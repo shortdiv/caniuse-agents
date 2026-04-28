@@ -1,0 +1,103 @@
+{
+  "category": "tools",
+  "title": "Built-in Tools",
+  "description": "Native tools and capabilities the agent ships with out of the box",
+  "features": [
+    {
+      "id": "file-read",
+      "group": "File Operations",
+      "title": "File read",
+      "description": "Read file contents from the local filesystem"
+    },
+    {
+      "id": "file-edit",
+      "group": "File Operations",
+      "title": "File edit / write",
+      "description": "Create, modify, and overwrite files"
+    },
+    {
+      "id": "notebook-edit",
+      "group": "File Operations",
+      "title": "Notebook editing",
+      "description": "Read and edit Jupyter notebook (.ipynb) cells"
+    },
+    {
+      "id": "shell-execution",
+      "group": "Shell & Execution",
+      "title": "Shell execution",
+      "description": "Execute shell commands in the user's environment"
+    },
+    {
+      "id": "background-monitor",
+      "group": "Shell & Execution",
+      "title": "Background monitor",
+      "description": "Run a process in the background and react to its output (tail logs, poll status)"
+    },
+    {
+      "id": "scheduled-tasks",
+      "group": "Shell & Execution",
+      "title": "Scheduled tasks",
+      "description": "Schedule recurring or one-shot prompts within a session (cron-like)"
+    },
+    {
+      "id": "code-search",
+      "group": "Search",
+      "title": "Code search",
+      "description": "Search file contents by pattern, regex, or filename glob"
+    },
+    {
+      "id": "semantic-search",
+      "group": "Search",
+      "title": "Semantic search",
+      "description": "Search codebase by meaning using embeddings or indexing, not just exact matches"
+    },
+    {
+      "id": "web-search",
+      "group": "Search",
+      "title": "Web search",
+      "description": "Search the web for information"
+    },
+    {
+      "id": "web-fetch",
+      "group": "Search",
+      "title": "Web fetch",
+      "description": "Fetch and read the contents of a URL"
+    },
+    {
+      "id": "lsp-integration",
+      "group": "Code Intelligence",
+      "title": "LSP integration",
+      "description": "Language server features: go-to-definition, find references, type errors, symbol search"
+    },
+    {
+      "id": "browser-control",
+      "group": "Code Intelligence",
+      "title": "Browser control",
+      "description": "Programmatic browser interaction: take screenshots, navigate pages, click elements"
+    },
+    {
+      "id": "image-input",
+      "group": "Code Intelligence",
+      "title": "Image input",
+      "description": "Read and understand images and screenshots (multimodal input)"
+    },
+    {
+      "id": "image-generation",
+      "group": "Code Intelligence",
+      "title": "Image generation",
+      "description": "Generate images from text descriptions"
+    },
+    {
+      "id": "subagent-spawning",
+      "group": "Orchestration",
+      "title": "Subagent spawning",
+      "description": "Spawn sub-agents with their own context window to handle tasks in parallel"
+    },
+    {
+      "id": "task-management",
+      "group": "Orchestration",
+      "title": "Task management",
+      "description": "Track work progress with task lists and checklists within a session"
+    }
+  ]
+}

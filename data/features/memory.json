@@ -1,0 +1,25 @@
+{
+  "category": "memory",
+  "title": "Memory",
+  "description": "How the agent persists its own knowledge and manages the constraint of limited context",
+  "features": [
+    {
+      "id": "auto-memory",
+      "group": "Persistence",
+      "title": "Persistent auto memory",
+      "description": "The agent automatically saves notes and learnings across sessions without manual effort"
+    },
+    {
+      "id": "conversation-resume",
+      "group": "Persistence",
+      "title": "Conversation resume",
+      "description": "Resume a past conversation with its full context intact"
+    },
+    {
+      "id": "context-compaction",
+      "group": "Context Management",
+      "title": "Context compaction",
+      "description": "Gracefully handles long conversations by summarizing or compacting context when approaching window limits"
+    }
+  ]
+}

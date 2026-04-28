@@ -1,0 +1,79 @@
+{
+  "category": "mcp",
+  "title": "Model Context Protocol",
+  "description": "MCP client support — transports, server primitives, client features, and configuration",
+  "features": [
+    {
+      "id": "mcp-stdio",
+      "group": "Transports",
+      "title": "stdio transport",
+      "description": "Connect to MCP servers via local processes using stdin/stdout"
+    },
+    {
+      "id": "mcp-sse",
+      "group": "Transports",
+      "title": "SSE transport",
+      "description": "Connect to MCP servers via Server-Sent Events over HTTP"
+    },
+    {
+      "id": "mcp-streamable-http",
+      "group": "Transports",
+      "title": "Streamable HTTP transport",
+      "description": "Connect to MCP servers via the newer streamable HTTP transport"
+    },
+    {
+      "id": "mcp-tools",
+      "group": "Server Primitives",
+      "title": "Tool discovery & execution",
+      "description": "Discover and invoke tools exposed by MCP servers"
+    },
+    {
+      "id": "mcp-resources",
+      "group": "Server Primitives",
+      "title": "Resource support",
+      "description": "Read structured data and context exposed by MCP servers as resources"
+    },
+    {
+      "id": "mcp-prompts",
+      "group": "Server Primitives",
+      "title": "Prompt template support",
+      "description": "Use templated messages and workflows provided by MCP servers"
+    },
+    {
+      "id": "mcp-sampling",
+      "group": "Client Features",
+      "title": "Sampling",
+      "description": "Allow MCP servers to request LLM completions through the client"
+    },
+    {
+      "id": "mcp-roots",
+      "group": "Client Features",
+      "title": "Roots support",
+      "description": "Expose filesystem or URI boundaries to MCP servers"
+    },
+    {
+      "id": "mcp-elicitation",
+      "group": "Client Features",
+      "title": "Elicitation",
+      "description": "Allow MCP servers to request additional input from the user mid-operation"
+    },
+    {
+      "id": "mcp-oauth",
+      "group": "Auth & Config",
+      "title": "OAuth authentication",
+      "description": "OAuth 2.0 authentication for connecting to remote MCP servers"
+    },
+    {
+      "id": "mcp-config-project",
+      "group": "Auth & Config",
+      "title": "Project-level MCP config",
+      "description": "Configure MCP servers per-project, shareable via version control"
+    },
+    {
+      "id": "mcp-config-user",
+      "group": "Auth & Config",
+      "title": "User-level MCP config",
+      "description": "Configure MCP servers globally for the current user across all projects"
+    }
+  ]
+}

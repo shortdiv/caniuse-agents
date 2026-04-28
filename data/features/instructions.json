@@ -1,0 +1,43 @@
+{
+  "category": "instructions",
+  "title": "Instructions",
+  "description": "How you tell the agent what to do — persistent guidance files, scoping, and cross-agent compatibility",
+  "features": [
+    {
+      "id": "project-instructions",
+      "group": "Scope",
+      "title": "Project-level instructions",
+      "description": "Repo-specific guidance files checked into version control (e.g. CLAUDE.md, .cursorrules, copilot-instructions.md)"
+    },
+    {
+      "id": "user-instructions",
+      "group": "Scope",
+      "title": "User-level instructions",
+      "description": "Global personal preferences that apply across all projects for the current user"
+    },
+    {
+      "id": "org-instructions",
+      "group": "Scope",
+      "title": "Org/managed instructions",
+      "description": "Organization-wide instructions enforced via managed policy or team admin settings"
+    },
+    {
+      "id": "path-scoped-rules",
+      "group": "Targeting",
+      "title": "Path-scoped rules",
+      "description": "Instructions that only apply when the agent works with files matching a glob pattern"
+    },
+    {
+      "id": "instruction-imports",
+      "group": "Targeting",
+      "title": "Instruction file imports",
+      "description": "Instruction files can reference or import other files to compose guidance from multiple sources"
+    },
+    {
+      "id": "agents-md-compat",
+      "group": "Interop",
+      "title": "AGENTS.md compatibility",
+      "description": "The agent reads the cross-agent AGENTS.md format used by multiple coding tools"
+    }
+  ]
+}
