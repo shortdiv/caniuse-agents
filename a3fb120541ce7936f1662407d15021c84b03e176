@@ -1,0 +1,24 @@
+src/lib/types.ts
+  d0d447e576b3eb2b 6-8,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.6",
+  "base_commit_sha": "a3fb120541ce7936f1662407d15021c84b03e176",
+  "prompts": {
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 403,
+      "total_deletions": 50,
+      "accepted_lines": 403,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/6c5963673a0b12d271ba6978d2a61c4b98e72412bd6daa2a246650236324e8b7"
+    }
+  }
+}
