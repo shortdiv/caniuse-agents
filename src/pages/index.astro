@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import { loadAgents, loadCategories } from "../lib/data.js";
 import type { Feature } from "../lib/types";
 
@@ -24,43 +25,9 @@ const featureRows = categories.flatMap((category) =>
 ---
 
 <Layout title="Can I Use Agents?">
+  <SiteHeader agentCount={agents.length} featureCount={totalFeatures} features={featureRows.map(f => ({ id: f.id, title: f.title, description: f.description, category: f.category }))} />
+
   <main class="page-shell">
-    <header class="masthead">
-      <div class="brand-row">
-        <p class="brand-mark">Can I Use Agents?</p>
-        <p class="brand-meta">
-          {agents.length} agents · {totalFeatures} tracked features
-        </p>
-      </div>
-
-      <h1>Agent capability tables</h1>
-
-      <p class="lede">
-        Search across tools, MCP, memory, instructions, hooks, and other agent
-        features.
-      </p>
-
-      <form class="search-panel" onsubmit="return false;">
-        <label class="search-label" for="feature-search">
-          Search feature name, category, or description
-        </label>
-        <div class="search-row">
-          <input
-            id="feature-search"
-            class="search-input"
-            type="search"
-            placeholder="Search: MCP, subagents, shell, AGENTS.md..."
-            autocomplete="off"
-          />
-          <a class="browse-link" href="#feature-index">Browse index</a>
-        </div>
-        <p class="search-hint" id="search-status">
-          Showing all {totalFeatures} features across {categories.length}
-          categories.
-        </p>
-      </form>
-    </header>
-
     <section class="category-jump panel" aria-labelledby="jump-title">
       <div class="section-head">
         <h2 id="jump-title">Category index</h2>
@@ -181,6 +148,14 @@ const featureRows = categories.flatMap((category) =>
     };
 
     searchInput?.addEventListener("input", updateSearch);
+
+    // If navigated here with ?q=, prefill and run search
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q && searchInput instanceof HTMLInputElement) {
+      searchInput.value = q;
+      updateSearch();
+    }
   </script>
 </Layout>
 
@@ -198,7 +173,6 @@ const featureRows = categories.flatMap((category) =>
   .page-shell {
     max-width: 1160px;
     margin: 0 auto;
-    padding: 18px 12px 40px;
   }
 
   .panel {
