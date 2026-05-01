@@ -1,0 +1,42 @@
+src/pages/features/[featureId].astro
+  d0d447e576b3eb2b 3,34-35,37,39,45-50,52-53,57-62,65-72,74,76-78,80-85,180-183,186-187,190,192,196-199,202,205-206,208-209,212,215-216,220,224-225,228-231,236-238,241,243,245-246,250,253-254,256-257,259,262-265,269,280,289,293-294,299,302,304-305,309,312,319,321,330-332,346-347,349-351,355,357-365,473-474,477-479,482-483
+src/components/SiteHeader.astro
+  d0d447e576b3eb2b 1-37,40-161,163-214,216-222,224-242,244-282,284-310,312-400
+src/pages/index.astro
+  d0d447e576b3eb2b 4,28,30,151-158
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "529ecd54065a414745ab5a3ddacb6c76a0c898e8",
+  "prompts": {
+    "ad43188449f694e8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019dd4c6-702c-7312-b37a-febc0e8ac115",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 8,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/2941036189aba50388b56ad60694249fb87dc2f6e7314b73eb6342bc75cb2de2"
+    },
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 529,
+      "total_deletions": 299,
+      "accepted_lines": 907,
+      "overriden_lines": 15,
+      "messages_url": "http://localhost:4000/cas/390a29823b7c0fc57a40af2864ddcd33817c86affe6dfca66ce61e7faa6cb299"
+    }
+  }
+}
