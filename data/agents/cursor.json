@@ -1,0 +1,824 @@
+{
+  "id": "cursor",
+  "name": "Cursor",
+  "vendor": "Anysphere",
+  "url": "https://cursor.com",
+  "features": {
+    "hook-pre-tool": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: basic tool observation. 2.4 GA: full PreToolUse with allow/deny/modify, matchers, failClosed."
+    },
+    "hook-post-tool": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: basic observation. 2.4 GA: full PostToolUse with updated_mcp_tool_output, additional_context."
+    },
+    "hook-prompt-submit": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "beforeSubmitPrompt added in 2.4. Not in 1.7 beta."
+    },
+    "hook-turn-end": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "stop hook with followup_message added in 2.4. Not in 1.7 beta."
+    },
+    "hook-notification": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "n",
+        "2.5": "n",
+        "3.0": "n",
+        "3.2": "n"
+      },
+      "notes": "No notification hook."
+    },
+    "hook-subagent-end": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "subagentStart/subagentStop added with subagents in 2.4."
+    },
+    "hook-session-start": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "sessionStart/sessionEnd added in 2.4 with env injection, composer_mode."
+    },
+    "hook-permission": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: basic command blocking. 2.4: preToolUse + beforeShellExecution + beforeMCPExecution with allow/deny/ask."
+    },
+    "hook-blocking": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: basic command blocking. 2.4 GA: exit code 2, failClosed option for security-critical hooks."
+    },
+    "hook-matchers": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Matchers added in 2.4. Filter by tool type (Shell, Read, Write, MCP:<name>), subagent type, or regex."
+    },
+    "hook-json-protocol": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: basic script execution. 2.4 GA: full JSON stdin/stdout with conversation_id, model, workspace_roots. Prompt-based hooks."
+    },
+    "hook-timeout": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Per-hook timeout in seconds in hooks.json. Added in 2.4."
+    },
+    "hook-scope-project": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "1.7 beta: user-level only. 2.1: project-level added. 2.4: full .cursor/hooks.json with enterprise/team/project/user hierarchy."
+    },
+    "hook-scope-user": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "~/.cursor/hooks.json. Available since 1.7 beta. Enterprise + Team levels added in 2.0/2.4."
+    },
+    "mcp-stdio": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Supported since MCP launch in 1.0."
+    },
+    "mcp-sse": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Supported since MCP launch in 1.0."
+    },
+    "mcp-streamable-http": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Supported since MCP launch in 1.0."
+    },
+    "mcp-tools": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Core MCP capability since 1.0. Dynamic tool registration added in 1.1."
+    },
+    "mcp-resources": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Added in 1.6 (Sep 2025). Servers share files, database schemas, or app-specific context."
+    },
+    "mcp-prompts": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Listed as supported in Cursor MCP docs. No specific changelog entry for introduction."
+    },
+    "mcp-sampling": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "n",
+        "2.5": "n",
+        "3.0": "n",
+        "3.2": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-roots": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "a",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "a",
+        "2.5": "a",
+        "3.0": "a",
+        "3.2": "a"
+      },
+      "notes": "Partial: listed as supported in Cursor docs and MCP clients page. 1.1 changelog mentions 'Roots support' but details are vague. Unclear if meaningful workspace boundaries are sent to servers."
+    },
+    "mcp-elicitation": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Elicitation support added in 1.5 (Aug 2025). Servers request structured user input via JSON schemas."
+    },
+    "mcp-oauth": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "OAuth since 1.0. Static credentials + DCR. Scopes and state support added in 2.2 (Dec 2025)."
+    },
+    "mcp-config-project": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": ".cursor/mcp.json in project root. MCP as JSON files in .cursor/ dir improved in 2.4."
+    },
+    "mcp-config-user": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "~/.cursor/mcp.json for global config."
+    },
+    "project-instructions": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": ".cursor/rules/ with .md/.mdc files. Legacy .cursorrules also supported."
+    },
+    "user-instructions": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Global user rules in Settings > Rules."
+    },
+    "org-instructions": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Team Rules via admin dashboard (Teams/Enterprise plans)."
+    },
+    "path-scoped-rules": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "YAML frontmatter globs: field. Auto-attached when matching files are in context."
+    },
+    "instruction-imports": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Remote rules imported from GitHub repos into .cursor/rules/imported/."
+    },
+    "agents-md-compat": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "AGENTS.md supported in project root and subdirectories."
+    },
+    "auto-memory": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "a",
+        "1.2": "a",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "a",
+        "2.5": "a",
+        "3.0": "a",
+        "3.2": "a"
+      },
+      "notes": "Partial: Memories (beta) in 1.0. Per-project facts across conversations."
+    },
+    "conversation-resume": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "CLI -continue flag. Chat history persistent and searchable."
+    },
+    "context-compaction": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "a",
+        "1.2": "a",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "a",
+        "2.5": "a",
+        "3.0": "a",
+        "3.2": "a"
+      },
+      "notes": "Partial: auto-compression at 100% context. No user-configurable controls."
+    },
+    "file-read": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Core tool. Reads images too (png, jpg, gif, webp, svg)."
+    },
+    "file-edit": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Core tool. Search-and-replace for large files (0.50+)."
+    },
+    "notebook-edit": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Jupyter notebook cell editing with Sonnet models."
+    },
+    "code-search": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Pattern search + semantic codebase indexing."
+    },
+    "shell-execution": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Terminal command execution with output monitoring."
+    },
+    "background-monitor": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "a",
+        "1.0": "a",
+        "1.2": "a",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "a",
+        "2.5": "a",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Partial from 0.50 (Background Agent). Await tool for background commands in 3.1+."
+    },
+    "scheduled-tasks": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "n",
+        "2.5": "n",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Automations: always-on agents triggered by events from Slack, Linear, GitHub, webhooks."
+    },
+    "web-search": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Agent generates search queries and searches the web."
+    },
+    "web-fetch": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "a",
+        "1.2": "a",
+        "1.7": "a",
+        "2.0": "a",
+        "2.4": "a",
+        "2.5": "a",
+        "3.0": "a",
+        "3.2": "a"
+      },
+      "notes": "Partial: @Link context with PDF parsing. Not a standalone fetch tool."
+    },
+    "image-input": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Reads images from workspace."
+    },
+    "image-generation": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Text-to-image generation, saves to assets/."
+    },
+    "browser-control": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Screenshots, navigation, element interaction, visual verification."
+    },
+    "lsp-integration": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "n",
+        "2.5": "n",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Go-to-definition with full LSPs (3.0+)."
+    },
+    "semantic-search": {
+      "stats": {
+        "0.45": "y",
+        "0.49": "y",
+        "0.50": "y",
+        "1.0": "y",
+        "1.2": "y",
+        "1.7": "y",
+        "2.0": "y",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Codebase indexing with meaning-based search."
+    },
+    "subagent-spawning": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "y",
+        "2.5": "y",
+        "3.0": "y",
+        "3.2": "y"
+      },
+      "notes": "Built-in subagents (Explore, Bash, Browser) + custom via .cursor/agents/. Async in 2.5+."
+    },
+    "task-management": {
+      "stats": {
+        "0.45": "n",
+        "0.49": "n",
+        "0.50": "n",
+        "1.0": "n",
+        "1.2": "n",
+        "1.7": "n",
+        "2.0": "n",
+        "2.4": "n",
+        "2.5": "n",
+        "3.0": "n",
+        "3.2": "y"
+      },
+      "notes": "/multitask for parallel dispatch. Worktrees for isolated work."
+    }
+  }
+}

@@ -1,0 +1,569 @@
+{
+  "id": "copilot",
+  "name": "Copilot",
+  "vendor": "GitHub",
+  "url": "https://github.com/features/copilot",
+  "features": {
+    "hook-pre-tool": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "preToolUse event. Can approve, deny, or defer."
+    },
+    "hook-post-tool": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "postToolUse event. Fires on success or failure."
+    },
+    "hook-prompt-submit": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "userPromptSubmitted event."
+    },
+    "hook-turn-end": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No turn-end/stop hook."
+    },
+    "hook-notification": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No notification hook. errorOccurred event exists but doesn't map to notification."
+    },
+    "hook-subagent-end": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No subagent completion hook."
+    },
+    "hook-session-start": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "sessionStart event. Also sessionEnd."
+    },
+    "hook-permission": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No dedicated permission hook. preToolUse can act as gate."
+    },
+    "hook-blocking": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Hooks can approve/deny tool calls."
+    },
+    "hook-matchers": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: preToolUse receives tool name and can filter, but no dedicated matcher config."
+    },
+    "hook-json-protocol": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Shell scripts with structured input. Deterministic, consume zero tokens."
+    },
+    "hook-timeout": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No configurable timeout documented."
+    },
+    "hook-scope-project": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": ".github/hooks/ on default branch (cloud) or CWD (CLI)."
+    },
+    "hook-scope-user": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No user-level hook configuration."
+    },
+    "mcp-stdio": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "stdio and local transport types."
+    },
+    "mcp-sse": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "SSE transport."
+    },
+    "mcp-streamable-http": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: http transport listed but unclear if streamable-http per MCP spec."
+    },
+    "mcp-tools": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Only primitive supported by cloud agent."
+    },
+    "mcp-resources": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: supported in IDE (VS Code) but not in cloud agent."
+    },
+    "mcp-prompts": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: supported in IDE (/mcp.server.prompt) but not in cloud agent."
+    },
+    "mcp-sampling": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-roots": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-elicitation": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-oauth": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: supported in VS Code IDE but not by cloud agent."
+    },
+    "mcp-config-project": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Cloud: repo settings. IDE: .vscode/mcp.json."
+    },
+    "mcp-config-user": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "IDE: user settings.json. Cloud: no user-level config."
+    },
+    "project-instructions": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": ".github/copilot-instructions.md for all repo requests."
+    },
+    "user-instructions": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Personal instructions on GitHub.com. Highest priority. Not in IDEs."
+    },
+    "org-instructions": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Org Settings > Copilot > Custom Instructions. Lowest priority."
+    },
+    "path-scoped-rules": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": ".github/instructions/NAME.instructions.md with applyTo glob frontmatter. excludeAgent support."
+    },
+    "instruction-imports": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No import mechanism."
+    },
+    "agents-md-compat": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Reads AGENTS.md, CLAUDE.md, and GEMINI.md from repo as instruction sources."
+    },
+    "auto-memory": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Public preview. Auto-discovers repo conventions. Memories expire after 28 days if not validated. Cross-tool."
+    },
+    "conversation-resume": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "CLI /resume for previous sessions. Cloud agent sessions trackable."
+    },
+    "context-compaction": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "CLI auto-compacts at ~80% context. Manual /compact available."
+    },
+    "file-read": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Built-in read tool."
+    },
+    "file-edit": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Built-in edit tool."
+    },
+    "notebook-edit": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No notebook-specific tool."
+    },
+    "code-search": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Built-in search tool."
+    },
+    "shell-execution": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Runs in GitHub Actions (cloud) or terminal (CLI)."
+    },
+    "background-monitor": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No background monitor tool. Agent itself runs in background."
+    },
+    "scheduled-tasks": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No session-scoped cron/scheduling."
+    },
+    "web-search": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Bing-powered. Disabled by default, must enable in settings."
+    },
+    "web-fetch": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "web_fetch tool retrieves URL content as markdown."
+    },
+    "image-input": {
+      "stats": {
+        "2025.06": "y",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Screenshots, sketches via drag-and-drop in issues or chat."
+    },
+    "image-generation": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No image generation. Can generate HTML/CSS but no image files."
+    },
+    "browser-control": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "y",
+        "2025.10": "y",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Built-in Playwright MCP server. Interact with web apps, validate UI."
+    },
+    "lsp-integration": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: IDE agent has LSP via editor. Cloud agent has semantic search but no direct LSP."
+    },
+    "semantic-search": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Added March 2026. Finds code by meaning."
+    },
+    "subagent-spawning": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
+      },
+      "notes": "Custom agents as subagents with own context. CLI parallel agents. handoffs property."
+    },
+    "task-management": {
+      "stats": {
+        "2025.06": "a",
+        "2025.07": "a",
+        "2025.10": "a",
+        "2026.01": "a",
+        "2026.03": "a",
+        "2026.05": "a"
+      },
+      "notes": "Partial: no built-in task tool but integrates with GitHub Issues, Jira, Linear, etc."
+    }
+  }
+}

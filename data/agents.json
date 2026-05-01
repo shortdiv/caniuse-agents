@@ -8,54 +8,268 @@
     "url": "https://code.claude.com",
     "current_version": "2.1.121",
     "version_list": [
-      { "version": "0.2.31", "release_date": 1741196900, "era": -47, "models": ["Sonnet 3.5"] },
-      { "version": "0.2.47", "release_date": 1742262157, "era": -46 },
-      { "version": "0.2.50", "release_date": 1742418406, "era": -45 },
-      { "version": "0.2.53", "release_date": 1742580242, "era": -44 },
-      { "version": "0.2.54", "release_date": 1742935487, "era": -43 },
-      { "version": "0.2.93", "release_date": 1746036882, "era": -42 },
-      { "version": "0.2.105", "release_date": 1746722494, "era": -41 },
-      { "version": "0.2.107", "release_date": 1746807303, "era": -40 },
-      { "version": "1.0.0", "release_date": 1747933038, "era": -39, "models": ["Sonnet 4", "Opus 4"] },
-      { "version": "1.0.38", "release_date": 1751315343, "era": -38 },
-      { "version": "1.0.41", "release_date": 1751478322, "era": -37 },
-      { "version": "1.0.48", "release_date": 1752109407, "era": -36 },
-      { "version": "1.0.54", "release_date": 1752707822, "era": -35 },
-      { "version": "1.0.58", "release_date": 1753223382, "era": -34 },
-      { "version": "1.0.59", "release_date": 1753305262, "era": -33 },
-      { "version": "1.0.62", "release_date": 1753740275, "era": -32 },
-      { "version": "1.0.64", "release_date": 1753910817, "era": -31 },
-      { "version": "1.0.68", "release_date": 1754342058, "era": -30 },
-      { "version": "1.0.85", "release_date": 1755637877, "era": -29 },
-      { "version": "2.0.0", "release_date": 1759156874, "era": -28 },
-      { "version": "2.0.10", "release_date": 1759866836, "era": -27 },
-      { "version": "2.0.12", "release_date": 1760024608, "era": -26 },
-      { "version": "2.0.17", "release_date": 1760543180, "era": -25, "models": ["Haiku 4.5"] },
-      { "version": "2.0.30", "release_date": 1761863028, "era": -24 },
-      { "version": "2.0.43", "release_date": 1763417957, "era": -23 },
-      { "version": "2.0.45", "release_date": 1763483466, "era": -22 },
-      { "version": "2.0.51", "release_date": 1764008838, "era": -21, "models": ["Opus 4.5"] },
-      { "version": "2.1.0", "release_date": 1767753784, "era": -20 },
-      { "version": "2.1.10", "release_date": 1768608689, "era": -19 },
-      { "version": "2.1.32", "release_date": 1770311000, "era": -18, "models": ["Opus 4.6"] },
-      { "version": "2.1.34", "release_date": 1770359892, "era": -17 },
-      { "version": "2.1.45", "release_date": 1771349628, "era": -16, "models": ["Sonnet 4.6"] },
-      { "version": "2.1.47", "release_date": 1771445711, "era": -15 },
-      { "version": "2.1.50", "release_date": 1771628978, "era": -14 },
-      { "version": "2.1.63", "release_date": 1772246622, "era": -13 },
-      { "version": "2.1.69", "release_date": 1772660806, "era": -12 },
-      { "version": "2.1.72", "release_date": 1773098956, "era": -11 },
-      { "version": "2.1.76", "release_date": 1773447257, "era": -10 },
-      { "version": "2.1.78", "release_date": 1773781445, "era": -9 },
-      { "version": "2.1.83", "release_date": 1774390607, "era": -8 },
-      { "version": "2.1.84", "release_date": 1774482613, "era": -7 },
-      { "version": "2.1.85", "release_date": 1774558547, "era": -6 },
-      { "version": "2.1.89", "release_date": 1774999960, "era": -5 },
-      { "version": "2.1.98", "release_date": 1775758129, "era": -4 },
-      { "version": "2.1.105", "release_date": 1776109879, "era": -3 },
-      { "version": "2.1.111", "release_date": 1776352569, "era": -2, "models": ["Opus 4.7"] },
-      { "version": "2.1.118", "release_date": 1776901736, "era": -1 },
-      { "version": "2.1.121", "release_date": 1777318786, "era": 0 }
+      {
+        "version": "0.2.31",
+        "release_date": 1741196900,
+        "era": -47,
+        "models": [
+          "Sonnet 3.5"
+        ]
+      },
+      {
+        "version": "0.2.47",
+        "release_date": 1742262157,
+        "era": -46
+      },
+      {
+        "version": "0.2.50",
+        "release_date": 1742418406,
+        "era": -45
+      },
+      {
+        "version": "0.2.53",
+        "release_date": 1742580242,
+        "era": -44
+      },
+      {
+        "version": "0.2.54",
+        "release_date": 1742935487,
+        "era": -43
+      },
+      {
+        "version": "0.2.93",
+        "release_date": 1746036882,
+        "era": -42
+      },
+      {
+        "version": "0.2.105",
+        "release_date": 1746722494,
+        "era": -41
+      },
+      {
+        "version": "0.2.107",
+        "release_date": 1746807303,
+        "era": -40
+      },
+      {
+        "version": "1.0.0",
+        "release_date": 1747933038,
+        "era": -39,
+        "models": [
+          "Sonnet 4",
+          "Opus 4"
+        ]
+      },
+      {
+        "version": "1.0.38",
+        "release_date": 1751315343,
+        "era": -38
+      },
+      {
+        "version": "1.0.41",
+        "release_date": 1751478322,
+        "era": -37
+      },
+      {
+        "version": "1.0.48",
+        "release_date": 1752109407,
+        "era": -36
+      },
+      {
+        "version": "1.0.54",
+        "release_date": 1752707822,
+        "era": -35
+      },
+      {
+        "version": "1.0.58",
+        "release_date": 1753223382,
+        "era": -34
+      },
+      {
+        "version": "1.0.59",
+        "release_date": 1753305262,
+        "era": -33
+      },
+      {
+        "version": "1.0.62",
+        "release_date": 1753740275,
+        "era": -32
+      },
+      {
+        "version": "1.0.64",
+        "release_date": 1753910817,
+        "era": -31
+      },
+      {
+        "version": "1.0.68",
+        "release_date": 1754342058,
+        "era": -30
+      },
+      {
+        "version": "1.0.85",
+        "release_date": 1755637877,
+        "era": -29
+      },
+      {
+        "version": "2.0.0",
+        "release_date": 1759156874,
+        "era": -28
+      },
+      {
+        "version": "2.0.10",
+        "release_date": 1759866836,
+        "era": -27
+      },
+      {
+        "version": "2.0.12",
+        "release_date": 1760024608,
+        "era": -26
+      },
+      {
+        "version": "2.0.17",
+        "release_date": 1760543180,
+        "era": -25,
+        "models": [
+          "Haiku 4.5"
+        ]
+      },
+      {
+        "version": "2.0.30",
+        "release_date": 1761863028,
+        "era": -24
+      },
+      {
+        "version": "2.0.43",
+        "release_date": 1763417957,
+        "era": -23
+      },
+      {
+        "version": "2.0.45",
+        "release_date": 1763483466,
+        "era": -22
+      },
+      {
+        "version": "2.0.51",
+        "release_date": 1764008838,
+        "era": -21,
+        "models": [
+          "Opus 4.5"
+        ]
+      },
+      {
+        "version": "2.1.0",
+        "release_date": 1767753784,
+        "era": -20
+      },
+      {
+        "version": "2.1.10",
+        "release_date": 1768608689,
+        "era": -19
+      },
+      {
+        "version": "2.1.32",
+        "release_date": 1770311000,
+        "era": -18,
+        "models": [
+          "Opus 4.6"
+        ]
+      },
+      {
+        "version": "2.1.34",
+        "release_date": 1770359892,
+        "era": -17
+      },
+      {
+        "version": "2.1.45",
+        "release_date": 1771349628,
+        "era": -16,
+        "models": [
+          "Sonnet 4.6"
+        ]
+      },
+      {
+        "version": "2.1.47",
+        "release_date": 1771445711,
+        "era": -15
+      },
+      {
+        "version": "2.1.50",
+        "release_date": 1771628978,
+        "era": -14
+      },
+      {
+        "version": "2.1.63",
+        "release_date": 1772246622,
+        "era": -13
+      },
+      {
+        "version": "2.1.69",
+        "release_date": 1772660806,
+        "era": -12
+      },
+      {
+        "version": "2.1.72",
+        "release_date": 1773098956,
+        "era": -11
+      },
+      {
+        "version": "2.1.76",
+        "release_date": 1773447257,
+        "era": -10
+      },
+      {
+        "version": "2.1.78",
+        "release_date": 1773781445,
+        "era": -9
+      },
+      {
+        "version": "2.1.83",
+        "release_date": 1774390607,
+        "era": -8
+      },
+      {
+        "version": "2.1.84",
+        "release_date": 1774482613,
+        "era": -7
+      },
+      {
+        "version": "2.1.85",
+        "release_date": 1774558547,
+        "era": -6
+      },
+      {
+        "version": "2.1.89",
+        "release_date": 1774999960,
+        "era": -5
+      },
+      {
+        "version": "2.1.98",
+        "release_date": 1775758129,
+        "era": -4
+      },
+      {
+        "version": "2.1.105",
+        "release_date": 1776109879,
+        "era": -3
+      },
+      {
+        "version": "2.1.111",
+        "release_date": 1776352569,
+        "era": -2,
+        "models": [
+          "Opus 4.7"
+        ]
+      },
+      {
+        "version": "2.1.118",
+        "release_date": 1776901736,
+        "era": -1
+      },
+      {
+        "version": "2.1.121",
+        "release_date": 1777318786,
+        "era": 0
+      }
     ]
   },
   "codex-cli": {
@@ -67,42 +281,354 @@
     "url": "https://developers.openai.com/codex",
     "current_version": "0.128.0",
     "version_list": [
-      { "version": "0.2.0", "release_date": 1751311511, "era": -34 },
-      { "version": "0.8.0", "release_date": 1752885328, "era": -33 },
-      { "version": "0.16.0", "release_date": 1754589597, "era": -32 },
-      { "version": "0.24.0", "release_date": 1756230056, "era": -31 },
-      { "version": "0.36.0", "release_date": 1757956620, "era": -30 },
-      { "version": "0.44.0", "release_date": 1759510896, "era": -29 },
-      { "version": "0.48.0", "release_date": 1761263259, "era": -28 },
-      { "version": "0.53.0", "release_date": 1761873684, "era": -27 },
-      { "version": "0.59.0", "release_date": 1763575762, "era": -26 },
-      { "version": "0.64.0", "release_date": 1764713706, "era": -25 },
-      { "version": "0.72.0", "release_date": 1765588962, "era": -24 },
-      { "version": "0.77.0", "release_date": 1766295421, "era": -23 },
-      { "version": "0.79.0", "release_date": 1767747363, "era": -22 },
-      { "version": "0.81.0", "release_date": 1768414356, "era": -21 },
-      { "version": "0.88.0", "release_date": 1769023150, "era": -20 },
-      { "version": "0.92.0", "release_date": 1769514652, "era": -19 },
-      { "version": "0.93.0", "release_date": 1769842791, "era": -18 },
-      { "version": "0.97.0", "release_date": 1770268270, "era": -17 },
-      { "version": "0.99.0", "release_date": 1770842580, "era": -16 },
-      { "version": "0.100.0", "release_date": 1770920997, "era": -15 },
-      { "version": "0.102.0", "release_date": 1771358555, "era": -14 },
-      { "version": "0.105.0", "release_date": 1772040105, "era": -13 },
-      { "version": "0.107.0", "release_date": 1772474416, "era": -12 },
-      { "version": "0.110.0", "release_date": 1772677366, "era": -11 },
-      { "version": "0.113.0", "release_date": 1773120270, "era": -10 },
-      { "version": "0.114.0", "release_date": 1773188922, "era": -9 },
-      { "version": "0.115.0", "release_date": 1773689857, "era": -8 },
-      { "version": "0.116.0", "release_date": 1773942695, "era": -7 },
-      { "version": "0.117.0", "release_date": 1774564059, "era": -6 },
-      { "version": "0.119.0", "release_date": 1775861061, "era": -5 },
-      { "version": "0.120.0", "release_date": 1775876029, "era": -4 },
-      { "version": "0.121.0", "release_date": 1776285918, "era": -3 },
-      { "version": "0.122.0", "release_date": 1776710320, "era": -2 },
-      { "version": "0.124.0", "release_date": 1776968980, "era": -1 },
-      { "version": "0.125.0", "release_date": 1777053638, "era": -1 },
-      { "version": "0.128.0", "release_date": 1777564800, "era": 0 }
+      {
+        "version": "0.2.0",
+        "release_date": 1751311511,
+        "era": -34
+      },
+      {
+        "version": "0.8.0",
+        "release_date": 1752885328,
+        "era": -33
+      },
+      {
+        "version": "0.16.0",
+        "release_date": 1754589597,
+        "era": -32
+      },
+      {
+        "version": "0.24.0",
+        "release_date": 1756230056,
+        "era": -31
+      },
+      {
+        "version": "0.36.0",
+        "release_date": 1757956620,
+        "era": -30
+      },
+      {
+        "version": "0.44.0",
+        "release_date": 1759510896,
+        "era": -29
+      },
+      {
+        "version": "0.48.0",
+        "release_date": 1761263259,
+        "era": -28
+      },
+      {
+        "version": "0.53.0",
+        "release_date": 1761873684,
+        "era": -27
+      },
+      {
+        "version": "0.59.0",
+        "release_date": 1763575762,
+        "era": -26
+      },
+      {
+        "version": "0.64.0",
+        "release_date": 1764713706,
+        "era": -25
+      },
+      {
+        "version": "0.72.0",
+        "release_date": 1765588962,
+        "era": -24
+      },
+      {
+        "version": "0.77.0",
+        "release_date": 1766295421,
+        "era": -23
+      },
+      {
+        "version": "0.79.0",
+        "release_date": 1767747363,
+        "era": -22
+      },
+      {
+        "version": "0.81.0",
+        "release_date": 1768414356,
+        "era": -21
+      },
+      {
+        "version": "0.88.0",
+        "release_date": 1769023150,
+        "era": -20
+      },
+      {
+        "version": "0.92.0",
+        "release_date": 1769514652,
+        "era": -19
+      },
+      {
+        "version": "0.93.0",
+        "release_date": 1769842791,
+        "era": -18
+      },
+      {
+        "version": "0.97.0",
+        "release_date": 1770268270,
+        "era": -17
+      },
+      {
+        "version": "0.99.0",
+        "release_date": 1770842580,
+        "era": -16
+      },
+      {
+        "version": "0.100.0",
+        "release_date": 1770920997,
+        "era": -15
+      },
+      {
+        "version": "0.102.0",
+        "release_date": 1771358555,
+        "era": -14
+      },
+      {
+        "version": "0.105.0",
+        "release_date": 1772040105,
+        "era": -13
+      },
+      {
+        "version": "0.107.0",
+        "release_date": 1772474416,
+        "era": -12
+      },
+      {
+        "version": "0.110.0",
+        "release_date": 1772677366,
+        "era": -11
+      },
+      {
+        "version": "0.113.0",
+        "release_date": 1773120270,
+        "era": -10
+      },
+      {
+        "version": "0.114.0",
+        "release_date": 1773188922,
+        "era": -9
+      },
+      {
+        "version": "0.115.0",
+        "release_date": 1773689857,
+        "era": -8
+      },
+      {
+        "version": "0.116.0",
+        "release_date": 1773942695,
+        "era": -7
+      },
+      {
+        "version": "0.117.0",
+        "release_date": 1774564059,
+        "era": -6
+      },
+      {
+        "version": "0.119.0",
+        "release_date": 1775861061,
+        "era": -5
+      },
+      {
+        "version": "0.120.0",
+        "release_date": 1775876029,
+        "era": -4
+      },
+      {
+        "version": "0.121.0",
+        "release_date": 1776285918,
+        "era": -3
+      },
+      {
+        "version": "0.122.0",
+        "release_date": 1776710320,
+        "era": -2
+      },
+      {
+        "version": "0.124.0",
+        "release_date": 1776968980,
+        "era": -1
+      },
+      {
+        "version": "0.125.0",
+        "release_date": 1777053638,
+        "era": -1
+      },
+      {
+        "version": "0.128.0",
+        "release_date": 1777564800,
+        "era": 0
+      }
+    ]
+  },
+  "cursor": {
+    "name": "Cursor",
+    "long_name": "Cursor (Anysphere)",
+    "abbr": "CU",
+    "vendor": "Anysphere",
+    "type": "ide",
+    "url": "https://cursor.com",
+    "current_version": "3.2",
+    "version_list": [
+      {
+        "version": "0.45",
+        "release_date": 1737590400,
+        "era": -10
+      },
+      {
+        "version": "0.49",
+        "release_date": 1744675200,
+        "era": -9
+      },
+      {
+        "version": "0.50",
+        "release_date": 1747267200,
+        "era": -8
+      },
+      {
+        "version": "1.0",
+        "release_date": 1748995200,
+        "era": -7
+      },
+      {
+        "version": "1.2",
+        "release_date": 1751500800,
+        "era": -6
+      },
+      {
+        "version": "1.7",
+        "release_date": 1759104000,
+        "era": -5
+      },
+      {
+        "version": "2.0",
+        "release_date": 1761696000,
+        "era": -4
+      },
+      {
+        "version": "2.4",
+        "release_date": 1769040000,
+        "era": -3
+      },
+      {
+        "version": "2.5",
+        "release_date": 1771286400,
+        "era": -2
+      },
+      {
+        "version": "3.0",
+        "release_date": 1775088000,
+        "era": -1
+      },
+      {
+        "version": "3.2",
+        "release_date": 1775988000,
+        "era": 0
+      }
+    ]
+  },
+  "windsurf": {
+    "name": "Windsurf",
+    "long_name": "Windsurf (Codeium)",
+    "abbr": "WS",
+    "vendor": "Codeium",
+    "type": "ide",
+    "url": "https://windsurf.com",
+    "current_version": "2.1.29",
+    "version_list": [
+      {
+        "version": "1.0.2",
+        "release_date": 1731456000,
+        "era": -9
+      },
+      {
+        "version": "1.1.0",
+        "release_date": 1733875200,
+        "era": -8
+      },
+      {
+        "version": "1.2.1",
+        "release_date": 1737072000,
+        "era": -7
+      },
+      {
+        "version": "1.12.20",
+        "release_date": 1760601600,
+        "era": -6
+      },
+      {
+        "version": "1.12.25",
+        "release_date": 1761120000,
+        "era": -5
+      },
+      {
+        "version": "1.12.28",
+        "release_date": 1762156800,
+        "era": -4
+      },
+      {
+        "version": "1.12.31",
+        "release_date": 1763020800,
+        "era": -3
+      },
+      {
+        "version": "1.13.3",
+        "release_date": 1766563200,
+        "era": -2
+      },
+      {
+        "version": "2.0.44",
+        "release_date": 1776384000,
+        "era": -1
+      },
+      {
+        "version": "2.1.29",
+        "release_date": 1777507200,
+        "era": 0
+      }
+    ]
+  },
+  "copilot": {
+    "name": "Copilot",
+    "long_name": "Copilot (GitHub)",
+    "abbr": "CP",
+    "vendor": "GitHub",
+    "type": "cloud",
+    "url": "https://github.com/features/copilot",
+    "current_version": "2026.05",
+    "version_list": [
+      {
+        "version": "2025.06",
+        "release_date": 1748736000,
+        "era": -5
+      },
+      {
+        "version": "2025.07",
+        "release_date": 1751328000,
+        "era": -4
+      },
+      {
+        "version": "2025.10",
+        "release_date": 1759241600,
+        "era": -3
+      },
+      {
+        "version": "2026.01",
+        "release_date": 1769472000,
+        "era": -2
+      },
+      {
+        "version": "2026.03",
+        "release_date": 1772064000,
+        "era": -1
+      },
+      {
+        "version": "2026.05",
+        "release_date": 1777334400,
+        "era": 0
+      }
     ]
   }
 }

@@ -193,16 +193,14 @@ const agentMeta: Record<
   string,
   { color: string; short: string; logo?: string }
 > = {
-  "claude-code": {
-    color: "#D97757",
-    short: "CC",
-    logo: "/logos/claude-icon.png",
-  },
+  "claude-code": { color: "#D97757", short: "CC", logo: "/logos/claude-icon.png" },
   "codex-cli": { color: "#9CA3AF", short: "CX", logo: "/logos/codex-icon.png" },
-  windsurf: { color: "#5B8DEF", short: "WS" },
-  devin: { color: "#7B61FF", short: "DV" },
-  aider: { color: "#5BB67A", short: "AI" },
-  "cursor-agent": { color: "#E6B450", short: "CA" },
+  "cursor": { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
+  "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
+  "copilot": { color: "#6C63FF", short: "CP", logo: "/logos/copilot.png" },
+  "windsurf": { color: "#5B8DEF", short: "WS", logo: "/logos/windsurf.svg" },
+  "devin": { color: "#7B61FF", short: "DV" },
+  "aider": { color: "#5BB67A", short: "AI" },
 };
 
 function getAgentMark(id: string, name: string) {
@@ -216,34 +214,15 @@ const supported = supportRows.filter(
   (r) => r.support.support === "full" || r.support.support === "partial",
 );
 const unsupported = supportRows.filter((r) => r.support.support === "no");
-const summaryParts: string[] = [];
+let overviewSummary: string;
 
 if (supported.length === supportRows.length) {
-  summaryParts.push(`Supported by all ${supportRows.length} agents.`);
+  overviewSummary = `Supported by all ${supportRows.length} agents.`;
 } else if (supported.length === 0) {
-  summaryParts.push(`Not yet supported by any tracked agent.`);
+  overviewSummary = `Not yet supported by any tracked agent.`;
 } else {
-  summaryParts.push(
-    `Supported by ${supported.length} of ${supportRows.length} agents.`,
-  );
+  overviewSummary = `Supported by ${supported.length} of ${supportRows.length} agents.`;
 }
-
-for (const { agent, support } of supportRows) {
-  const latestVersion = agent.versions?.at(-1)?.version;
-  if (support.support === "full") {
-    summaryParts.push(
-      `${agent.name} has full support${latestVersion ? ` as of ${latestVersion}` : ""}.`,
-    );
-  } else if (support.support === "partial") {
-    summaryParts.push(
-      `${agent.name} has partial support${support.notes ? ` — ${support.notes}` : ""}.`,
-    );
-  } else if (support.support === "no") {
-    summaryParts.push(`${agent.name} has no support.`);
-  }
-}
-
-const overviewSummary = summaryParts.join(" ");
 ---
 
 <div class="ciu-matrix">
@@ -254,7 +233,10 @@ const overviewSummary = summaryParts.join(" ");
     {
       agentBuckets.map(({ agent, support, buckets }) => {
         const meta = getAgentMark(agent.id, agent.name);
-        const latestVersion = agent.versions?.at(-1)?.version;
+        const latest = agent.versions?.at(-1);
+        const latestDate = latest?.date
+          ? new Date(latest.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+          : null;
         const agentNote = support.notes || "";
 
         return (
@@ -275,8 +257,8 @@ const overviewSummary = summaryParts.join(" ");
                 </span>
               )}
               <span class="agent-name">{agent.name}</span>
-              {latestVersion && (
-                <span class="agent-version">{latestVersion} · current</span>
+              {latestDate && (
+                <span class="agent-version">Current · {latestDate}</span>
               )}
             </div>
 

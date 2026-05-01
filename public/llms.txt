@@ -1,0 +1,90 @@
+# Can I Use Agents?
+
+> A community-maintained compatibility table for AI coding agent features, modeled after caniuse.com. Tracks hooks, MCP, tools, instructions, and memory support across major coding agents including Claude Code, Codex CLI, Cursor, Windsurf, and Copilot.
+
+This site compares feature support across AI coding agents with version-level granularity. Each feature page shows a time-aligned matrix of support across agents, similar to how caniuse.com compares browser support for web standards. Data is stored as JSON and open for community contributions.
+
+## Agents Tracked
+
+- Claude Code (Anthropic) — 48 versions from 0.2.31 (Mar 2025) to 2.1.121 (Apr 2026)
+- Codex CLI (OpenAI) — 36 versions from 0.2.0 (Jun 2025) to 0.128.0 (Apr 2026)
+- Cursor (Anysphere) — 11 versions from 0.45 to 3.2
+- Windsurf (Codeium) — 10 versions from 1.0.2 to 2.1.29
+- Copilot (GitHub) — 6 versions from 2025.06 to 2026.05
+
+## Hooks & Lifecycle — 14 features
+
+- [Pre-tool-use hook](/features/hook-pre-tool): Run custom code before any tool executes
+- [Post-tool-use hook](/features/hook-post-tool): Run custom code after a tool completes
+- [User prompt submit hook](/features/hook-prompt-submit): Intercept or augment user prompts before they are processed
+- [Turn-end / stop hook](/features/hook-turn-end): Fire a hook when the agent finishes a turn, with the ability to continue
+- [Notification hook](/features/hook-notification): Fire a hook on general system notifications such as errors or status updates
+- [Subagent completion hook](/features/hook-subagent-end): Fire a hook when a subagent completes its work
+- [Session start hook](/features/hook-session-start): Fire a hook when an agent session begins
+- [Permission request hook](/features/hook-permission): Hook into the permission/approval flow to auto-allow, deny, or defer
+- [Blocking hooks](/features/hook-blocking): Pre-hooks can block the pending action via exit code or return value
+- [Event matchers / filters](/features/hook-matchers): Scope a hook to specific tools or events by name or pattern
+- [Structured I/O protocol](/features/hook-json-protocol): Hooks receive context as JSON on stdin and can return structured output on stdout
+- [Configurable timeout](/features/hook-timeout): Per-hook timeout setting to prevent runaway hooks
+- [Project-level hooks](/features/hook-scope-project): Hooks configured at the project/repo level, shareable via version control
+- [User-level hooks](/features/hook-scope-user): Hooks configured globally for the current user across all projects
+
+## Instructions — 6 features
+
+- [Project-level instructions](/features/project-instructions): Repo-specific guidance files checked into version control
+- [User-level instructions](/features/user-instructions): Global personal preferences that apply across all projects
+- [Org/managed instructions](/features/org-instructions): Organization-wide instructions enforced via managed policy
+- [Path-scoped rules](/features/path-scoped-rules): Instructions that only apply when the agent works with files matching a glob pattern
+- [Instruction file imports](/features/instruction-imports): Instruction files can reference or import other files
+- [AGENTS.md compatibility](/features/agents-md-compat): The agent reads the cross-agent AGENTS.md format
+
+## Model Context Protocol — 12 features
+
+- [stdio transport](/features/mcp-stdio): Connect to MCP servers via local processes using stdin/stdout
+- [SSE transport](/features/mcp-sse): Connect to MCP servers via Server-Sent Events over HTTP
+- [Streamable HTTP transport](/features/mcp-streamable-http): Connect to MCP servers via the newer streamable HTTP transport
+- [Tool discovery & execution](/features/mcp-tools): Discover and invoke tools exposed by MCP servers
+- [Resource support](/features/mcp-resources): Read structured data and context exposed by MCP servers as resources
+- [Prompt template support](/features/mcp-prompts): Use templated messages and workflows provided by MCP servers
+- [Sampling](/features/mcp-sampling): Allow MCP servers to request LLM completions through the client
+- [Roots support](/features/mcp-roots): Expose filesystem or URI boundaries to MCP servers
+- [Elicitation](/features/mcp-elicitation): Allow MCP servers to request additional input from the user mid-operation
+- [OAuth authentication](/features/mcp-oauth): OAuth 2.0 authentication for connecting to remote MCP servers
+- [Project-level MCP config](/features/mcp-config-project): Configure MCP servers per-project, shareable via version control
+- [User-level MCP config](/features/mcp-config-user): Configure MCP servers globally for the current user
+
+## Memory — 3 features
+
+- [Persistent auto memory](/features/auto-memory): The agent automatically saves notes and learnings across sessions
+- [Conversation resume](/features/conversation-resume): Resume a past conversation with its full context intact
+- [Context compaction](/features/context-compaction): Gracefully handles long conversations by summarizing or compacting context
+
+## Built-in Tools — 16 features
+
+- [File read](/features/file-read): Read file contents from the local filesystem
+- [File edit / write](/features/file-edit): Create, modify, and overwrite files
+- [Notebook editing](/features/notebook-edit): Read and edit Jupyter notebook cells
+- [Code search](/features/code-search): Search file contents by pattern, regex, or filename glob
+- [Shell execution](/features/shell-execution): Execute shell commands in the user's environment
+- [Background monitor](/features/background-monitor): Run a process in the background and react to its output
+- [Scheduled tasks](/features/scheduled-tasks): Schedule recurring or one-shot prompts within a session
+- [Web search](/features/web-search): Search the web for information
+- [Web fetch](/features/web-fetch): Fetch and read the contents of a URL
+- [Image input](/features/image-input): Read and understand images and screenshots
+- [Image generation](/features/image-generation): Generate images from text descriptions
+- [Browser control](/features/browser-control): Programmatic browser interaction: screenshots, navigation, clicks
+- [LSP integration](/features/lsp-integration): Language server features: go-to-definition, find references, type errors
+- [Semantic search](/features/semantic-search): Search codebase by meaning using embeddings or indexing
+- [Subagent spawning](/features/subagent-spawning): Spawn sub-agents with their own context window
+- [Task management](/features/task-management): Track work progress with task lists and checklists
+
+## Data
+
+- [agents.json](/data/agents.json): Version metadata with release dates and era positions for all tracked agents
+- [Feature definitions](/data/features/): JSON files defining all tracked features by category
+- [Agent data](/data/agents/): Per-agent JSON files with version-by-version support codes (y/n/a/u/p/d)
+
+## Optional
+
+- [Index page](/): Homepage with category index, feature search, and browseable feature list
+- [Feature index](/features/): Alphabetical listing of all tracked features

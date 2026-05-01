@@ -1,0 +1,773 @@
+{
+  "id": "windsurf",
+  "name": "Windsurf",
+  "vendor": "Codeium",
+  "url": "https://windsurf.com",
+  "features": {
+    "hook-pre-tool": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "pre_write_code, pre_read_code, pre_run_command, pre_mcp_tool_use \u2014 four distinct pre-tool hooks."
+    },
+    "hook-post-tool": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "post_write_code, post_read_code, post_run_command, post_mcp_tool_use."
+    },
+    "hook-prompt-submit": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "pre_user_prompt hook. Can block policy-violating prompts."
+    },
+    "hook-turn-end": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "post_cascade_response and post_cascade_response_with_transcript."
+    },
+    "hook-notification": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No notification hook."
+    },
+    "hook-subagent-end": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No subagent completion hook. Only post_setup_worktree for worktree lifecycle."
+    },
+    "hook-session-start": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No session-start hook."
+    },
+    "hook-permission": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No permission-request hook. Pre-hooks can block but no dedicated permission event."
+    },
+    "hook-blocking": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Exit code 2 blocks. Exit 0 = proceed, other = proceed with error logged."
+    },
+    "hook-matchers": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No event matchers. Hooks fire on all events of their type."
+    },
+    "hook-json-protocol": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "JSON via stdin with agent_action_name, trajectory_id, execution_id, timestamp, model_name, tool_info."
+    },
+    "hook-timeout": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No configurable timeout. Docs recommend sub-100ms execution."
+    },
+    "hook-scope-project": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": ".windsurf/hooks.json (version-controlled)."
+    },
+    "hook-scope-user": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "~/.codeium/windsurf/hooks.json. Also system-level for enterprise (MDM)."
+    },
+    "mcp-stdio": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Supported transport."
+    },
+    "mcp-sse": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Supported transport."
+    },
+    "mcp-streamable-http": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Supported transport."
+    },
+    "mcp-tools": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Primary MCP feature. 100-tool max across all servers."
+    },
+    "mcp-resources": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Explicitly listed as supported."
+    },
+    "mcp-prompts": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Added in 1.12.31."
+    },
+    "mcp-sampling": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-roots": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-elicitation": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not supported."
+    },
+    "mcp-oauth": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "OAuth for all transport types. Enhanced in 1.12.28."
+    },
+    "mcp-config-project": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No project-level MCP config. Config is user-level only."
+    },
+    "mcp-config-user": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "~/.codeium/windsurf/mcp_config.json with variable interpolation."
+    },
+    "project-instructions": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": ".windsurf/rules/*.md (12,000 char/file limit)."
+    },
+    "user-instructions": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "~/.codeium/windsurf/memories/global_rules.md (6,000 char limit)."
+    },
+    "org-instructions": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "System-level rules for enterprise, IT-deployed and read-only."
+    },
+    "path-scoped-rules": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Rules support glob trigger mode. AGENTS.md in subdirs auto-scopes."
+    },
+    "instruction-imports": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No import/include mechanism."
+    },
+    "agents-md-compat": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Native AGENTS.md support. Auto-discovered, fed into Rules engine."
+    },
+    "auto-memory": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Auto-generated memories during conversations. Workspace-scoped."
+    },
+    "conversation-resume": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No conversation resume. Memories persist but no explicit resume."
+    },
+    "context-compaction": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "a",
+        "1.12.31": "a",
+        "1.13.3": "a",
+        "2.0.44": "a",
+        "2.1.29": "a"
+      },
+      "notes": "Partial: improved summarization for long conversations (1.12.28) but no explicit compaction feature."
+    },
+    "file-read": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Core capability. Confirmed by pre_read_code/post_read_code hooks."
+    },
+    "file-edit": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Multi-file editing. Confirmed by pre_write_code/post_write_code hooks."
+    },
+    "notebook-edit": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not documented."
+    },
+    "code-search": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Fast Context with SWE-grep (20x faster) added 1.12.25."
+    },
+    "shell-execution": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Terminal execution with auto-run and allow/deny lists."
+    },
+    "background-monitor": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not documented."
+    },
+    "scheduled-tasks": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not documented."
+    },
+    "web-search": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "@web/@docs commands. Added 1.2.1."
+    },
+    "web-fetch": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "URL input support for fetching web content."
+    },
+    "image-input": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Multimodal image input supported."
+    },
+    "image-generation": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "Not documented."
+    },
+    "browser-control": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "a",
+        "2.1.29": "a"
+      },
+      "notes": "Partial: refined browser integration in 2.0.44 but not full automation."
+    },
+    "lsp-integration": {
+      "stats": {
+        "1.0.2": "a",
+        "1.1.0": "a",
+        "1.2.1": "a",
+        "1.12.20": "a",
+        "1.12.25": "a",
+        "1.12.28": "a",
+        "1.12.31": "a",
+        "1.13.3": "a",
+        "2.0.44": "a",
+        "2.1.29": "a"
+      },
+      "notes": "Partial: linter integration and Windsurf Pyright, but no direct LSP tool the agent invokes."
+    },
+    "semantic-search": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Fast Context / SWE-grep. Semantic-level code search subagent."
+    },
+    "subagent-spawning": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "a",
+        "1.12.25": "a",
+        "1.12.28": "a",
+        "1.12.31": "a",
+        "1.13.3": "a",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Partial from 1.12.20 (Fast Context subagent). Full with Devin integration in 2.0.44."
+    },
+    "task-management": {
+      "stats": {
+        "1.0.2": "y",
+        "1.1.0": "y",
+        "1.2.1": "y",
+        "1.12.20": "y",
+        "1.12.25": "y",
+        "1.12.28": "y",
+        "1.12.31": "y",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Built-in planning and todo lists. Spaces for grouping sessions (2.0.44)."
+    }
+  }
+}
