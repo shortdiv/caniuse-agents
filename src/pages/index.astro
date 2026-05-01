@@ -25,7 +25,16 @@ const featureRows = categories.flatMap((category) =>
 ---
 
 <Layout title="Can I Use Agents?">
-  <SiteHeader agentCount={agents.length} featureCount={totalFeatures} features={featureRows.map(f => ({ id: f.id, title: f.title, description: f.description, category: f.category }))} />
+  <SiteHeader
+    agentCount={agents.length}
+    featureCount={totalFeatures}
+    features={featureRows.map((f) => ({
+      id: f.id,
+      title: f.title,
+      description: f.description,
+      category: f.category,
+    }))}
+  />
 
   <main class="page-shell">
     <section class="category-jump panel" aria-labelledby="jump-title">
@@ -178,7 +187,6 @@ const featureRows = categories.flatMap((category) =>
   .panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    box-shadow: 0 1px 0 color-mix(in srgb, var(--surface) 78%, white) inset;
   }
 
   .masthead {
