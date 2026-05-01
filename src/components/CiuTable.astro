@@ -1,0 +1,633 @@
+---
+import type {
+  CaniuseFeatureData,
+  CaniuseSupportCode,
+  SupportRow,
+  AgentVersion,
+} from "../lib/types.js";
+
+interface Props {
+  featureData: CaniuseFeatureData | null;
+  supportRows: SupportRow[];
+}
+
+const { featureData, supportRows } = Astro.props as Props;
+
+const supportLabels: Record<CaniuseSupportCode, string> = {
+  y: "Full support",
+  a: "Partial support",
+  n: "No support",
+  u: "Unknown support",
+  p: "Prefix or workaround",
+  d: "Deprecated",
+};
+
+const supportClassNames: Record<CaniuseSupportCode, string> = {
+  y: "yes",
+  a: "partial",
+  n: "no",
+  u: "unknown",
+  p: "flag",
+  d: "unknown",
+};
+
+// ---------- Time-aligned era system ----------
+
+/**
+ * For a given agent, find the support code at a point in time
+ * by looking up the latest version released on or before that timestamp.
+ */
+function supportAtTime(
+  versions: AgentVersion[],
+  stats: Record<string, CaniuseSupportCode>,
+  timestamp: number,
+): { version: string | null; value: CaniuseSupportCode } {
+  let match: AgentVersion | null = null;
+  for (const v of versions) {
+    if (new Date(v.date).getTime() <= timestamp) {
+      match = v;
+    } else {
+      break;
+    }
+  }
+  if (!match) return { version: null, value: "n" };
+  return { version: match.version, value: (stats[match.version] ?? "u") as CaniuseSupportCode };
+}
+
+/**
+ * Collect every timestamp where ANY agent's support status changes.
+ * These become the global row boundaries so all columns split at the same points.
+ */
+function findGlobalSplitPoints(): number[] {
+  const allTimestamps = new Set<number>();
+
+  for (const { agent } of supportRows) {
+    const versions = (agent.versions ?? []).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+    for (const v of versions) {
+      allTimestamps.add(new Date(v.date).getTime());
+    }
+  }
+
+  return [...allTimestamps].sort((a, b) => a - b);
+}
+
+interface RowSegment {
+  startTime: number;
+  endTime: number;
+}
+
+interface AgentCell {
+  version: string | null;
+  value: CaniuseSupportCode;
+  label: string;
+  dateRange: string;
+}
+
+const fmt = (ts: number) =>
+  new Date(ts).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+
+// ---------- Build the grid ----------
+
+// 1. Get all version release timestamps across all agents, sorted
+const splitPoints = findGlobalSplitPoints();
+if (splitPoints.length === 0) splitPoints.push(Date.now());
+
+// 2. Build time segments between consecutive split points
+//    Add "now" as the final boundary
+const now = Date.now();
+const boundaries = [...splitPoints];
+if (boundaries[boundaries.length - 1] < now) boundaries.push(now);
+
+const segments: RowSegment[] = [];
+for (let i = 0; i < boundaries.length - 1; i++) {
+  segments.push({ startTime: boundaries[i], endTime: boundaries[i + 1] });
+}
+
+// 3. Resolve each agent's support at each segment, then find GLOBAL
+//    row boundaries where ANY agent changes status.
+
+interface Bucket {
+  label: string;
+  value: CaniuseSupportCode;
+  dateRange: string;
+}
+
+// Resolve per-agent support for every segment
+const perAgent = supportRows.map(({ agent, support }) => {
+  const versions = (agent.versions ?? []).sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
+  const stats = featureData?.stats[agent.id] ?? {};
+
+  const resolved = segments.map((seg) => ({
+    ...supportAtTime(versions, stats, seg.endTime),
+    segment: seg,
+  }));
+
+  return { agent, support, resolved };
+});
+
+// Find global split indices: a row boundary exists wherever ANY agent's
+// support value differs from the previous segment.
+const globalSplits = new Set<number>();
+globalSplits.add(0); // always start a group at index 0
+for (let i = 1; i < segments.length; i++) {
+  for (const { resolved } of perAgent) {
+    if (resolved[i].value !== resolved[i - 1].value) {
+      globalSplits.add(i);
+      break;
+    }
+  }
+}
+
+// Convert split indices into row ranges: [start, end) segment indices
+const splitIndices = [...globalSplits].sort((a, b) => a - b);
+const rowRanges: { start: number; end: number }[] = [];
+for (let i = 0; i < splitIndices.length; i++) {
+  const start = splitIndices[i];
+  const end = i + 1 < splitIndices.length ? splitIndices[i + 1] : segments.length;
+  rowRanges.push({ start, end });
+}
+
+// Build buckets for each agent using the global row ranges
+const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
+  const buckets: Bucket[] = rowRanges
+    .map((range) => {
+      const group = resolved.slice(range.start, range.end);
+      const versionNames = group
+        .map((g) => g.version)
+        .filter((v): v is string => v !== null);
+      const unique = [...new Set(versionNames)];
+
+      let label: string;
+      if (unique.length === 0) {
+        label = "Not released";
+      } else if (unique.length === 1) {
+        label = unique[0];
+      } else {
+        label = `${unique[0]} - ${unique[unique.length - 1]}`;
+      }
+
+      const startTime = group[0].segment.startTime;
+      const endTime = group[group.length - 1].segment.endTime;
+
+      return {
+        label,
+        value: group[0].value,
+        dateRange: `${fmt(startTime)} — ${fmt(endTime)}`,
+      };
+    })
+    .reverse();
+
+  return { agent, support, buckets };
+});
+
+// Agent identity: logo path (if available), fallback color + monogram
+const agentMeta: Record<string, { color: string; short: string; logo?: string }> = {
+  "claude-code":  { color: "#D97757", short: "CC", logo: "/logos/claude-icon.png" },
+  "codex-cli":    { color: "#9CA3AF", short: "CX", logo: "/logos/codex-icon.png" },
+  "windsurf":     { color: "#5B8DEF", short: "WS" },
+  "devin":        { color: "#7B61FF", short: "DV" },
+  "aider":        { color: "#5BB67A", short: "AI" },
+  "cursor-agent": { color: "#E6B450", short: "CA" },
+};
+
+function getAgentMark(id: string, name: string) {
+  return agentMeta[id] || { color: "#777", short: name.slice(0, 2).toUpperCase() };
+}
+
+// Build overview summary from current support status
+const supported = supportRows.filter(r => r.support.support === "full" || r.support.support === "partial");
+const unsupported = supportRows.filter(r => r.support.support === "no");
+const summaryParts: string[] = [];
+
+if (supported.length === supportRows.length) {
+  summaryParts.push(`Supported by all ${supportRows.length} agents.`);
+} else if (supported.length === 0) {
+  summaryParts.push(`Not yet supported by any tracked agent.`);
+} else {
+  summaryParts.push(`Supported by ${supported.length} of ${supportRows.length} agents.`);
+}
+
+for (const { agent, support } of supportRows) {
+  const latestVersion = agent.versions?.at(-1)?.version;
+  if (support.support === "full") {
+    summaryParts.push(`${agent.name} has full support${latestVersion ? ` as of ${latestVersion}` : ""}.`);
+  } else if (support.support === "partial") {
+    summaryParts.push(`${agent.name} has partial support${support.notes ? ` — ${support.notes}` : ""}.`);
+  } else if (support.support === "no") {
+    summaryParts.push(`${agent.name} has no support.`);
+  }
+}
+
+const overviewSummary = summaryParts.join(" ");
+---
+
+<div class="ciu-matrix">
+  <div
+    class="ciu-grid"
+    style={`grid-template-columns: repeat(${agentBuckets.length}, minmax(0, 1fr));`}
+  >
+    {agentBuckets.map(({ agent, support, buckets }) => {
+      const meta = getAgentMark(agent.id, agent.name);
+      const latestVersion = agent.versions?.at(-1)?.version;
+      const agentNote = support.notes || "";
+
+      return (
+        <div class="ciu-column">
+          {/* Agent header with logo or monogram */}
+          <div class="ciu-agent-header">
+            {meta.logo ? (
+              <img class="agent-logo" src={meta.logo} alt={agent.name} width="26" height="26" />
+            ) : (
+              <span class="agent-mark" style={`background: ${meta.color};`}>
+                {meta.short}
+              </span>
+            )}
+            <span class="agent-name">{agent.name}</span>
+            {latestVersion && (
+              <span class="agent-version">{latestVersion} · current</span>
+            )}
+          </div>
+
+          {/* Version cells */}
+          {buckets.map((bucket) => {
+            const cls = supportClassNames[bucket.value];
+
+            return (
+              <div
+                class={`ciu-cell ${cls}`}
+                data-agent-name={agent.name}
+                data-agent-color={meta.color}
+                data-agent-short={meta.short}
+                data-agent-logo={meta.logo || ""}
+                data-range={bucket.label}
+                data-dates={bucket.dateRange}
+                data-status={bucket.value}
+                data-status-label={supportLabels[bucket.value]}
+                data-note={agentNote}
+              >
+                <span class="ciu-cell-label">{bucket.label}</span>
+                {(bucket.value === "a" || bucket.value === "p") && <span class="partial-dot" />}
+              </div>
+            );
+          })}
+        </div>
+      );
+    })}
+  </div>
+
+  {/* Notes panel — static summary + hover detail */}
+  <div class="ciu-notes" data-notes-panel>
+    {/* Default: overview summary */}
+    <div class="notes-summary" data-notes-summary>
+      <p class="notes-overview">{overviewSummary}</p>
+      <p class="notes-prompt">Hover any cell for version details.</p>
+    </div>
+
+    {/* Hover: specific cell detail */}
+    <div class="notes-hover" data-notes-hover hidden>
+      <div class="hover-header">
+        <span class="hover-mark-wrap" data-hover-mark-wrap>
+          <img class="agent-logo-sm" data-hover-logo hidden width="18" height="18" alt="" />
+          <span class="agent-mark agent-mark-sm" data-hover-mark></span>
+        </span>
+        <span class="hover-agent-name" data-hover-name></span>
+        <span class="hover-range" data-hover-range></span>
+        <span class="hover-status-tag" data-hover-tag></span>
+      </div>
+      <p class="hover-note" data-hover-note></p>
+      <p class="hover-dates" data-hover-dates></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const panel = document.querySelector("[data-notes-panel]") as HTMLElement;
+  if (panel) {
+    const summary = panel.querySelector("[data-notes-summary]") as HTMLElement;
+    const hover = panel.querySelector("[data-notes-hover]") as HTMLElement;
+    const hoverLogo = panel.querySelector("[data-hover-logo]") as HTMLImageElement;
+    const mark = panel.querySelector("[data-hover-mark]") as HTMLElement;
+    const name = panel.querySelector("[data-hover-name]") as HTMLElement;
+    const range = panel.querySelector("[data-hover-range]") as HTMLElement;
+    const tag = panel.querySelector("[data-hover-tag]") as HTMLElement;
+    const dates = panel.querySelector("[data-hover-dates]") as HTMLElement;
+    const note = panel.querySelector("[data-hover-note]") as HTMLElement;
+
+    const statusClassMap: Record<string, string> = {
+      y: "tag-yes", a: "tag-partial", n: "tag-no",
+      u: "tag-unknown", p: "tag-flag", d: "tag-deprecated",
+    };
+
+    const cells = document.querySelectorAll(".ciu-cell[data-agent-name]");
+
+    cells.forEach((cell) => {
+      cell.addEventListener("mouseenter", () => {
+        const el = cell as HTMLElement;
+        const agentName = el.dataset.agentName || "";
+        const agentColor = el.dataset.agentColor || "#777";
+        const agentShort = el.dataset.agentShort || "";
+        const agentLogo = el.dataset.agentLogo || "";
+        const cellRange = el.dataset.range || "";
+        const cellDates = el.dataset.dates || "";
+        const cellStatus = el.dataset.status || "u";
+        const cellStatusLabel = el.dataset.statusLabel || "";
+        const cellNote = el.dataset.note || "";
+
+        if (agentLogo) {
+          hoverLogo.src = agentLogo;
+          hoverLogo.alt = agentName;
+          hoverLogo.hidden = false;
+          mark.hidden = true;
+        } else {
+          hoverLogo.hidden = true;
+          mark.hidden = false;
+          mark.style.background = agentColor;
+          mark.textContent = agentShort;
+        }
+        name.textContent = agentName;
+        range.textContent = cellRange;
+        tag.textContent = cellStatusLabel;
+        tag.className = "hover-status-tag " + (statusClassMap[cellStatus] || "tag-unknown");
+        dates.textContent = cellDates;
+        note.textContent = cellNote || "No additional notes for this version range.";
+
+        summary.hidden = true;
+        hover.hidden = false;
+      });
+
+      cell.addEventListener("mouseleave", () => {
+        summary.hidden = false;
+        hover.hidden = true;
+      });
+    });
+  }
+</script>
+
+<style>
+  .ciu-matrix {
+    overflow: hidden;
+  }
+
+  .ciu-grid {
+    display: grid;
+    position: relative;
+  }
+
+  .ciu-column {
+    display: flex;
+    flex-direction: column;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .ciu-column:last-child {
+    border-right: none;
+  }
+
+  /* ─── Agent header ─── */
+  .ciu-agent-header {
+    padding: 14px 12px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-alt);
+  }
+
+  .agent-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    color: #0F0E0C;
+    font: 600 13px/1 var(--font-mono);
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (prefers-color-scheme: light) {
+    .agent-mark {
+      box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  .agent-mark-sm {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+
+  .agent-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .agent-logo-sm {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+
+  .hover-mark-wrap {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .agent-name {
+    font: 600 13px/1 var(--font-sans);
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+
+  .agent-version {
+    font: 11px/1 var(--font-mono);
+    color: var(--text-subtle);
+  }
+
+  /* ─── Cells ─── */
+  .ciu-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 10px;
+    font: 12px/1 var(--font-mono);
+    letter-spacing: -0.005em;
+    text-align: center;
+    cursor: default;
+    border-top: 0.5px solid var(--border);
+    position: relative;
+    transition: outline-color 90ms ease;
+  }
+
+  .ciu-cell:hover {
+    outline: 1px solid var(--accent);
+    outline-offset: -1px;
+    z-index: 1;
+  }
+
+  .ciu-cell-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .partial-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  .ciu-cell.yes {
+    background: var(--status-yes-bg);
+    color: var(--status-yes-text);
+  }
+  .ciu-cell.no {
+    background: var(--status-no-bg);
+    color: var(--status-no-text);
+  }
+  .ciu-cell.partial {
+    background: var(--status-partial-bg);
+    color: var(--status-partial-text);
+  }
+  .ciu-cell.flag {
+    background: var(--status-flag-bg);
+    color: var(--status-flag-text);
+  }
+  .ciu-cell.unknown {
+    background: var(--status-unknown-bg);
+    color: var(--status-unknown-text);
+  }
+  .ciu-cell.deprecated {
+    background: var(--status-deprecated-bg);
+    color: var(--status-deprecated-text);
+  }
+
+  /* ─── Notes panel ─── */
+  .ciu-notes {
+    padding: 18px 22px;
+    border-top: 0.5px solid var(--border);
+    background: var(--surface);
+    height: 90px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .notes-summary,
+  .notes-hover {
+    width: 100%;
+  }
+
+  .notes-overview {
+    font: 13px/1.55 var(--font-sans);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .notes-prompt {
+    font: 12px/1 var(--font-sans);
+    color: var(--text-subtle);
+    margin: 8px 0 0;
+  }
+
+  /* ─── Hover detail view ─── */
+  .notes-hover {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hover-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .hover-header .agent-mark-sm {
+    align-self: center;
+  }
+
+  .hover-agent-name {
+    font: 600 13px var(--font-sans);
+    color: var(--text);
+  }
+
+  .hover-range {
+    font: 11px var(--font-mono);
+    color: var(--text-subtle);
+  }
+
+  .hover-status-tag {
+    display: inline-flex;
+    align-items: center;
+    font: 10px/1 var(--font-sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 7px;
+    border-radius: 3px;
+  }
+
+  .hover-status-tag.tag-yes {
+    background: var(--status-yes-bg);
+    color: var(--status-yes-text);
+  }
+  .hover-status-tag.tag-partial {
+    background: var(--status-partial-bg);
+    color: var(--status-partial-text);
+  }
+  .hover-status-tag.tag-no {
+    background: var(--status-no-bg);
+    color: var(--status-no-text);
+  }
+  .hover-status-tag.tag-flag {
+    background: var(--status-flag-bg);
+    color: var(--status-flag-text);
+  }
+  .hover-status-tag.tag-unknown {
+    background: var(--status-unknown-bg);
+    color: var(--status-unknown-text);
+  }
+  .hover-status-tag.tag-deprecated {
+    background: var(--status-deprecated-bg);
+    color: var(--status-deprecated-text);
+  }
+
+  .hover-dates {
+    font: 12px/1 var(--font-sans);
+    color: var(--text-subtle);
+    margin: 0;
+  }
+
+  .hover-note {
+    font: 13px/1.55 var(--font-sans);
+    color: var(--text-muted);
+    margin: 2px 0 0;
+    max-width: 680px;
+  }
+
+  @media (max-width: 700px) {
+    .notes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

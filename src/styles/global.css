@@ -1,1 +1,118 @@
 @import "tailwindcss";
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Dark theme (default) — from design prototype */
+  --bg: #0F0E0C;
+  --surface: #191714;
+  --surface-alt: #1F1C18;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --text: #EDE7DA;
+  --text-muted: rgba(237, 231, 218, 0.62);
+  --text-subtle: rgba(237, 231, 218, 0.42);
+
+  --header-bg: #2A2440;
+  --header-text: #EDE7DA;
+  --header-muted: rgba(237, 231, 218, 0.62);
+
+  --accent: #E89A6A;
+  --accent-hover: #D4814F;
+  --accent-soft: rgba(232, 154, 106, 0.12);
+
+  /* Classic palette — muted, dark cell backgrounds */
+  --status-yes: #A6E29B;
+  --status-yes-bg: #1B3A1A;
+  --status-yes-text: #A6E29B;
+  --status-partial: #E8C684;
+  --status-partial-bg: #3A2E16;
+  --status-partial-text: #E8C684;
+  --status-no: #E6A39B;
+  --status-no-bg: #3A1B1B;
+  --status-no-text: #E6A39B;
+  --status-flag: #B7B2EA;
+  --status-flag-bg: #2A2A48;
+  --status-flag-text: #B7B2EA;
+  --status-prefix: #9FD3EE;
+  --status-prefix-bg: #163142;
+  --status-prefix-text: #9FD3EE;
+  --status-unknown: rgba(220, 210, 190, 0.5);
+  --status-unknown-bg: transparent;
+  --status-unknown-text: rgba(220, 210, 190, 0.5);
+  --status-deprecated: rgba(220, 210, 190, 0.5);
+  --status-deprecated-bg: #2A2620;
+  --status-deprecated-text: rgba(220, 210, 190, 0.5);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F7F4EC;
+    --surface: #FBF9F2;
+    --surface-alt: #F1ECDF;
+    --border: rgba(0, 0, 0, 0.10);
+    --border-strong: rgba(0, 0, 0, 0.18);
+
+    --text: #1B1812;
+    --text-muted: rgba(27, 24, 18, 0.66);
+    --text-subtle: rgba(27, 24, 18, 0.44);
+
+    --header-bg: #DDD3E6;
+    --header-text: #1B1812;
+    --header-muted: rgba(27, 24, 18, 0.62);
+
+    --accent: #B5572D;
+    --accent-hover: #9A4420;
+    --accent-soft: rgba(181, 87, 45, 0.08);
+
+    /* Classic palette — light */
+    --status-yes: #22461E;
+    --status-yes-bg: #D6EAC9;
+    --status-yes-text: #22461E;
+    --status-partial: #5C4514;
+    --status-partial-bg: #F1E2B6;
+    --status-partial-text: #5C4514;
+    --status-no: #5A1F1A;
+    --status-no-bg: #EFD0CC;
+    --status-no-text: #5A1F1A;
+    --status-flag: #312D6E;
+    --status-flag-bg: #D8D5EC;
+    --status-flag-text: #312D6E;
+    --status-prefix: #0F3A52;
+    --status-prefix-bg: #CFE3EE;
+    --status-prefix-text: #0F3A52;
+    --status-unknown: rgba(40, 30, 20, 0.45);
+    --status-unknown-bg: transparent;
+    --status-unknown-text: rgba(40, 30, 20, 0.45);
+    --status-deprecated: rgba(40, 30, 20, 0.45);
+    --status-deprecated-bg: #E8E2D2;
+    --status-deprecated-text: rgba(40, 30, 20, 0.45);
+  }
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+}
+h1,
+.feature {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+code,
+.version {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}

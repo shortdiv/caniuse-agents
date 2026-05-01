@@ -1,0 +1,18 @@
+---
+const { support } = Astro.props;
+
+const colors: Record<string, string> = {
+  full: "bg-emerald-500",
+  partial: "bg-lime-400",
+  beta: "bg-amber-400",
+  flag: "bg-orange-400",
+  "via-mcp": "bg-teal-400",
+  "via-skill": "bg-cyan-400",
+  "via-extension": "bg-sky-400",
+  no: "bg-red-400",
+  unknown: "bg-gray-300",
+  deprecated: "bg-gray-400 line-through",
+};
+---
+
+<div class={`h-8 w-full ${colors[support] || colors.unknown}`}></div>

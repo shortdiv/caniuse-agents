@@ -1,11 +1,539 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import type { GetStaticPaths } from "astro";
+import Layout from "../layouts/Layout.astro";
+import { loadAgents, loadCategories } from "../lib/data.js";
+import type { Feature } from "../lib/types";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const [categories, agents] = await Promise.all([
+  loadCategories(),
+  loadAgents(),
+]);
+
+const totalFeatures = categories.reduce(
+  (count, category) => count + category.features.length,
+  0,
+);
+
+const featureRows = categories.flatMap((category) =>
+  category.features.map((feature: Feature) => ({
+    ...feature,
+    category: category.title,
+    categorySlug: category.category,
+  })),
+);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Can I Use Agents?">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand-row">
+        <p class="brand-mark">Can I Use Agents?</p>
+        <p class="brand-meta">
+          {agents.length} agents · {totalFeatures} tracked features
+        </p>
+      </div>
+
+      <h1>Agent capability tables</h1>
+
+      <p class="lede">
+        Search across tools, MCP, memory, instructions, hooks, and other agent
+        features.
+      </p>
+
+      <form class="search-panel" onsubmit="return false;">
+        <label class="search-label" for="feature-search">
+          Search feature name, category, or description
+        </label>
+        <div class="search-row">
+          <input
+            id="feature-search"
+            class="search-input"
+            type="search"
+            placeholder="Search: MCP, subagents, shell, AGENTS.md..."
+            autocomplete="off"
+          />
+          <a class="browse-link" href="#feature-index">Browse index</a>
+        </div>
+        <p class="search-hint" id="search-status">
+          Showing all {totalFeatures} features across {categories.length}
+          categories.
+        </p>
+      </form>
+    </header>
+
+    <section class="category-jump panel" aria-labelledby="jump-title">
+      <div class="section-head">
+        <h2 id="jump-title">Category index</h2>
+        <p>Jump straight to a capability family.</p>
+      </div>
+
+      <nav class="jump-links" aria-label="Feature categories">
+        {
+          categories.map((category) => (
+            <a href={`#${category.category}`}>
+              <span>{category.title}</span>
+              <small>{category.features.length}</small>
+            </a>
+          ))
+        }
+      </nav>
+    </section>
+
+    <section id="feature-index" class="feature-index">
+      <div class="section-head feature-head">
+        <h2>Feature index</h2>
+        <p>
+          Inspired by the information density of caniuse.com. Attribution to the
+          original project below.
+        </p>
+      </div>
+
+      <div class="category-grid">
+        {
+          categories.map((category) => (
+            <article
+              id={category.category}
+              class="panel category-card"
+              data-category-card
+              data-category={category.title.toLowerCase()}
+            >
+              <div class="category-header">
+                <div>
+                  <p class="category-kicker">{category.category}</p>
+                  <h3>{category.title}</h3>
+                </div>
+                <span class="feature-count">
+                  {category.features.length} features
+                </span>
+              </div>
+
+              <p class="category-description">{category.description}</p>
+
+              <ul class="feature-list">
+                {category.features.map((feature) => (
+                  <li
+                    data-feature-item
+                    data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
+                  >
+                    <a href={`/features/${feature.id}`}>
+                      <span class="feature-title">{feature.title}</span>
+                      <span class="feature-summary">{feature.description}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <footer class="attribution">
+      <p>
+        This project is structurally inspired by
+        <a href="https://caniuse.com/">caniuse.com</a>, created by Alexis
+        Deveria and contributors. This is an original compatibility index for AI
+        coding agents, not an official caniuse property.
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    const searchInput = document.querySelector("#feature-search");
+    const status = document.querySelector("#search-status");
+    const categoryCards = [
+      ...document.querySelectorAll("[data-category-card]"),
+    ];
+    const allItems = [...document.querySelectorAll("[data-feature-item]")];
+
+    const updateSearch = () => {
+      const query = (
+        searchInput instanceof HTMLInputElement ? searchInput.value : ""
+      )
+        .trim()
+        .toLowerCase();
+
+      let visibleItems = 0;
+
+      for (const item of allItems) {
+        const haystack = item.getAttribute("data-searchable") ?? "";
+        const matches = query === "" || haystack.includes(query);
+        item.toggleAttribute("hidden", !matches);
+
+        if (matches) {
+          visibleItems += 1;
+        }
+      }
+
+      for (const card of categoryCards) {
+        const matchingChildren = card.querySelectorAll(
+          "[data-feature-item]:not([hidden])",
+        ).length;
+        card.toggleAttribute("hidden", matchingChildren === 0);
+      }
+
+      if (status) {
+        status.textContent =
+          query === ""
+            ? `Showing all ${allItems.length} feature entries on this page.`
+            : `Showing ${visibleItems} matching feature entries for "${query}".`;
+      }
+    };
+
+    searchInput?.addEventListener("input", updateSearch);
+  </script>
 </Layout>
+
+<style>
+  :global(body) {
+    font-family: "Avenir Next", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  :global(a) {
+    color: inherit;
+  }
+
+  .page-shell {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 18px 12px 40px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--surface) 78%, white) inset;
+  }
+
+  .masthead {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--header-bg) 92%, black) 0%,
+      var(--header-bg) 100%
+    );
+    color: var(--header-text);
+    border: 1px solid color-mix(in srgb, var(--header-bg) 82%, black);
+    padding: 18px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .brand-row,
+  .section-head,
+  .category-header,
+  .agent-list,
+  .search-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .brand-mark,
+  .brand-meta,
+  .section-head p,
+  .category-kicker,
+  .search-hint,
+  .feature-summary,
+  .alpha-meta,
+  .agent-list span,
+  .attribution p {
+    margin: 0;
+  }
+
+  .brand-mark {
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .brand-meta,
+  .section-head p,
+  .search-hint {
+    color: var(--header-muted);
+  }
+
+  .masthead h1 {
+    margin: 14px 0 8px;
+    font-size: clamp(2.4rem, 8vw, 4.2rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+  }
+
+  .lede {
+    max-width: 70ch;
+    margin: 0 0 18px;
+    line-height: 1.55;
+    color: var(--header-text);
+  }
+
+  .search-panel {
+    background: color-mix(in srgb, var(--header-bg) 72%, white 8%);
+    border: 1px solid color-mix(in srgb, var(--header-muted) 28%, transparent);
+    padding: 14px;
+  }
+
+  .search-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .search-input {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 1.05rem;
+    padding: 0 14px;
+    box-sizing: border-box;
+  }
+
+  .search-input::placeholder {
+    color: var(--text-subtle);
+  }
+
+  .browse-link {
+    flex-shrink: 0;
+    align-self: stretch;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 138px;
+    padding: 0 16px;
+    background: var(--accent);
+    border: 1px solid var(--accent-hover);
+    text-decoration: none;
+    color: var(--header-text);
+    font-weight: 700;
+  }
+
+  .browse-link:hover {
+    background: var(--accent-hover);
+  }
+
+  .search-hint {
+    margin-top: 8px;
+    font-size: 0.94rem;
+  }
+
+  .category-jump,
+  .agents-strip,
+  .all-features {
+    margin-top: 12px;
+    padding: 14px;
+  }
+
+  .feature-index {
+    margin-top: 16px;
+  }
+
+  .feature-head {
+    margin: 0 0 10px;
+    padding: 0 2px;
+  }
+
+  .section-head {
+    margin-bottom: 12px;
+  }
+
+  .section-head h2,
+  .category-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .category-jump .section-head p,
+  .agents-strip .section-head p,
+  .feature-head p,
+  .category-description,
+  .feature-summary,
+  .agent-list span,
+  .attribution p {
+    color: var(--text-muted);
+  }
+
+  .jump-links,
+  .alpha-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .jump-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .jump-links a,
+  .alpha-list a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+  }
+
+  .jump-links a {
+    padding: 10px 12px;
+  }
+
+  .jump-links small {
+    color: var(--text-subtle);
+  }
+
+  .agent-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .agent-list li {
+    min-width: 180px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+  }
+
+  .agent-list strong,
+  .agent-list span {
+    display: block;
+  }
+
+  .agent-list span {
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .category-card {
+    padding: 14px;
+  }
+
+  .category-kicker {
+    color: var(--text-subtle);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .feature-count {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    background: var(--status-prefix-bg);
+    border: 1px solid
+      color-mix(in srgb, var(--status-prefix) 48%, var(--border));
+    color: var(--status-prefix-text);
+    font-size: 0.82rem;
+  }
+
+  .category-description {
+    margin: 10px 0 12px;
+    line-height: 1.45;
+  }
+
+  .feature-list,
+  .alpha-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .feature-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .feature-list li a {
+    display: block;
+    padding: 10px 12px;
+    text-decoration: none;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+  }
+
+  .feature-list li a:hover,
+  .jump-links a:hover,
+  .alpha-list a:hover {
+    background: var(--accent-soft);
+    border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
+  }
+
+  .feature-title,
+  .alpha-title {
+    display: block;
+    font-weight: 700;
+  }
+
+  .feature-summary,
+  .alpha-meta {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  .alpha-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .alpha-list a {
+    padding: 10px 12px;
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .attribution {
+    margin-top: 16px;
+    padding: 10px 2px 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .attribution a {
+    color: var(--accent);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (max-width: 900px) {
+    .category-grid,
+    .alpha-list,
+    .jump-links {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .page-shell {
+      padding: 10px 8px 28px;
+    }
+
+    .brand-row,
+    .section-head,
+    .category-header,
+    .search-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .browse-link {
+      min-height: 46px;
+    }
+  }
+</style>

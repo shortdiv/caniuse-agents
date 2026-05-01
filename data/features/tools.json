@@ -5,63 +5,75 @@
   "features": [
     {
       "id": "file-read",
-      "group": "File Operations",
+      "group": "File & Code",
       "title": "File read",
       "description": "Read file contents from the local filesystem"
     },
     {
       "id": "file-edit",
-      "group": "File Operations",
+      "group": "File & Code",
       "title": "File edit / write",
       "description": "Create, modify, and overwrite files"
     },
     {
       "id": "notebook-edit",
-      "group": "File Operations",
+      "group": "File & Code",
       "title": "Notebook editing",
       "description": "Read and edit Jupyter notebook (.ipynb) cells"
     },
     {
+      "id": "code-search",
+      "group": "File & Code",
+      "title": "Code search",
+      "description": "Search file contents by pattern, regex, or filename glob"
+    },
+    {
       "id": "shell-execution",
-      "group": "Shell & Execution",
+      "group": "Shell & Automation",
       "title": "Shell execution",
       "description": "Execute shell commands in the user's environment"
     },
     {
       "id": "background-monitor",
-      "group": "Shell & Execution",
+      "group": "Shell & Automation",
       "title": "Background monitor",
       "description": "Run a process in the background and react to its output (tail logs, poll status)"
     },
     {
       "id": "scheduled-tasks",
-      "group": "Shell & Execution",
+      "group": "Shell & Automation",
       "title": "Scheduled tasks",
       "description": "Schedule recurring or one-shot prompts within a session (cron-like)"
     },
     {
-      "id": "code-search",
-      "group": "Search",
-      "title": "Code search",
-      "description": "Search file contents by pattern, regex, or filename glob"
-    },
-    {
-      "id": "semantic-search",
-      "group": "Search",
-      "title": "Semantic search",
-      "description": "Search codebase by meaning using embeddings or indexing, not just exact matches"
-    },
-    {
       "id": "web-search",
-      "group": "Search",
+      "group": "Web & Data",
       "title": "Web search",
       "description": "Search the web for information"
     },
     {
       "id": "web-fetch",
-      "group": "Search",
+      "group": "Web & Data",
       "title": "Web fetch",
       "description": "Fetch and read the contents of a URL"
+    },
+    {
+      "id": "image-input",
+      "group": "Multimodal",
+      "title": "Image input",
+      "description": "Read and understand images and screenshots (multimodal input)"
+    },
+    {
+      "id": "image-generation",
+      "group": "Multimodal",
+      "title": "Image generation",
+      "description": "Generate images from text descriptions"
+    },
+    {
+      "id": "browser-control",
+      "group": "Multimodal",
+      "title": "Browser control",
+      "description": "Programmatic browser interaction: take screenshots, navigate pages, click elements"
     },
     {
       "id": "lsp-integration",
@@ -70,22 +82,10 @@
       "description": "Language server features: go-to-definition, find references, type errors, symbol search"
     },
     {
-      "id": "browser-control",
+      "id": "semantic-search",
       "group": "Code Intelligence",
-      "title": "Browser control",
-      "description": "Programmatic browser interaction: take screenshots, navigate pages, click elements"
-    },
-    {
-      "id": "image-input",
-      "group": "Code Intelligence",
-      "title": "Image input",
-      "description": "Read and understand images and screenshots (multimodal input)"
-    },
-    {
-      "id": "image-generation",
-      "group": "Code Intelligence",
-      "title": "Image generation",
-      "description": "Generate images from text descriptions"
+      "title": "Semantic search",
+      "description": "Search codebase by meaning using embeddings or indexing, not just exact matches"
     },
     {
       "id": "subagent-spawning",

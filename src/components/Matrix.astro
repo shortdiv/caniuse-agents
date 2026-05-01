@@ -1,0 +1,43 @@
+---
+const { agents, categories } = Astro.props;
+import SupportBadge from "./SupportBadge.astro";
+---
+
+<div
+  class="grid gap-px bg-gray-200 overflow-x-auto"
+  style={`grid-template-columns: 240px repeat(${agents.length}, minmax(120px, 1fr))`}
+>
+  <div class="bg-white p-2 sticky left-0 z-10"></div>
+  {
+    agents.map((agent) => (
+      <div class="bg-white p-2 text-center text-sm font-semibold sticky top-0">
+        {agent.name}
+      </div>
+    ))
+  }
+  {
+    categories.map((category) => (
+      <>
+        <div
+          class="bg-gray-100 p-2 font-bold text-sm col-span-full"
+          style={`grid-column: 1 / -1`}
+        >
+          {category.title}
+        </div>
+
+        {category.features.map((feature) => (
+          <>
+            <div class="bg-white p-2 text-sm sticky left-0 z-5">
+              {feature.title}
+            </div>
+
+            {agents.map((agent) => {
+              const support = agent.features[feature.id]?.support || "unknown";
+              return <SupportBadge support={support} />;
+            })}
+          </>
+        ))}
+      </>
+    ))
+  }
+</div>

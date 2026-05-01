@@ -4,196 +4,158 @@
   "description": "Agent extensibility via lifecycle hooks — intercept, observe, and control agent behavior at key points in the workflow",
   "features": [
     {
-      "id": "session-start",
-      "group": "Core Lifecycle Events",
-      "title": "Session start hook",
-      "description": "Fire a hook when an agent session begins or resumes"
-    },
-    {
-      "id": "session-end",
-      "group": "Core Lifecycle Events",
-      "title": "Session end hook",
-      "description": "Fire a hook when an agent session terminates"
-    },
-    {
-      "id": "pre-tool-use",
-      "group": "Core Lifecycle Events",
+      "id": "hook-pre-tool",
+      "group": "Hook Events",
       "title": "Pre-tool-use hook",
-      "description": "Run custom code before any tool executes"
+      "description": "Run custom code before any tool executes",
+      "agent_mapping": {
+        "claude-code": "PreToolUse",
+        "codex-cli": "pre_tool_call"
+      },
+      "sub_capabilities": [
+        "Tool-specific filtering via matchers (Claude Code: match by tool name or regex; Codex: shell-only initially, MCP tool observation added in 0.124.0)",
+        "Blocking via exit code to veto the tool call (both agents)"
+      ]
     },
     {
-      "id": "post-tool-use",
-      "group": "Core Lifecycle Events",
+      "id": "hook-post-tool",
+      "group": "Hook Events",
       "title": "Post-tool-use hook",
-      "description": "Run custom code after a tool completes"
+      "description": "Run custom code after a tool completes",
+      "agent_mapping": {
+        "claude-code": "PostToolUse",
+        "codex-cli": "post_tool_call"
+      },
+      "sub_capabilities": [
+        "Tool-specific filtering via matchers (Claude Code: match by tool name or regex; Codex: shell-only initially)",
+        "Useful for post-edit linting, formatting, or logging"
+      ]
     },
     {
-      "id": "user-prompt-submit",
-      "group": "Core Lifecycle Events",
+      "id": "hook-prompt-submit",
+      "group": "Hook Events",
       "title": "User prompt submit hook",
-      "description": "Intercept or augment user prompts before they are processed"
+      "description": "Intercept or augment user prompts before they are processed",
+      "agent_mapping": {
+        "claude-code": "UserPromptSubmit",
+        "codex-cli": "user_prompt_submit"
+      },
+      "sub_capabilities": [
+        "Can block or modify the prompt before the agent sees it",
+        "Useful for injecting context, enforcing policies, or prompt logging"
+      ]
     },
     {
-      "id": "stop",
-      "group": "Core Lifecycle Events",
-      "title": "Stop / turn-end hook",
-      "description": "Fire a hook when the agent finishes a turn, with the ability to continue"
+      "id": "hook-turn-end",
+      "group": "Hook Events",
+      "title": "Turn-end / stop hook",
+      "description": "Fire a hook when the agent finishes a turn, with the ability to continue",
+      "agent_mapping": {
+        "claude-code": "Stop",
+        "codex-cli": "stop"
+      },
+      "sub_capabilities": [
+        "Can force the agent to continue working by returning a non-zero exit code (Claude Code)",
+        "Useful for quality gates, automated review, or chaining tasks"
+      ]
     },
     {
-      "id": "permission-request",
-      "group": "Core Lifecycle Events",
+      "id": "hook-notification",
+      "group": "Hook Events",
+      "title": "Notification hook",
+      "description": "Fire a hook on general system notifications such as errors or status updates",
+      "agent_mapping": {
+        "claude-code": "Notification"
+      },
+      "sub_capabilities": [
+        "Covers error events, status changes, and general agent notifications",
+        "Useful for external logging, alerting, or observability integrations"
+      ]
+    },
+    {
+      "id": "hook-subagent-end",
+      "group": "Hook Events",
+      "title": "Subagent completion hook",
+      "description": "Fire a hook when a subagent completes its work",
+      "agent_mapping": {
+        "claude-code": "SubagentStop"
+      },
+      "sub_capabilities": [
+        "Receives subagent result context on stdin",
+        "Useful for aggregating subagent outputs or enforcing policies on delegated work"
+      ]
+    },
+    {
+      "id": "hook-session-start",
+      "group": "Hook Events",
+      "title": "Session start hook",
+      "description": "Fire a hook when an agent session begins",
+      "agent_mapping": {
+        "codex-cli": "SessionStart"
+      },
+      "sub_capabilities": [
+        "Useful for initializing environment, loading context, or session logging"
+      ]
+    },
+    {
+      "id": "hook-permission",
+      "group": "Hook Events",
       "title": "Permission request hook",
-      "description": "Hook into the permission/approval flow to auto-allow, deny, or defer"
+      "description": "Hook into the permission/approval flow to auto-allow, deny, or defer",
+      "agent_mapping": {
+        "codex-cli": "PermissionRequest"
+      },
+      "sub_capabilities": [
+        "Allows programmatic approval or denial of tool execution requests"
+      ]
     },
     {
-      "id": "pre-shell-execution",
-      "group": "Tool-Specific Hooks",
-      "title": "Pre-shell-execution hook",
-      "description": "Hook specifically before shell/terminal commands, separate from generic pre-tool-use"
-    },
-    {
-      "id": "pre-file-read",
-      "group": "Tool-Specific Hooks",
-      "title": "Pre-file-read hook",
-      "description": "Hook before the agent reads a file"
-    },
-    {
-      "id": "pre-file-write",
-      "group": "Tool-Specific Hooks",
-      "title": "Pre-file-write hook",
-      "description": "Hook before the agent writes or edits a file"
-    },
-    {
-      "id": "post-file-edit",
-      "group": "Tool-Specific Hooks",
-      "title": "Post-file-edit hook",
-      "description": "Hook after a file is modified, useful for linting or formatting"
-    },
-    {
-      "id": "pre-mcp-tool-use",
-      "group": "Tool-Specific Hooks",
-      "title": "Pre-MCP-tool-use hook",
-      "description": "Hook specifically before MCP tool invocations, separate from generic pre-tool-use"
-    },
-    {
-      "id": "subagent-start",
-      "group": "Advanced Events",
-      "title": "Subagent start hook",
-      "description": "Fire a hook when a subagent is spawned"
-    },
-    {
-      "id": "subagent-stop",
-      "group": "Advanced Events",
-      "title": "Subagent stop hook",
-      "description": "Fire a hook when a subagent completes"
-    },
-    {
-      "id": "context-compaction",
-      "group": "Advanced Events",
-      "title": "Context compaction hooks",
-      "description": "Hooks before and/or after context window compaction"
-    },
-    {
-      "id": "error-event",
-      "group": "Advanced Events",
-      "title": "Error event hook",
-      "description": "Fire a hook when the agent encounters an error"
-    },
-    {
-      "id": "post-agent-response",
-      "group": "Advanced Events",
-      "title": "Post-agent-response hook",
-      "description": "Fire a hook after the agent produces a response message"
-    },
-    {
-      "id": "file-watch",
-      "group": "Advanced Events",
-      "title": "File watch hook",
-      "description": "Fire a hook when a watched file changes on disk during the session"
-    },
-    {
-      "id": "worktree-hooks",
-      "group": "Advanced Events",
-      "title": "Worktree hooks",
-      "description": "Hooks for git worktree creation and removal"
-    },
-    {
-      "id": "handler-command",
-      "group": "Handler Types",
-      "title": "Command handlers",
-      "description": "Execute shell scripts as hook handlers (bash/powershell)"
-    },
-    {
-      "id": "handler-prompt",
-      "group": "Handler Types",
-      "title": "Prompt handlers",
-      "description": "Use an LLM prompt as a hook handler for yes/no decisions"
-    },
-    {
-      "id": "handler-http",
-      "group": "Handler Types",
-      "title": "HTTP handlers",
-      "description": "Send hook payloads to HTTP/webhook endpoints"
-    },
-    {
-      "id": "handler-mcp-tool",
-      "group": "Handler Types",
-      "title": "MCP tool handlers",
-      "description": "Call a tool on a connected MCP server as a hook handler"
-    },
-    {
-      "id": "handler-agent",
-      "group": "Handler Types",
-      "title": "Agent handlers",
-      "description": "Spawn a subagent with tool access as a hook handler"
-    },
-    {
-      "id": "blocking-hooks",
-      "group": "Control Flow",
+      "id": "hook-blocking",
+      "group": "Hook Capabilities",
       "title": "Blocking hooks",
-      "description": "Pre-hooks can block the action via exit code (typically exit 2)"
+      "description": "Pre-hooks can block the pending action via exit code or return value",
+      "sub_capabilities": [
+        "Claude Code: exit code 2 blocks the action; exit code 0 allows",
+        "Codex: similar exit-code-based blocking"
+      ]
     },
     {
-      "id": "async-hooks",
-      "group": "Control Flow",
-      "title": "Async / fire-and-forget hooks",
-      "description": "Hooks that run in the background without blocking the agent"
+      "id": "hook-matchers",
+      "group": "Hook Capabilities",
+      "title": "Event matchers / filters",
+      "description": "Scope a hook to specific tools or events by name or pattern",
+      "sub_capabilities": [
+        "Claude Code: tool_name field matches by exact name or regex",
+        "Codex: matcher patterns for filtering tool events"
+      ]
     },
     {
-      "id": "matcher-patterns",
-      "group": "Control Flow",
-      "title": "Matcher patterns",
-      "description": "Filter which tools or events a hook applies to via name or regex"
-    },
-    {
-      "id": "hook-json-io",
-      "group": "Control Flow",
-      "title": "JSON stdin/stdout protocol",
-      "description": "Hooks receive context as JSON on stdin and return structured output on stdout"
+      "id": "hook-json-protocol",
+      "group": "Hook Capabilities",
+      "title": "Structured I/O protocol",
+      "description": "Hooks receive context as JSON on stdin and can return structured output on stdout",
+      "sub_capabilities": [
+        "Input includes tool name, arguments, and session context",
+        "Output can modify tool arguments or provide decisions (block/allow)"
+      ]
     },
     {
       "id": "hook-timeout",
-      "group": "Control Flow",
+      "group": "Hook Capabilities",
       "title": "Configurable timeout",
       "description": "Per-hook timeout setting to prevent runaway hooks"
     },
     {
-      "id": "scope-project",
+      "id": "hook-scope-project",
       "group": "Configuration Scope",
       "title": "Project-level hooks",
       "description": "Hooks configured at the project/repo level, shareable via version control"
     },
     {
-      "id": "scope-user",
+      "id": "hook-scope-user",
       "group": "Configuration Scope",
       "title": "User-level hooks",
       "description": "Hooks configured globally for the current user across all projects"
-    },
-    {
-      "id": "scope-org",
-      "group": "Configuration Scope",
-      "title": "Organization-level hooks",
-      "description": "Hooks enforced via managed policy for an entire org or team"
     }
   ]
 }

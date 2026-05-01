@@ -21,12 +21,19 @@ export interface FeatureSupport {
   notes?: string;
 }
 
+export interface AgentFeatureStats {
+  notes?: string;
+  stats: Record<string, CaniuseSupportCode>;
+}
+
 export interface Feature {
   id: string;
   group?: string;
   title: string;
   description: string;
   spec_url?: string;
+  agent_mapping?: Record<string, string>;
+  sub_capabilities?: string[];
 }
 
 export interface FeatureCategory {
@@ -36,12 +43,48 @@ export interface FeatureCategory {
   features: Feature[];
 }
 
+export interface AgentVersion {
+  version: string;
+  date: string;
+  models?: string[];
+}
+
 export interface Agent {
   id: string;
   name: string;
   vendor: string;
   url: string;
   logo?: string;
-  current_version: string;
-  features: Record<string, FeatureSupport>;
+  versions?: AgentVersion[];
+  current_version?: string;
+  features: Record<string, FeatureSupport | AgentFeatureStats>;
+}
+
+export interface CategorizedFeature extends Feature {
+  category: Pick<FeatureCategory, "category" | "title" | "description">;
+}
+
+export interface SupportRow {
+  agent: Agent;
+  support: FeatureSupport;
+}
+
+export type CaniuseSupportCode =
+  | "y"
+  | "a"
+  | "n"
+  | "u"
+  | "p"
+  | "d";
+
+export interface CaniuseFeatureStats {
+  [agentId: string]: Record<string, CaniuseSupportCode>;
+}
+
+export interface CaniuseFeatureData {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  stats: CaniuseFeatureStats;
 }
