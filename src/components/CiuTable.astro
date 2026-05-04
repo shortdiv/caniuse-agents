@@ -230,66 +230,46 @@ if (supported.length === supportRows.length) {
     class="ciu-grid"
     style={`grid-template-columns: repeat(${agentBuckets.length}, minmax(0, 1fr));`}
   >
-    {
+    {/* Header row — all agents */}
+    {agentDisplay.map(({ agent, meta, latestDate }) => (
+      <div class="ciu-agent-header">
+        {meta.logo ? (
+          <img class="agent-logo" src={meta.logo} alt={agent.name} width="26" height="26" />
+        ) : (
+          <span class="agent-mark" style={`background: ${meta.color};`}>{meta.short}</span>
+        )}
+        <span class="agent-name">{agent.name}</span>
+        {latestDate && <span class="agent-version">Current · {latestDate}</span>}
+      </div>
+    ))}
+
+    {/* Version rows — iterate by row, then by agent */}
+    {Array.from({ length: numRows }).map((_, rowIdx) =>
       agentBuckets.map(({ agent, support, buckets }) => {
+        const bucket = buckets[rowIdx];
         const meta = getAgentMark(agent.id, agent.name);
-        const latest = agent.versions?.at(-1);
-        const latestDate = latest?.date
-          ? new Date(latest.date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
-          : null;
+        const cls = supportClassNames[bucket.value];
         const agentNote = support.notes || "";
 
         return (
-          <div class="ciu-column">
-            {/* Agent header with logo or monogram */}
-            <div class="ciu-agent-header">
-              {meta.logo ? (
-                <img
-                  class="agent-logo"
-                  src={meta.logo}
-                  alt={agent.name}
-                  width="26"
-                  height="26"
-                />
-              ) : (
-                <span class="agent-mark" style={`background: ${meta.color};`}>
-                  {meta.short}
-                </span>
-              )}
-              <span class="agent-name">{agent.name}</span>
-              {latestDate && (
-                <span class="agent-version">Current · {latestDate}</span>
-              )}
-            </div>
-
-            {/* Version cells */}
-            {buckets.map((bucket) => {
-              const cls = supportClassNames[bucket.value];
-
-              return (
-                <div
-                  class={`ciu-cell ${cls}`}
-                  data-agent-name={agent.name}
-                  data-agent-color={meta.color}
-                  data-agent-short={meta.short}
-                  data-agent-logo={meta.logo || ""}
-                  data-range={bucket.label}
-                  data-dates={bucket.dateRange}
-                  data-status={bucket.value}
-                  data-status-label={supportLabels[bucket.value]}
-                  data-note={agentNote}
-                >
-                  <span class="ciu-cell-label">{bucket.label}</span>
-                  {(bucket.value === "a" || bucket.value === "p") && (
-                    <span class="partial-dot" />
-                  )}
-                </div>
-              );
-            })}
+          <div
+            class={`ciu-cell ${cls}`}
+            data-agent-name={agent.name}
+            data-agent-color={meta.color}
+            data-agent-short={meta.short}
+            data-agent-logo={meta.logo || ""}
+            data-range={bucket.label}
+            data-dates={bucket.dateRange}
+            data-status={bucket.value}
+            data-status-label={supportLabels[bucket.value]}
+            data-note={agentNote}
+          >
+            <span class="ciu-cell-label">{bucket.label}</span>
+            {(bucket.value === "a" || bucket.value === "p") && <span class="partial-dot" />}
           </div>
         );
       })
-    }
+    )}
   </div>
 
   {/* Notes panel — static summary + hover detail */}
@@ -403,17 +383,9 @@ if (supported.length === supportRows.length) {
 
   .ciu-grid {
     display: grid;
+    gap: 1px;
+    background: var(--border);
     position: relative;
-  }
-
-  .ciu-column {
-    display: flex;
-    flex-direction: column;
-    border-right: 0.5px solid var(--border);
-  }
-
-  .ciu-column:last-child {
-    border-right: none;
   }
 
   /* ─── Agent header ─── */

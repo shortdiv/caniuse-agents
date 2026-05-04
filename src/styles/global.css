@@ -50,46 +50,46 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #F7F4EC;
-    --surface: #FBF9F2;
-    --surface-alt: #F1ECDF;
+    --bg: #F5F1E8;
+    --surface: #FFFFFF;
+    --surface-alt: #F0EBE0;
     --border: rgba(0, 0, 0, 0.10);
     --border-strong: rgba(0, 0, 0, 0.18);
 
-    --text: #1B1812;
-    --text-muted: rgba(27, 24, 18, 0.66);
-    --text-subtle: rgba(27, 24, 18, 0.44);
+    --text: #2C2418;
+    --text-muted: rgba(44, 36, 24, 0.62);
+    --text-subtle: rgba(44, 36, 24, 0.40);
 
-    --header-bg: #DDD3E6;
-    --header-text: #1B1812;
-    --header-muted: rgba(27, 24, 18, 0.62);
+    --header-bg: #4A5540;
+    --header-text: #F5F1E8;
+    --header-muted: rgba(245, 241, 232, 0.70);
 
-    --accent: #B5572D;
-    --accent-hover: #9A4420;
-    --accent-soft: rgba(181, 87, 45, 0.08);
+    --accent: #C4623A;
+    --accent-hover: #A84E2A;
+    --accent-soft: rgba(196, 98, 58, 0.10);
 
-    /* Classic palette — light */
-    --status-yes: #22461E;
-    --status-yes-bg: #D6EAC9;
-    --status-yes-text: #22461E;
-    --status-partial: #5C4514;
-    --status-partial-bg: #F1E2B6;
-    --status-partial-text: #5C4514;
-    --status-no: #5A1F1A;
-    --status-no-bg: #EFD0CC;
-    --status-no-text: #5A1F1A;
-    --status-flag: #312D6E;
-    --status-flag-bg: #D8D5EC;
-    --status-flag-text: #312D6E;
-    --status-prefix: #0F3A52;
-    --status-prefix-bg: #CFE3EE;
-    --status-prefix-text: #0F3A52;
-    --status-unknown: rgba(40, 30, 20, 0.45);
-    --status-unknown-bg: transparent;
-    --status-unknown-text: rgba(40, 30, 20, 0.45);
-    --status-deprecated: rgba(40, 30, 20, 0.45);
-    --status-deprecated-bg: #E8E2D2;
-    --status-deprecated-text: rgba(40, 30, 20, 0.45);
+    /* Classic palette — warm light */
+    --status-yes: #2E5428;
+    --status-yes-bg: #C8DEBA;
+    --status-yes-text: #2E5428;
+    --status-partial: #6B4E12;
+    --status-partial-bg: #EDD9A8;
+    --status-partial-text: #6B4E12;
+    --status-no: #6B2520;
+    --status-no-bg: #E8C4BE;
+    --status-no-text: #6B2520;
+    --status-flag: #3E3870;
+    --status-flag-bg: #D5D0E8;
+    --status-flag-text: #3E3870;
+    --status-prefix: #1A4258;
+    --status-prefix-bg: #C8DDE8;
+    --status-prefix-text: #1A4258;
+    --status-unknown: rgba(44, 36, 24, 0.35);
+    --status-unknown-bg: #E8E2D6;
+    --status-unknown-text: rgba(44, 36, 24, 0.45);
+    --status-deprecated: rgba(44, 36, 24, 0.35);
+    --status-deprecated-bg: #E0DAD0;
+    --status-deprecated-text: rgba(44, 36, 24, 0.45);
   }
 }
 
