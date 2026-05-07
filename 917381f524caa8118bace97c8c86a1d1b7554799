@@ -1,0 +1,62 @@
+src/components/SiteHeader.astro
+  d0d447e576b3eb2b 68,80,83-92,152,169,204,212,344,455-468
+src/pages/index.astro
+  d0d447e576b3eb2b 5,101
+src/components/SiteFooter.astro
+  d0d447e576b3eb2b 1,3-122
+src/pages/features/[featureId].astro
+  d0d447e576b3eb2b 4,167-168
+astro.config.mjs
+  d0d447e576b3eb2b 9-23
+src/components/CiuTable.astro
+  d0d447e576b3eb2b 319-338,340-341,357,373-374,379-396,398,403
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "917381f524caa8118bace97c8c86a1d1b7554799",
+  "prompts": {
+    "ad3651c6afd5b9d4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5a1e6b9b-20be-45d7-af14-ad55bb626df3",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 44,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/d5676b2ed634ab94e621508c5095f5073da61191f63f93aa6904c60b9dbb28ed"
+    },
+    "ad43188449f694e8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019dd4c6-702c-7312-b37a-febc0e8ac115",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 8,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/2941036189aba50388b56ad60694249fb87dc2f6e7314b73eb6342bc75cb2de2"
+    },
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 207,
+      "total_deletions": 101,
+      "accepted_lines": 602,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/f85011e32e1abf6847e66bed7298682f5fa0d232d0f6a3e565c8b3ca100b8db9"
+    }
+  }
+}
