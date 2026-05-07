@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { loadAgents, loadCategories } from "../lib/data.js";
 import type { Feature } from "../lib/types";
 
@@ -95,15 +96,9 @@ const featureRows = categories.flatMap((category) =>
       }
     </div>
 
-    <footer class="page-footer">
-      <span>caniuse·agents · independent reference · MIT</span>
-      <div class="footer-links">
-        <span>data.json</span>
-        <span>github</span>
-        <span>contribute</span>
-      </div>
-    </footer>
   </main>
+
+  <SiteFooter />
 
   <script>
     const searchInput = document.querySelector("#feature-search");
@@ -360,22 +355,6 @@ const featureRows = categories.flatMap((category) =>
   }
 
   /* ─── Footer ─── */
-  .page-footer {
-    padding: 20px 24px 48px;
-    margin-top: 24px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-subtle);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 14px;
-  }
 
   [hidden] {
     display: none !important;

@@ -316,6 +316,29 @@ if (supported.length === supportRows.length) {
     {/* Hover: specific cell detail */}
     <div class="notes-hover is-hidden" data-notes-hover>
       <div class="hover-header">
+        {
+          agentDisplay.map(({ agent, meta }) =>
+            meta.logo ? (
+              <img
+                class="agent-logo-sm hover-agent-icon"
+                data-agent-icon={agent.id}
+                src={meta.logo}
+                alt={agent.name}
+                width="18"
+                height="18"
+                style="display:none;"
+              />
+            ) : (
+              <span
+                class="agent-mark agent-mark-sm hover-agent-icon"
+                data-agent-icon={agent.id}
+                style={`background:${meta.color}; display:none;`}
+              >
+                {meta.short}
+              </span>
+            ),
+          )
+        }
         <span class="hover-agent-name" data-hover-name></span>
         <span class="hover-range" data-hover-range></span>
         <span class="hover-status-tag" data-hover-tag></span>
@@ -331,6 +354,7 @@ if (supported.length === supportRows.length) {
   if (panel) {
     const summary = panel.querySelector("[data-notes-summary]") as HTMLElement;
     const hover = panel.querySelector("[data-notes-hover]") as HTMLElement;
+    const agentIcons = panel.querySelectorAll("[data-agent-icon]");
     const nameEl = panel.querySelector("[data-hover-name]") as HTMLElement;
     const range = panel.querySelector("[data-hover-range]") as HTMLElement;
     const tag = panel.querySelector("[data-hover-tag]") as HTMLElement;
@@ -346,21 +370,37 @@ if (supported.length === supportRows.length) {
       d: "tag-deprecated",
     };
 
-    const cells = document.querySelectorAll(".ciu-cell[data-agent-name]");
+    const cells = document.querySelectorAll(".ciu-cell[data-agent-id]");
+    let currentAgentId = "";
 
     cells.forEach((cell) => {
       cell.addEventListener("mouseenter", () => {
         const el = cell as HTMLElement;
-        //   nameEl.textContent = el.dataset.agentName || "";
-        //   range.textContent = el.dataset.range || "";
-        //   tag.textContent = el.dataset.statusLabel || "";
-        //   tag.className = "hover-status-tag " + (statusClassMap[el.dataset.status || "u"] || "tag-unknown");
-        //   dates.textContent = el.dataset.dates || "";
+        const agentId = el.dataset.agentId || "";
+
+        // Only update icon when agent changes
+        if (currentAgentId !== agentId) {
+          currentAgentId = agentId;
+          agentIcons.forEach((icon) => {
+            (icon as HTMLElement).style.display =
+              icon.getAttribute("data-agent-icon") === agentId ? "" : "none";
+          });
+          nameEl.textContent = el.dataset.agentName || "";
+        }
+
+        range.textContent = el.dataset.range || "";
+        tag.textContent = el.dataset.statusLabel || "";
+        tag.className =
+          "hover-status-tag " +
+          (statusClassMap[el.dataset.status || "u"] || "tag-unknown");
+        dates.textContent = el.dataset.dates || "";
         note.textContent = el.dataset.note || "";
+
         summary.classList.add("is-hidden");
         hover.classList.remove("is-hidden");
       });
       cell.addEventListener("mouseleave", () => {
+        currentAgentId = "";
         summary.classList.remove("is-hidden");
         hover.classList.add("is-hidden");
       });
@@ -519,6 +559,7 @@ if (supported.length === supportRows.length) {
   /* ─── Notes panel ─── */
   .ciu-notes {
     padding: 18px 22px;
+    margin-bottom: 10px;
     border-top: 0.5px solid var(--border);
     background: var(--surface);
     height: 90px;

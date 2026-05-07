@@ -61,21 +61,11 @@ const { agentCount, featureCount, features = [] } = Astro.props;
         <div class="search-results" id="search-results" hidden></div>
       </div>
 
-      <div class="site-chips">
-        <span class="chip-label">popular:</span>
-        {
-          ["mcp", "hooks", "AGENTS.md", "memory", "shell"].map((c) => (
-            <button class="chip" type="button" data-search-chip={c}>
-              {c}
-            </button>
-          ))
-        }
-      </div>
-
       <p class="site-search-hint" id="search-status"></p>
     </div>
   </div>
 </section>
+<div class="search-overlay" id="search-overlay" hidden></div>
 
 {/* Embed feature index for client-side search */}
 <script
@@ -87,8 +77,19 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 <script>
   const input = document.querySelector("#feature-search") as HTMLInputElement;
   const results = document.querySelector("#search-results") as HTMLElement;
+  const overlay = document.querySelector("#search-overlay") as HTMLElement;
   const status = document.querySelector("#search-status") as HTMLElement;
   const dataEl = document.querySelector("#feature-index-data");
+
+  function showDropdown() {
+    results.hidden = false;
+    if (overlay) overlay.hidden = false;
+  }
+
+  function hideDropdown() {
+    results.hidden = true;
+    if (overlay) overlay.hidden = true;
+  }
   const searchBtn = document.querySelector("#search-submit");
 
   // Search button focuses input or navigates to first result
@@ -148,7 +149,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     const update = () => {
       const q = input.value.trim().toLowerCase();
       if (!q) {
-        results.hidden = true;
+        hideDropdown();
         if (status) status.textContent = "";
         activeIdx = -1;
         return;
@@ -165,7 +166,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 
       activeIdx = matched.length > 0 ? 0 : -1;
       render(matched);
-      results.hidden = false;
+      showDropdown();
 
       if (status) {
         status.textContent = `${matched.length} result${matched.length === 1 ? "" : "s"}`;
@@ -200,7 +201,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
           window.location.href = active.href;
         }
       } else if (e.key === "Escape") {
-        results.hidden = true;
+        hideDropdown();
         input.blur();
       }
     });
@@ -208,7 +209,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     // Close dropdown when clicking outside
     document.addEventListener("click", (e) => {
       if (!(e.target as Element).closest(".site-search-wrap")) {
-        results.hidden = true;
+        hideDropdown();
       }
     });
 
@@ -340,6 +341,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     gap: 8px;
     align-items: stretch;
     position: relative;
+    z-index: 20;
   }
 
   .site-search-field {
@@ -450,6 +452,20 @@ const { agentCount, featureCount, features = [] } = Astro.props;
   }
 
   /* ─── Search results dropdown ─── */
+  :global(.search-overlay) {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 15;
+    pointer-events: auto;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :global(.search-overlay) {
+      background: rgba(0, 0, 0, 0.15);
+    }
+  }
+
   .search-results {
     position: absolute;
     top: 100%;

@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
 import CiuTable from "../../components/CiuTable.astro";
 import {
   getCurrentFeatureSupport,
@@ -162,17 +163,9 @@ const allFeatures = categories.flatMap((c) =>
       )
     }
 
-    {/* ─── Footer ─── */}
-    <footer class="page-footer">
-      <div>
-        <a href="/" class="footer-link">Back to index</a>
-        <span class="footer-note">
-          — A reference catalog of agent capabilities. Original work,
-          structurally inspired by reference compatibility tables.</span
-        >
-      </div>
-    </footer>
   </main>
+
+  <SiteFooter />
 </Layout>
 
 <style>
@@ -453,20 +446,6 @@ const allFeatures = categories.flatMap((c) =>
   }
 
   /* ─── Footer ─── */
-  .page-footer {
-    padding: 22px 0 32px;
-    font: 12px/1.5 var(--font-sans);
-    color: var(--text-muted);
-  }
-
-  .footer-link {
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  .footer-note {
-    color: var(--text-subtle);
-  }
 
   @media (max-width: 700px) {
     .page-shell {
