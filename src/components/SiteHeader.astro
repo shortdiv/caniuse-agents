@@ -2,70 +2,129 @@
 interface Props {
   agentCount: number;
   featureCount: number;
-  features?: { id: string; title: string; description: string; category: string }[];
+  features?: {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+  }[];
 }
 
 const { agentCount, featureCount, features = [] } = Astro.props;
 ---
 
 <section class="site-header">
-  <div class="site-header-top">
-    <a href="/" class="site-wordmark">Can I Use Agents?</a>
-    <span class="site-meta"
-      >{agentCount} agents · {featureCount} tracked features</span
-    >
+  {/* Top bar — wordmark + nav */}
+  <div class="site-header-nav">
+    <a href="/" class="site-wordmark">
+      <span class="wm-name">caniuse</span><span class="wm-dot">·</span><span
+        class="wm-agents">agents</span
+      >
+    </a>
+    <div class="site-nav-right">
+      <a
+        href="https://github.com/nicedoc/caniuse-agents"
+        class="nav-link"
+        target="_blank"
+        rel="noopener">contribute</a
+      >
+    </div>
   </div>
 
-  <h1 class="site-title">Agent capability tables</h1>
-  <p class="site-blurb">
-    Search across tools, MCP, memory, instructions, hooks, and other agent
-    features.
-  </p>
-
-  <div class="site-search-wrap">
-    <div class="site-search-label">
-      Search feature name, category, or description
-    </div>
-    <div class="site-search-row">
-      <div class="site-search-field">
-        <svg
-          viewBox="0 0 16 16"
-          width="14"
-          height="14"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          ><circle cx="7" cy="7" r="4.5"></circle><path d="m10.5 10.5 3.5 3.5"
-          ></path></svg
-        >
-        <input
-          id="feature-search"
-          type="search"
-          placeholder="Search: MCP, subagents, shell, AGENTS.md…"
-          autocomplete="off"
-        />
+  {/* Hero — title + subtitle + search */}
+  <div class="site-hero">
+    <div class="site-hero-inner">
+      <div class="site-hero-top">
+        <span class="site-kicker">Reference / Capabilities</span>
       </div>
-      <a href="/#feature-index" class="site-browse-btn">Browse index</a>
-    </div>
-    <p class="site-search-hint" id="search-status"></p>
-  </div>
 
-  {/* Live search dropdown */}
-  <div class="search-results" id="search-results" hidden></div>
+      <h1 class="site-title">What can your agent actually do?</h1>
+      <p class="site-blurb">
+        A reference manual for the moving target of coding-agent capabilities.
+        Updated continuously.
+      </p>
+
+      <div class="site-search-wrap">
+        <label class="site-search-field">
+          <span class="search-prompt">›</span>
+          <input
+            id="feature-search"
+            type="search"
+            placeholder="Search feature, category, or agent…"
+            autocomplete="off"
+          />
+          <kbd class="search-kbd">⌘K</kbd>
+        </label>
+        <button type="button" class="site-search-btn" id="search-submit"
+          >Search</button
+        >
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+
+      <div class="site-chips">
+        <span class="chip-label">popular:</span>
+        {
+          ["mcp", "hooks", "AGENTS.md", "memory", "shell"].map((c) => (
+            <button class="chip" type="button" data-search-chip={c}>
+              {c}
+            </button>
+          ))
+        }
+      </div>
+
+      <p class="site-search-hint" id="search-status"></p>
+    </div>
+  </div>
 </section>
 
 {/* Embed feature index for client-side search */}
-<script id="feature-index-data" type="application/json" set:html={JSON.stringify(features)} />
+<script
+  id="feature-index-data"
+  type="application/json"
+  set:html={JSON.stringify(features)}
+/>
 
 <script>
   const input = document.querySelector("#feature-search") as HTMLInputElement;
   const results = document.querySelector("#search-results") as HTMLElement;
   const status = document.querySelector("#search-status") as HTMLElement;
   const dataEl = document.querySelector("#feature-index-data");
+  const searchBtn = document.querySelector("#search-submit");
+
+  // Search button focuses input or navigates to first result
+  if (searchBtn && input) {
+    searchBtn.addEventListener("click", () => {
+      if (input.value.trim()) {
+        const firstResult = document.querySelector(
+          ".search-result",
+        ) as HTMLAnchorElement;
+        if (firstResult) {
+          window.location.href = firstResult.href;
+        }
+      } else {
+        input.focus();
+      }
+    });
+  }
+
+  // Popular chips — fill search and trigger
+  document.querySelectorAll("[data-search-chip]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      if (input) {
+        input.value = (chip as HTMLElement).dataset.searchChip || "";
+        input.focus();
+        input.dispatchEvent(new Event("input"));
+      }
+    });
+  });
 
   if (input && results && dataEl) {
-    const features: { id: string; title: string; description: string; category: string }[] =
-      JSON.parse(dataEl.textContent || "[]");
+    const features: {
+      id: string;
+      title: string;
+      description: string;
+      category: string;
+    }[] = JSON.parse(dataEl.textContent || "[]");
 
     let activeIdx = -1;
 
@@ -95,12 +154,14 @@ const { agentCount, featureCount, features = [] } = Astro.props;
         return;
       }
 
-      const matched = features.filter(
-        (f) =>
-          f.title.toLowerCase().includes(q) ||
-          f.description.toLowerCase().includes(q) ||
-          f.category.toLowerCase().includes(q),
-      ).slice(0, 10);
+      const matched = features
+        .filter(
+          (f) =>
+            f.title.toLowerCase().includes(q) ||
+            f.description.toLowerCase().includes(q) ||
+            f.category.toLowerCase().includes(q),
+        )
+        .slice(0, 10);
 
       activeIdx = matched.length > 0 ? 0 : -1;
       render(matched);
@@ -121,14 +182,20 @@ const { agentCount, featureCount, features = [] } = Astro.props;
       if (e.key === "ArrowDown") {
         e.preventDefault();
         activeIdx = Math.min(activeIdx + 1, links.length - 1);
-        links.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+        links.forEach((el, i) =>
+          el.classList.toggle("active", i === activeIdx),
+        );
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         activeIdx = Math.max(activeIdx - 1, 0);
-        links.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+        links.forEach((el, i) =>
+          el.classList.toggle("active", i === activeIdx),
+        );
       } else if (e.key === "Enter") {
         e.preventDefault();
-        const active = results.querySelector(".search-result.active") as HTMLAnchorElement;
+        const active = results.querySelector(
+          ".search-result.active",
+        ) as HTMLAnchorElement;
         if (active) {
           window.location.href = active.href;
         }
@@ -154,101 +221,142 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 
 <style>
   .site-header {
-    background: var(--header-bg);
-    color: var(--header-text);
-    padding: 26px 32px 28px;
-    border-top: 0.5px solid var(--border);
-    border-bottom: 0.5px solid var(--border);
+    background: var(--bg-elev, var(--surface));
+    color: var(--text);
+    width: 100%;
+  }
+
+  /* ─── Nav bar ─── */
+  .site-header-nav {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .site-wordmark {
+    font-family: var(--font-display);
+    font-size: 17px;
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+
+  .wm-name {
+    font-weight: 700;
+    color: var(--text);
+  }
+  .wm-dot {
+    color: var(--accent);
+    margin: 0 2px;
+  }
+  .wm-agents {
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .site-nav-right {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-subtle);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: var(--text);
+  }
+  .nav-sep {
+    color: var(--border);
+  }
+  .nav-version {
+    color: var(--text-subtle);
+  }
+
+  /* ─── Hero ─── */
+  .site-hero {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-hero-inner {
+    padding: 40px 24px 32px;
     max-width: 1160px;
     margin: 0 auto;
   }
 
-  .site-header-top {
+  .site-hero-top {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 18px;
   }
 
-  .site-wordmark {
-    font: 700 11px/1 var(--font-sans);
-    letter-spacing: 0.16em;
+  .site-kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--header-muted);
-    text-decoration: none;
-  }
-
-  .site-wordmark:hover {
-    color: var(--header-text);
+    color: var(--accent);
   }
 
   .site-meta {
-    font: 500 12.5px/1 var(--font-sans);
-    letter-spacing: 0.02em;
-    color: var(--header-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-subtle);
   }
 
   .site-title {
-    font: 400 clamp(2.2rem, 6vw, 3.5rem)/1.05 var(--font-serif);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.02;
     letter-spacing: -0.02em;
-    margin: 14px 0 8px;
-    text-wrap: balance;
-    color: var(--header-text);
+    color: var(--text);
+    margin: 0 0 12px;
   }
 
   .site-blurb {
-    font: 15.5px/1.5 var(--font-sans);
-    color: rgba(237, 231, 218, 0.82);
-    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-muted);
     max-width: 680px;
+    margin: 0 0 28px;
   }
 
-  @media (prefers-color-scheme: light) {
-    .site-blurb {
-      color: rgba(245, 241, 232, 0.80);
-    }
-  }
-
+  /* ─── Search ─── */
   .site-search-wrap {
-    margin-top: 20px;
-    background: rgba(0, 0, 0, 0.18);
-    border: 0.5px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 12px 14px;
-  }
-
-  @media (prefers-color-scheme: light) {
-    .site-search-wrap {
-      background: rgba(0, 0, 0, 0.15);
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-  }
-
-  .site-search-label {
-    font: 600 10.5px/1 var(--font-sans);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--header-muted);
-    margin-bottom: 9px;
-  }
-
-  .site-search-row {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
     align-items: stretch;
+    position: relative;
   }
 
   .site-search-field {
     flex: 1;
-    border: 0.5px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.35);
-    color: rgba(237, 231, 218, 0.82);
-    font: 14px/1 var(--font-sans);
-    padding: 10px 14px;
-    border-radius: 6px;
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
+    border: 1.5px solid var(--border-strong);
+    background: var(--bg);
+    padding: 0 14px;
+    height: 42.69px;
+    cursor: text;
+  }
+
+  .search-prompt {
+    color: var(--text-subtle);
+    font-family: var(--font-mono);
   }
 
   .site-search-field input {
@@ -257,70 +365,105 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     border: none;
     outline: none;
     background: transparent;
-    color: inherit;
-    font: inherit;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--text);
     padding: 0;
     min-width: 0;
   }
 
   .site-search-field input::placeholder {
-    color: rgba(237, 231, 218, 0.5);
+    color: var(--text-subtle);
+  }
+
+  .search-kbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-subtle);
+    border: 1px solid var(--border);
+    padding: 2px 5px;
+    border-radius: 2px;
+  }
+
+  .site-search-btn {
+    background: var(--accent);
+    color: var(--accent-ink, #fff);
+    border: 1.5px solid var(--border-strong);
+    border-left: 1.5px solid var(--border-strong);
+    padding: 0 22px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-search-btn:hover {
+    background: var(--accent-hover);
+  }
+
+  /* ─── Chips ─── */
+  .site-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    align-items: center;
+  }
+
+  .chip-label {
+    color: var(--text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    margin-right: 4px;
+  }
+
+  .chip {
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 2px;
+    color: var(--text-muted);
+    background: var(--bg);
+    cursor: pointer;
+  }
+
+  .chip:hover {
+    border-color: var(--accent);
+    color: var(--text);
   }
 
   .site-search-hint {
-    font: 13px/1 var(--font-sans);
-    color: var(--header-muted);
-    margin: 8px 0 0;
+    font: 12px/1 var(--font-mono);
+    color: var(--text-subtle);
+    margin: 10px 0 0;
   }
 
   .site-search-hint:empty {
     display: none;
   }
 
-  @media (prefers-color-scheme: light) {
-    .site-search-field {
-      background: rgba(255, 255, 255, 0.90);
-      border-color: rgba(0, 0, 0, 0.08);
-      color: #2C2418;
-    }
-
-    .site-search-field input::placeholder {
-      color: rgba(44, 36, 24, 0.4);
-    }
-
-    .site-search-hint {
-      color: rgba(245, 241, 232, 0.65);
-    }
-  }
-
   /* ─── Search results dropdown ─── */
   .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     margin-top: 6px;
     background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: 8px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     max-height: 400px;
     overflow-y: auto;
-  }
-
-  .site-browse-btn {
-    appearance: none;
-    border: none;
-    background: var(--accent);
-    color: #1b1812;
-    font: 600 13px/1 var(--font-sans);
-    padding: 0 18px;
-    border-radius: 6px;
-    cursor: default;
-    letter-spacing: 0.01em;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .site-browse-btn:hover {
-    background: var(--accent-hover);
+    z-index: 20;
+    grid-column: 1 / -1;
   }
 
   :global(.search-result) {
@@ -328,7 +471,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     padding: 10px 16px;
     text-decoration: none;
     color: var(--text);
-    border-top: 0.5px solid var(--border);
+    border-top: 1px solid var(--border);
     transition: background 60ms ease;
   }
 
@@ -350,19 +493,19 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 
   :global(.search-result-title) {
     display: block;
-    font: 600 13.5px/1.2 var(--font-sans);
+    font: 600 13.5px/1.2 var(--font-display);
   }
 
   :global(.search-result-cat) {
     display: inline-block;
-    font: 11px/1 var(--font-sans);
+    font: 11px/1 var(--font-mono);
     color: var(--text-subtle);
     margin-top: 2px;
   }
 
   :global(.search-result-desc) {
     display: block;
-    font: 12.5px/1.4 var(--font-sans);
+    font: 12.5px/1.4 var(--font-body);
     color: var(--text-muted);
     margin-top: 3px;
     overflow: hidden;
@@ -374,27 +517,31 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     padding: 24px 16px;
     text-align: center;
     color: var(--text-subtle);
-    font: 13px var(--font-sans);
+    font: 13px var(--font-body);
   }
 
   @media (max-width: 700px) {
-    .site-header {
-      padding: 18px 14px 20px;
-    }
-
-    .site-header-top {
+    .site-header-nav {
       flex-direction: column;
+      gap: 8px;
       align-items: flex-start;
-      gap: 6px;
     }
 
-    .site-search-row {
-      flex-direction: column;
+    .site-hero {
+      padding: 24px 16px;
     }
 
-    .site-browse-btn {
-      padding: 10px 18px;
+    .site-search-wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .site-search-btn {
+      padding: 12px 22px;
       justify-content: center;
+    }
+
+    .site-nav-right {
+      gap: 12px;
     }
   }
 </style>

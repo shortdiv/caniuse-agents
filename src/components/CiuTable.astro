@@ -193,14 +193,18 @@ const agentMeta: Record<
   string,
   { color: string; short: string; logo?: string }
 > = {
-  "claude-code": { color: "#D97757", short: "CC", logo: "/logos/claude-icon.png" },
+  "claude-code": {
+    color: "#D97757",
+    short: "CC",
+    logo: "/logos/claude-icon.png",
+  },
   "codex-cli": { color: "#9CA3AF", short: "CX", logo: "/logos/codex-icon.png" },
-  "cursor": { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
+  cursor: { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
   "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
-  "copilot": { color: "#6C63FF", short: "CP", logo: "/logos/copilot.png" },
-  "windsurf": { color: "#5B8DEF", short: "WS", logo: "/logos/windsurf.svg" },
-  "devin": { color: "#7B61FF", short: "DV" },
-  "aider": { color: "#5BB67A", short: "AI" },
+  copilot: { color: "#6C63FF", short: "CP", logo: "/logos/copilot.png" },
+  windsurf: { color: "#5B8DEF", short: "WS", logo: "/logos/windsurf.svg" },
+  devin: { color: "#7B61FF", short: "DV" },
+  aider: { color: "#5BB67A", short: "AI" },
 };
 
 function getAgentMark(id: string, name: string) {
@@ -214,6 +218,21 @@ const supported = supportRows.filter(
   (r) => r.support.support === "full" || r.support.support === "partial",
 );
 const unsupported = supportRows.filter((r) => r.support.support === "no");
+// Precompute agent display metadata
+const agentDisplay = agentBuckets.map(({ agent, support }) => {
+  const meta = getAgentMark(agent.id, agent.name);
+  const latest = agent.versions?.at(-1);
+  const latestDate = latest?.date
+    ? new Date(latest.date).toLocaleDateString("en-US", {
+        month: "short",
+        year: "numeric",
+      })
+    : null;
+  return { agent, support, meta, latestDate, note: support.notes || "" };
+});
+
+const numRows = agentBuckets[0]?.buckets.length ?? 0;
+
 let overviewSummary: string;
 
 if (supported.length === supportRows.length) {
@@ -231,45 +250,59 @@ if (supported.length === supportRows.length) {
     style={`grid-template-columns: repeat(${agentBuckets.length}, minmax(0, 1fr));`}
   >
     {/* Header row — all agents */}
-    {agentDisplay.map(({ agent, meta, latestDate }) => (
-      <div class="ciu-agent-header">
-        {meta.logo ? (
-          <img class="agent-logo" src={meta.logo} alt={agent.name} width="26" height="26" />
-        ) : (
-          <span class="agent-mark" style={`background: ${meta.color};`}>{meta.short}</span>
-        )}
-        <span class="agent-name">{agent.name}</span>
-        {latestDate && <span class="agent-version">Current · {latestDate}</span>}
-      </div>
-    ))}
+    {
+      agentDisplay.map(({ agent, meta, latestDate }) => (
+        <div class="ciu-agent-header">
+          {meta.logo ? (
+            <img
+              class="agent-logo"
+              src={meta.logo}
+              alt={agent.name}
+              width="26"
+              height="26"
+            />
+          ) : (
+            <span class="agent-mark" style={`background: ${meta.color};`}>
+              {meta.short}
+            </span>
+          )}
+          <span class="agent-name">{agent.name}</span>
+          {latestDate && (
+            <span class="agent-version">Current · {latestDate}</span>
+          )}
+        </div>
+      ))
+    }
 
     {/* Version rows — iterate by row, then by agent */}
-    {Array.from({ length: numRows }).map((_, rowIdx) =>
-      agentBuckets.map(({ agent, support, buckets }) => {
-        const bucket = buckets[rowIdx];
-        const meta = getAgentMark(agent.id, agent.name);
-        const cls = supportClassNames[bucket.value];
-        const agentNote = support.notes || "";
+    {
+      Array.from({ length: numRows }).map((_, rowIdx) =>
+        agentBuckets.map(({ agent, support, buckets }) => {
+          const bucket = buckets[rowIdx];
+          const meta = getAgentMark(agent.id, agent.name);
+          const cls = supportClassNames[bucket.value];
+          const agentNote = support.notes || "";
 
-        return (
-          <div
-            class={`ciu-cell ${cls}`}
-            data-agent-name={agent.name}
-            data-agent-color={meta.color}
-            data-agent-short={meta.short}
-            data-agent-logo={meta.logo || ""}
-            data-range={bucket.label}
-            data-dates={bucket.dateRange}
-            data-status={bucket.value}
-            data-status-label={supportLabels[bucket.value]}
-            data-note={agentNote}
-          >
-            <span class="ciu-cell-label">{bucket.label}</span>
-            {(bucket.value === "a" || bucket.value === "p") && <span class="partial-dot" />}
-          </div>
-        );
-      })
-    )}
+          return (
+            <div
+              class={`ciu-cell ${cls}`}
+              data-agent-id={agent.id}
+              data-agent-name={agent.name}
+              data-range={bucket.label}
+              data-dates={bucket.dateRange}
+              data-status={bucket.value}
+              data-status-label={supportLabels[bucket.value]}
+              data-note={agentNote}
+            >
+              <span class="ciu-cell-label">{bucket.label}</span>
+              {(bucket.value === "a" || bucket.value === "p") && (
+                <span class="partial-dot" />
+              )}
+            </div>
+          );
+        }),
+      )
+    }
   </div>
 
   {/* Notes panel — static summary + hover detail */}
@@ -281,19 +314,8 @@ if (supported.length === supportRows.length) {
     </div>
 
     {/* Hover: specific cell detail */}
-    <div class="notes-hover" data-notes-hover hidden>
+    <div class="notes-hover is-hidden" data-notes-hover>
       <div class="hover-header">
-        <span class="hover-mark-wrap" data-hover-mark-wrap>
-          <img
-            class="agent-logo-sm"
-            data-hover-logo
-            hidden
-            width="18"
-            height="18"
-            alt=""
-          />
-          <span class="agent-mark agent-mark-sm" data-hover-mark></span>
-        </span>
         <span class="hover-agent-name" data-hover-name></span>
         <span class="hover-range" data-hover-range></span>
         <span class="hover-status-tag" data-hover-tag></span>
@@ -309,11 +331,7 @@ if (supported.length === supportRows.length) {
   if (panel) {
     const summary = panel.querySelector("[data-notes-summary]") as HTMLElement;
     const hover = panel.querySelector("[data-notes-hover]") as HTMLElement;
-    const hoverLogo = panel.querySelector(
-      "[data-hover-logo]",
-    ) as HTMLImageElement;
-    const mark = panel.querySelector("[data-hover-mark]") as HTMLElement;
-    const name = panel.querySelector("[data-hover-name]") as HTMLElement;
+    const nameEl = panel.querySelector("[data-hover-name]") as HTMLElement;
     const range = panel.querySelector("[data-hover-range]") as HTMLElement;
     const tag = panel.querySelector("[data-hover-tag]") as HTMLElement;
     const dates = panel.querySelector("[data-hover-dates]") as HTMLElement;
@@ -333,43 +351,18 @@ if (supported.length === supportRows.length) {
     cells.forEach((cell) => {
       cell.addEventListener("mouseenter", () => {
         const el = cell as HTMLElement;
-        const agentName = el.dataset.agentName || "";
-        const agentColor = el.dataset.agentColor || "#777";
-        const agentShort = el.dataset.agentShort || "";
-        const agentLogo = el.dataset.agentLogo || "";
-        const cellRange = el.dataset.range || "";
-        const cellDates = el.dataset.dates || "";
-        const cellStatus = el.dataset.status || "u";
-        const cellStatusLabel = el.dataset.statusLabel || "";
-        const cellNote = el.dataset.note || "";
-
-        if (agentLogo) {
-          hoverLogo.src = agentLogo;
-          hoverLogo.alt = agentName;
-          hoverLogo.hidden = false;
-          mark.hidden = true;
-        } else {
-          hoverLogo.hidden = true;
-          mark.hidden = false;
-          mark.style.background = agentColor;
-          mark.textContent = agentShort;
-        }
-        name.textContent = agentName;
-        range.textContent = cellRange;
-        tag.textContent = cellStatusLabel;
-        tag.className =
-          "hover-status-tag " + (statusClassMap[cellStatus] || "tag-unknown");
-        dates.textContent = cellDates;
-        note.textContent =
-          cellNote || "No additional notes for this version range.";
-
-        summary.hidden = true;
-        hover.hidden = false;
+        //   nameEl.textContent = el.dataset.agentName || "";
+        //   range.textContent = el.dataset.range || "";
+        //   tag.textContent = el.dataset.statusLabel || "";
+        //   tag.className = "hover-status-tag " + (statusClassMap[el.dataset.status || "u"] || "tag-unknown");
+        //   dates.textContent = el.dataset.dates || "";
+        note.textContent = el.dataset.note || "";
+        summary.classList.add("is-hidden");
+        hover.classList.remove("is-hidden");
       });
-
       cell.addEventListener("mouseleave", () => {
-        summary.hidden = false;
-        hover.hidden = true;
+        summary.classList.remove("is-hidden");
+        hover.classList.add("is-hidden");
       });
     });
   }
@@ -531,11 +524,18 @@ if (supported.length === supportRows.length) {
     height: 90px;
     display: flex;
     align-items: flex-start;
+    position: relative;
   }
 
   .notes-summary,
   .notes-hover {
     width: 100%;
+  }
+
+  .is-hidden {
+    visibility: hidden;
+    position: absolute;
+    pointer-events: none;
   }
 
   .notes-overview {

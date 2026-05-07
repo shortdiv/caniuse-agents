@@ -1,95 +1,126 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
 :root {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-serif: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  /* Dark theme (default) — from design prototype */
-  --bg: #0F0E0C;
-  --surface: #191714;
-  --surface-alt: #1F1C18;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  /* Direction B — dark mode (deep dark-green, Wes Anderson palette) */
+  --bg: #0c1110;
+  --bg-elev: #131a14;
+  --bg-sunken: #070a08;
+  --surface: #131a14;
+  --surface-alt: #1a2218;
+  --border: #243024;
+  --border-strong: #f6efde;
 
-  --text: #EDE7DA;
-  --text-muted: rgba(237, 231, 218, 0.62);
-  --text-subtle: rgba(237, 231, 218, 0.42);
+  --text: #f6efde;
+  --ink: #f6efde;
+  --ink-2: #c8ceba;
+  --ink-3: #8a9085;
+  --text-muted: #c8ceba;
+  --text-subtle: #8a9085;
 
-  --header-bg: #2A2440;
-  --header-text: #EDE7DA;
-  --header-muted: rgba(237, 231, 218, 0.62);
+  --header-bg: #131a14;
+  --header-text: #f6efde;
+  --header-muted: #8a9085;
 
-  --accent: #E89A6A;
-  --accent-hover: #D4814F;
-  --accent-soft: rgba(232, 154, 106, 0.12);
+  --accent: #e07b3e;
+  --accent-ink: #0c1110;
+  --accent-hover: #c96a30;
+  --accent-soft: #2a1a10;
 
-  /* Classic palette — muted, dark cell backgrounds */
-  --status-yes: #A6E29B;
-  --status-yes-bg: #1B3A1A;
-  --status-yes-text: #A6E29B;
-  --status-partial: #E8C684;
-  --status-partial-bg: #3A2E16;
-  --status-partial-text: #E8C684;
-  --status-no: #E6A39B;
-  --status-no-bg: #3A1B1B;
-  --status-no-text: #E6A39B;
-  --status-flag: #B7B2EA;
-  --status-flag-bg: #2A2A48;
-  --status-flag-text: #B7B2EA;
-  --status-prefix: #9FD3EE;
-  --status-prefix-bg: #163142;
-  --status-prefix-text: #9FD3EE;
-  --status-unknown: rgba(220, 210, 190, 0.5);
-  --status-unknown-bg: transparent;
-  --status-unknown-text: rgba(220, 210, 190, 0.5);
-  --status-deprecated: rgba(220, 210, 190, 0.5);
-  --status-deprecated-bg: #2A2620;
-  --status-deprecated-text: rgba(220, 210, 190, 0.5);
+  --rule: #243024;
+  --rule-strong: #f6efde;
+
+  /* Support palette — dark */
+  --moss: #9cbf5a;
+  --ochre: #ecbb5c;
+  --rose: #e07b3e;
+
+  --status-yes: #9cbf5a;
+  --status-yes-bg: #1a2a14;
+  --status-yes-text: #9cbf5a;
+  --status-partial: #ecbb5c;
+  --status-partial-bg: #2a2210;
+  --status-partial-text: #ecbb5c;
+  --status-no: #e07b3e;
+  --status-no-bg: #2a1a10;
+  --status-no-text: #e07b3e;
+  --status-flag: #b8a0d0;
+  --status-flag-bg: #1e1828;
+  --status-flag-text: #b8a0d0;
+  --status-prefix: #70b8c8;
+  --status-prefix-bg: #102028;
+  --status-prefix-text: #70b8c8;
+  --status-unknown: #8a9085;
+  --status-unknown-bg: #1a2218;
+  --status-unknown-text: #8a9085;
+  --status-deprecated: #6a6e65;
+  --status-deprecated-bg: #131a14;
+  --status-deprecated-text: #6a6e65;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #F5F1E8;
-    --surface: #FFFFFF;
-    --surface-alt: #F0EBE0;
-    --border: rgba(0, 0, 0, 0.10);
-    --border-strong: rgba(0, 0, 0, 0.18);
+    /* Direction B — light mode (warm cream, forest green, oxblood) */
+    --bg: #f5f3ec;
+    --bg-elev: #fbfaf4;
+    --bg-sunken: #ebe7da;
+    --surface: #fbfaf4;
+    --surface-alt: #ebe7da;
+    --border: #cdc8b6;
+    --border-strong: #14110d;
 
-    --text: #2C2418;
-    --text-muted: rgba(44, 36, 24, 0.62);
-    --text-subtle: rgba(44, 36, 24, 0.40);
+    --text: #14110d;
+    --ink: #14110d;
+    --ink-2: #3d3a32;
+    --ink-3: #6f6a5d;
+    --text-muted: #3d3a32;
+    --text-subtle: #6f6a5d;
 
-    --header-bg: #4A5540;
-    --header-text: #F5F1E8;
-    --header-muted: rgba(245, 241, 232, 0.70);
+    --header-bg: #fbfaf4;
+    --header-text: #14110d;
+    --header-muted: #6f6a5d;
 
-    --accent: #C4623A;
-    --accent-hover: #A84E2A;
-    --accent-soft: rgba(196, 98, 58, 0.10);
+    --accent: #2a4a2a;
+    --accent-ink: #f5f3ec;
+    --accent-hover: #1e381e;
+    --accent-soft: #d4dfc9;
 
-    /* Classic palette — warm light */
-    --status-yes: #2E5428;
-    --status-yes-bg: #C8DEBA;
-    --status-yes-text: #2E5428;
-    --status-partial: #6B4E12;
-    --status-partial-bg: #EDD9A8;
-    --status-partial-text: #6B4E12;
-    --status-no: #6B2520;
-    --status-no-bg: #E8C4BE;
-    --status-no-text: #6B2520;
-    --status-flag: #3E3870;
-    --status-flag-bg: #D5D0E8;
-    --status-flag-text: #3E3870;
-    --status-prefix: #1A4258;
-    --status-prefix-bg: #C8DDE8;
-    --status-prefix-text: #1A4258;
-    --status-unknown: rgba(44, 36, 24, 0.35);
-    --status-unknown-bg: #E8E2D6;
-    --status-unknown-text: rgba(44, 36, 24, 0.45);
-    --status-deprecated: rgba(44, 36, 24, 0.35);
-    --status-deprecated-bg: #E0DAD0;
-    --status-deprecated-text: rgba(44, 36, 24, 0.45);
+    --rule: #cdc8b6;
+    --rule-strong: #14110d;
+
+    /* Support palette — light */
+    --moss: #5a7a3a;
+    --ochre: #b8893a;
+    --rose: #8a2a2a;
+
+    --status-yes: #2e5428;
+    --status-yes-bg: #d4dfc9;
+    --status-yes-text: #2e5428;
+    --status-partial: #6b4e12;
+    --status-partial-bg: #f0e2b8;
+    --status-partial-text: #6b4e12;
+    --status-no: #8a2a2a;
+    --status-no-bg: #e8cfc8;
+    --status-no-text: #8a2a2a;
+    --status-flag: #3e3870;
+    --status-flag-bg: #d5d0e8;
+    --status-flag-text: #3e3870;
+    --status-prefix: #1a4258;
+    --status-prefix-bg: #c8dde8;
+    --status-prefix-text: #1a4258;
+    --status-unknown: #6f6a5d;
+    --status-unknown-bg: #ebe7da;
+    --status-unknown-text: #6f6a5d;
+    --status-deprecated: #9a9488;
+    --status-deprecated-bg: #e6e1d0;
+    --status-deprecated-text: #9a9488;
   }
 }
 
@@ -101,15 +132,12 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
 }
-h1,
-.feature {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+h1, h2, h3 {
+  font-family: var(--font-display);
 }
 code,
 .version {
