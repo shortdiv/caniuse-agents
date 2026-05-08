@@ -1,0 +1,22 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "a808fddcbf885e6f1cd82ffa71aa35e71f723e7b",
+  "prompts": {
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 156,
+      "total_deletions": 99,
+      "accepted_lines": 12,
+      "overriden_lines": 82,
+      "messages_url": "http://localhost:4000/cas/6d2fdd6f89ef897a9e1f31efeabc55dc71d334ecaea70dc07f3294ed52f6851d"
+    }
+  }
+}
