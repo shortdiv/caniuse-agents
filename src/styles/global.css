@@ -94,32 +94,32 @@
     --rule: #cdc8b6;
     --rule-strong: #14110d;
 
-    /* Support palette — light */
-    --moss: #5a7a3a;
-    --ochre: #b8893a;
-    --rose: #8a2a2a;
+    /* Support palette — light (saturated, caniuse-style) */
+    --moss: #4a8a2a;
+    --ochre: #c08030;
+    --rose: #b03030;
 
-    --status-yes: #2e5428;
-    --status-yes-bg: #d4dfc9;
-    --status-yes-text: #2e5428;
-    --status-partial: #6b4e12;
-    --status-partial-bg: #f0e2b8;
-    --status-partial-text: #6b4e12;
-    --status-no: #8a2a2a;
-    --status-no-bg: #e8cfc8;
-    --status-no-text: #8a2a2a;
-    --status-flag: #3e3870;
-    --status-flag-bg: #d5d0e8;
-    --status-flag-text: #3e3870;
-    --status-prefix: #1a4258;
-    --status-prefix-bg: #c8dde8;
-    --status-prefix-text: #1a4258;
+    --status-yes: #1a4a12;
+    --status-yes-bg: #a8d48a;
+    --status-yes-text: #1a3a10;
+    --status-partial: #5a3a08;
+    --status-partial-bg: #e8c86a;
+    --status-partial-text: #4a3008;
+    --status-no: #6a1a1a;
+    --status-no-bg: #e0a090;
+    --status-no-text: #5a1410;
+    --status-flag: #2e2860;
+    --status-flag-bg: #b8b0d8;
+    --status-flag-text: #2e2860;
+    --status-prefix: #0f3248;
+    --status-prefix-bg: #90c0d8;
+    --status-prefix-text: #0f3248;
     --status-unknown: #6f6a5d;
-    --status-unknown-bg: #ebe7da;
-    --status-unknown-text: #6f6a5d;
-    --status-deprecated: #9a9488;
-    --status-deprecated-bg: #e6e1d0;
-    --status-deprecated-text: #9a9488;
+    --status-unknown-bg: #d8d2c4;
+    --status-unknown-text: #5a5548;
+    --status-deprecated: #8a8478;
+    --status-deprecated-bg: #d0cab8;
+    --status-deprecated-text: #7a7468;
   }
 }
 

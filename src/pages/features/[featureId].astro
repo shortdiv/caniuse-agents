@@ -75,14 +75,24 @@ const allFeatures = categories.flatMap((c) =>
     {/* ─── Matrix section (feature title lives inside) ─── */}
     <section class="matrix-section">
       <header class="matrix-feature-header">
-        <div class="matrix-top-meta">
-          <span>Agent support · {category.title}</span>
-        </div>
-        <h2 class="matrix-feature-title">{feature.title}</h2>
-        <p class="matrix-feature-blurb">{feature.description}</p>
-        <div class="matrix-pills">
-          {feature.group && <span class="pill">{feature.group}</span>}
-          <span class="pill">{category.title}</span>
+        <div class="matrix-header-row">
+          <div class="matrix-header-content">
+            <div class="matrix-top-meta">
+              <span>Agent support · {category.title}</span>
+            </div>
+            <h2 class="matrix-feature-title">{feature.title}</h2>
+            <p class="matrix-feature-blurb">{feature.description}</p>
+            <div class="matrix-pills">
+              {feature.group && <span class="pill">{feature.group}</span>}
+              <span class="pill">{category.title}</span>
+            </div>
+          </div>
+          <div class="matrix-legend">
+            <div class="legend-item"><span class="legend-swatch yes"></span><span>Supported</span></div>
+            <div class="legend-item"><span class="legend-swatch partial"></span><span>Partial</span></div>
+            <div class="legend-item"><span class="legend-swatch no"></span><span>No</span></div>
+            <div class="legend-item"><span class="legend-swatch unknown"></span><span>Unknown</span></div>
+          </div>
         </div>
       </header>
 
@@ -97,7 +107,7 @@ const allFeatures = categories.flatMap((c) =>
             <div class="details-block">
               <h3>Agent event mapping</h3>
               <ul class="mapping-list">
-                {Object.entries(feature.agent_mapping).map(
+                {Object.entries(feature.agent_mapping).sort(([a], [b]) => a.localeCompare(b)).map(
                   ([agentId, eventName]) => {
                     const docUrl = feature.docs?.[agentId];
                     return (
@@ -238,6 +248,48 @@ const allFeatures = categories.flatMap((c) =>
     border-bottom: 0.5px solid var(--border);
   }
 
+  .matrix-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .matrix-header-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .matrix-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-top: 28px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .legend-swatch.yes { background: var(--moss); }
+  .legend-swatch.partial { background: var(--ochre); }
+  .legend-swatch.no { background: var(--rose); }
+  .legend-swatch.unknown { background: var(--text-subtle); }
+
   .matrix-top-meta {
     display: flex;
     align-items: center;
@@ -324,29 +376,39 @@ const allFeatures = categories.flatMap((c) =>
 
   .mapping-list li {
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
     background: var(--surface-alt);
     border: 0.5px solid var(--border);
     border-radius: 4px;
   }
 
   .mapping-agent {
-    font: 12px/1 var(--font-sans);
-    color: var(--text-muted);
+    font: 600 11px/1 var(--font-mono);
+    color: var(--text);
+    background: var(--surface-alt);
+    padding: 7px 10px;
+    border-right: 1px solid var(--border);
+    letter-spacing: 0.02em;
   }
 
   .mapping-event {
     font: 12px/1 var(--font-mono);
     color: var(--accent);
+    background: var(--bg);
+    padding: 7px 10px;
   }
 
   .mapping-doc-link {
     display: inline-flex;
     align-items: center;
     color: var(--text-subtle);
-    margin-left: 4px;
+    padding: 7px 8px;
+    background: var(--bg);
     transition: color 90ms ease;
   }
 
@@ -479,6 +541,16 @@ const allFeatures = categories.flatMap((c) =>
 
     .matrix-feature-header {
       padding: 18px 16px;
+    }
+
+    .matrix-header-row {
+      flex-direction: column;
+    }
+
+    .matrix-legend {
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-top: 0;
     }
 
     .related-header {
