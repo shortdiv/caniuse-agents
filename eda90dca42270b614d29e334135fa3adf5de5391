@@ -1,0 +1,24 @@
+src/components/CiuTable.astro
+  c078473cc4a972dd 320-321,330-331,334,409,443,688-692
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "eda90dca42270b614d29e334135fa3adf5de5391",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 15,
+      "total_deletions": 8,
+      "accepted_lines": 12,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/4e36e344a3fe76ae0274c19d73cde5a194144504c5b7954b38ad9e0de9da5f48"
+    }
+  }
+}
