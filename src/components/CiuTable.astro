@@ -317,7 +317,8 @@ if (supported.length === supportRows.length) {
         agentBuckets.map(({ agent, support, buckets }) => {
           const bucket = buckets[rowIdx];
           const meta = getAgentMark(agent.id, agent.name);
-          const cls = supportClassNames[bucket.value];
+          const notReleased = bucket.label === "Not released";
+          const cls = notReleased ? "not-released" : supportClassNames[bucket.value];
 
           return (
             <div
@@ -326,11 +327,11 @@ if (supported.length === supportRows.length) {
               data-agent-name={agent.name}
               data-range={bucket.label}
               data-dates={bucket.dateRange}
-              data-status={bucket.value}
-              data-status-label={supportLabels[bucket.value]}
+              data-status={notReleased ? "nr" : bucket.value}
+              data-status-label={notReleased ? "Not yet released" : supportLabels[bucket.value]}
               data-note={bucket.note}
             >
-              <span class="ciu-cell-label">{bucket.label}</span>
+              <span class="ciu-cell-label">{notReleased ? "—" : bucket.label}</span>
               {(bucket.value === "a" || bucket.value === "p") && (
                 <span class="partial-dot" />
               )}
@@ -405,6 +406,7 @@ if (supported.length === supportRows.length) {
       u: "tag-unknown",
       p: "tag-flag",
       d: "tag-deprecated",
+      nr: "tag-unknown",
     };
 
     const mappingEl = panel.querySelector("[data-hover-mapping]") as HTMLElement;
@@ -438,7 +440,7 @@ if (supported.length === supportRows.length) {
         (statusClassMap[status] || "tag-unknown");
       dates.textContent = el.dataset.dates || "";
 
-      if (status === "n" || status === "u") {
+      if (status === "n" || status === "u" || status === "nr") {
         note.textContent = "";
         mappingEl.classList.add("is-hidden");
       } else {
@@ -682,6 +684,11 @@ if (supported.length === supportRows.length) {
   .ciu-cell.deprecated {
     background: var(--status-deprecated-bg);
     color: var(--status-deprecated-text);
+  }
+  .ciu-cell.not-released {
+    background: var(--surface-alt, var(--bg));
+    color: var(--text-subtle);
+    opacity: 0.5;
   }
 
   /* ─── Notes panel ─── */
