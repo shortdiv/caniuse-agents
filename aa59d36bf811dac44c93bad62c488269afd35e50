@@ -1,0 +1,56 @@
+data/agents.json
+  c078473cc4a972dd 633-673
+src/components/CiuTable.astro
+  c078473cc4a972dd 234
+data/agents/cline.json
+  c078473cc4a972dd 1-1793
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "aa59d36bf811dac44c93bad62c488269afd35e50",
+  "prompts": {
+    "ad43188449f694e8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019dd4c6-702c-7312-b37a-febc0e8ac115",
+        "model": "gpt-5.4"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 8,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/2941036189aba50388b56ad60694249fb87dc2f6e7314b73eb6342bc75cb2de2"
+    },
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 1835,
+      "total_deletions": 0,
+      "accepted_lines": 1835,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/fd4232331d8c81c939afd6832bddb6eb19c3e553521a7412cf327ead942fe42c"
+    },
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 384,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/f85011e32e1abf6847e66bed7298682f5fa0d232d0f6a3e565c8b3ca100b8db9"
+    }
+  }
+}
