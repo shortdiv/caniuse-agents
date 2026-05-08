@@ -275,7 +275,7 @@ if (supported.length === supportRows.length) {
 <div class="ciu-matrix">
   <div
     class="ciu-grid"
-    style={`grid-template-columns: repeat(${agentBuckets.length}, minmax(0, 1fr));`}
+    style={`grid-template-columns: repeat(${agentBuckets.length}, minmax(120px, 1fr));`}
   >
     {/* Header row — all agents */}
     {
@@ -512,6 +512,8 @@ if (supported.length === supportRows.length) {
     gap: 1px;
     background: var(--border);
     position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* ─── Agent header ─── */
@@ -788,6 +790,27 @@ if (supported.length === supportRows.length) {
 
 
   @media (max-width: 700px) {
+    .ciu-matrix {
+      padding: 0;
+    }
+
+    .ciu-agent-header {
+      padding: 10px 8px;
+    }
+
+    .agent-name {
+      font-size: 11px;
+    }
+
+    .agent-version {
+      font-size: 9px;
+    }
+
+    .ciu-cell {
+      height: 36px;
+      font-size: 10px;
+    }
+
     .ciu-notes {
       height: auto;
       min-height: 130px;
