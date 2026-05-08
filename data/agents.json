@@ -630,5 +630,166 @@
         "era": 0
       }
     ]
+  },
+  "cline": {
+    "name": "Cline",
+    "long_name": "Cline (VS Code)",
+    "abbr": "CL",
+    "vendor": "Cline",
+    "type": "ide-extension",
+    "url": "https://docs.cline.bot",
+    "current_version": "3.82.0",
+    "version_list": [
+      {
+        "version": "1.1.0",
+        "release_date": 1727740800,
+        "era": -29
+      },
+      {
+        "version": "1.5.0",
+        "release_date": 1729555200,
+        "era": -28
+      },
+      {
+        "version": "1.6.0",
+        "release_date": 1730764800,
+        "era": -27
+      },
+      {
+        "version": "1.8.0",
+        "release_date": 1731974400,
+        "era": -26
+      },
+      {
+        "version": "2.0.0",
+        "release_date": 1733184000,
+        "era": -25
+      },
+      {
+        "version": "2.1.0",
+        "release_date": 1734393600,
+        "era": -24
+      },
+      {
+        "version": "3.0.0",
+        "release_date": 1735603200,
+        "era": -23
+      },
+      {
+        "version": "3.1.0",
+        "release_date": 1736812800,
+        "era": -22
+      },
+      {
+        "version": "3.2.0",
+        "release_date": 1737417600,
+        "era": -21
+      },
+      {
+        "version": "3.3.0",
+        "release_date": 1738022400,
+        "era": -20
+      },
+      {
+        "version": "3.7.0",
+        "release_date": 1738627200,
+        "era": -19
+      },
+      {
+        "version": "3.8.5",
+        "release_date": 1739232000,
+        "era": -18
+      },
+      {
+        "version": "3.12.0",
+        "release_date": 1739836800,
+        "era": -17
+      },
+      {
+        "version": "3.15.0",
+        "release_date": 1740441600,
+        "era": -16
+      },
+      {
+        "version": "3.17.9",
+        "release_date": 1741046400,
+        "era": -15
+      },
+      {
+        "version": "3.22.0",
+        "release_date": 1741651200,
+        "era": -14
+      },
+      {
+        "version": "3.25.0",
+        "release_date": 1742256000,
+        "era": -13
+      },
+      {
+        "version": "3.27.0",
+        "release_date": 1742860800,
+        "era": -12
+      },
+      {
+        "version": "3.33.0",
+        "release_date": 1743465600,
+        "era": -11
+      },
+      {
+        "version": "3.36.0",
+        "release_date": 1744070400,
+        "era": -10
+      },
+      {
+        "version": "3.38.0",
+        "release_date": 1744675200,
+        "era": -9
+      },
+      {
+        "version": "3.48.0",
+        "release_date": 1745280000,
+        "era": -8
+      },
+      {
+        "version": "3.52.0",
+        "release_date": 1745884800,
+        "era": -7
+      },
+      {
+        "version": "3.55.0",
+        "release_date": 1746489600,
+        "era": -6
+      },
+      {
+        "version": "3.58.0",
+        "release_date": 1747094400,
+        "era": -5
+      },
+      {
+        "version": "3.71.0",
+        "release_date": 1747699200,
+        "era": -4
+      },
+      {
+        "version": "3.76.0",
+        "release_date": 1748304000,
+        "era": -3
+      },
+      {
+        "version": "3.77.0",
+        "release_date": 1748908800,
+        "era": -2
+      },
+      {
+        "version": "3.80.0",
+        "release_date": 1749513600,
+        "era": -1
+      },
+      {
+        "version": "3.82.0",
+        "release_date": 1750118400,
+        "era": 0
+      }
+    ]
   }
 }
