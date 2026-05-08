@@ -512,8 +512,22 @@ if (supported.length === supportRows.length) {
     gap: 1px;
     background: var(--border);
     position: relative;
-    overflow-x: auto;
+    overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .ciu-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .ciu-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .ciu-grid::-webkit-scrollbar-thumb {
+    background: var(--text-subtle);
+    border-radius: 3px;
+    opacity: 0.4;
   }
 
   /* ─── Agent header ─── */
