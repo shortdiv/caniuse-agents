@@ -132,7 +132,7 @@ const allFeatures = categories.flatMap((c) =>
 
     {/* ─── Related features ─── */}
     {
-      feature.group && (
+      feature.group && category.features.filter((f) => f.group === feature.group && f.id !== feature.id).length > 0 && (
         <section class="related-section">
           <header class="related-header">
             <h2>Related features</h2>

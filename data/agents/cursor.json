@@ -122,7 +122,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Supported since MCP launch in 1.0."
+      "notes": "Supports env var interpolation in config (${env:VAR})."
     },
     "mcp-sse": {
       "stats": {
@@ -138,7 +138,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Supported since MCP launch in 1.0."
+      "notes": "Legacy. Streamable HTTP recommended for new servers."
     },
     "mcp-streamable-http": {
       "stats": {
@@ -154,7 +154,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Supported since MCP launch in 1.0."
+      "notes": "Recommended. Supports OAuth with dynamic client registration."
     },
     "mcp-tools": {
       "stats": {
@@ -170,7 +170,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Core MCP capability since 1.0. Dynamic tool registration added in 1.1."
+      "notes": "Auto-run approval available. Dynamic tool registration since 1.1."
     },
     "mcp-resources": {
       "stats": {
@@ -186,7 +186,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Added in 1.6 (Sep 2025). Servers share files, database schemas, or app-specific context."
+      "notes": "Servers share files, database schemas, or app-specific context."
     },
     "mcp-prompts": {
       "stats": {
@@ -201,8 +201,7 @@
         "2.5": "y",
         "3.0": "y",
         "3.2": "y"
-      },
-      "notes": "Listed as supported in Cursor MCP docs. No specific changelog entry for introduction."
+      }
     },
     "mcp-sampling": {
       "stats": {
@@ -217,8 +216,7 @@
         "2.5": "n",
         "3.0": "n",
         "3.2": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-roots": {
       "stats": {
@@ -234,7 +232,7 @@
         "3.0": "a",
         "3.2": "a"
       },
-      "notes": "Partial: listed as supported in Cursor docs and MCP clients page. 1.1 changelog mentions 'Roots support' but details are vague. Unclear if meaningful workspace boundaries are sent to servers."
+      "notes": "Changelog mentions 'Roots support' in 1.1 but limited documentation."
     },
     "mcp-elicitation": {
       "stats": {
@@ -250,7 +248,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "Elicitation support added in 1.5 (Aug 2025). Servers request structured user input via JSON schemas."
+      "notes": "Servers request structured input via JSON schemas."
     },
     "mcp-oauth": {
       "stats": {
@@ -266,7 +264,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "OAuth since 1.0. Static credentials + DCR. Scopes and state support added in 2.2 (Dec 2025)."
+      "notes": "Static credentials and dynamic client registration. Scopes/state since 2.2."
     },
     "mcp-config-project": {
       "stats": {
@@ -282,7 +280,7 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": ".cursor/mcp.json in project root. MCP as JSON files in .cursor/ dir improved in 2.4."
+      "notes": ".cursor/mcp.json. Supports env var interpolation."
     },
     "mcp-config-user": {
       "stats": {
@@ -297,8 +295,7 @@
         "2.5": "y",
         "3.0": "y",
         "3.2": "y"
-      },
-      "notes": "~/.cursor/mcp.json for global config."
+      }
     },
     "project-instructions": {
       "stats": {

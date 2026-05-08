@@ -106,8 +106,7 @@
         "1.13.3": "y",
         "2.0.44": "y",
         "2.1.29": "y"
-      },
-      "notes": "Supported transport."
+      }
     },
     "mcp-sse": {
       "stats": {
@@ -122,7 +121,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "Supported transport."
+      "notes": "Legacy. Streamable HTTP preferred."
     },
     "mcp-streamable-http": {
       "stats": {
@@ -137,7 +136,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "Supported transport."
+      "notes": "Recommended over SSE for new servers."
     },
     "mcp-tools": {
       "stats": {
@@ -152,7 +151,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "Primary MCP feature. 100-tool max across all servers."
+      "notes": "Hard limit: 100 tools max across all connected servers."
     },
     "mcp-resources": {
       "stats": {
@@ -166,8 +165,7 @@
         "1.13.3": "y",
         "2.0.44": "y",
         "2.1.29": "y"
-      },
-      "notes": "Explicitly listed as supported."
+      }
     },
     "mcp-prompts": {
       "stats": {
@@ -197,7 +195,7 @@
         "2.0.44": "n",
         "2.1.29": "n"
       },
-      "notes": "Not supported."
+      "notes": "Explicitly documented as not supported."
     },
     "mcp-roots": {
       "stats": {
@@ -211,8 +209,7 @@
         "1.13.3": "n",
         "2.0.44": "n",
         "2.1.29": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-elicitation": {
       "stats": {
@@ -226,8 +223,7 @@
         "1.13.3": "n",
         "2.0.44": "n",
         "2.1.29": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-oauth": {
       "stats": {
@@ -242,7 +238,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "OAuth for all transport types. Enhanced in 1.12.28."
+      "notes": "Works across all transport types."
     },
     "mcp-config-project": {
       "stats": {
@@ -257,7 +253,7 @@
         "2.0.44": "n",
         "2.1.29": "n"
       },
-      "notes": "No project-level MCP config. Config is user-level only."
+      "notes": "Not supported. Config is user-level only."
     },
     "mcp-config-user": {
       "stats": {
@@ -272,7 +268,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "~/.codeium/windsurf/mcp_config.json with variable interpolation."
+      "notes": "Variable interpolation: ${env:VAR} and ${file:path} patterns."
     },
     "project-instructions": {
       "stats": {

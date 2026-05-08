@@ -78,8 +78,7 @@
         "2026.01": "y",
         "2026.03": "y",
         "2026.05": "y"
-      },
-      "notes": "stdio and local transport types."
+      }
     },
     "mcp-sse": {
       "stats": {
@@ -89,8 +88,7 @@
         "2026.01": "y",
         "2026.03": "y",
         "2026.05": "y"
-      },
-      "notes": "SSE transport."
+      }
     },
     "mcp-streamable-http": {
       "stats": {
@@ -101,7 +99,7 @@
         "2026.03": "a",
         "2026.05": "a"
       },
-      "notes": "Partial: http transport listed but unclear if streamable-http per MCP spec."
+      "notes": "HTTP transport listed but unclear if fully conformant with MCP streamable-http spec."
     },
     "mcp-tools": {
       "stats": {
@@ -112,7 +110,7 @@
         "2026.03": "y",
         "2026.05": "y"
       },
-      "notes": "Only primitive supported by cloud agent."
+      "notes": "Only MCP primitive supported by the cloud agent."
     },
     "mcp-resources": {
       "stats": {
@@ -123,7 +121,7 @@
         "2026.03": "a",
         "2026.05": "a"
       },
-      "notes": "Partial: supported in IDE (VS Code) but not in cloud agent."
+      "notes": "Supported in VS Code IDE but not in the cloud agent."
     },
     "mcp-prompts": {
       "stats": {
@@ -134,7 +132,7 @@
         "2026.03": "a",
         "2026.05": "a"
       },
-      "notes": "Partial: supported in IDE (/mcp.server.prompt) but not in cloud agent."
+      "notes": "IDE only via /mcp.server.prompt. Not available in cloud agent."
     },
     "mcp-sampling": {
       "stats": {
@@ -144,8 +142,7 @@
         "2026.01": "n",
         "2026.03": "n",
         "2026.05": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-roots": {
       "stats": {
@@ -155,8 +152,7 @@
         "2026.01": "n",
         "2026.03": "n",
         "2026.05": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-elicitation": {
       "stats": {
@@ -166,8 +162,7 @@
         "2026.01": "n",
         "2026.03": "n",
         "2026.05": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-oauth": {
       "stats": {
@@ -178,7 +173,7 @@
         "2026.03": "a",
         "2026.05": "a"
       },
-      "notes": "Partial: supported in VS Code IDE but not by cloud agent."
+      "notes": "IDE only. Not available for the cloud agent."
     },
     "mcp-config-project": {
       "stats": {
@@ -200,7 +195,7 @@
         "2026.03": "y",
         "2026.05": "y"
       },
-      "notes": "IDE: user settings.json. Cloud: no user-level config."
+      "notes": "Cloud agent has no user-level config."
     },
     "project-instructions": {
       "stats": {

@@ -55,7 +55,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "MCP setup wizard and debug mode in earliest versions"
+      "notes": "Also supports `claude mcp add` CLI for interactive setup."
     },
     "mcp-sse": {
       "stats": {
@@ -108,7 +108,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "MCP SSE transport support added"
+      "notes": "Custom headers supported since 0.2.106. Being superseded by Streamable HTTP."
     },
     "mcp-streamable-http": {
       "stats": {
@@ -161,7 +161,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "Streamable HTTP transport supported"
+      "notes": "Preferred remote transport."
     },
     "mcp-tools": {
       "stats": {
@@ -214,7 +214,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "Core MCP capability since initial MCP support"
+      "notes": "Tool search defers loading for large tool sets \u2014 avoids flooding the context window."
     },
     "mcp-resources": {
       "stats": {
@@ -267,7 +267,7 @@
         "2.1.118": "a",
         "2.1.121": "a"
       },
-      "notes": "Partial: resources accessible via @-mention typeahead but not proactively surfaced or browsable. resources/templates/list deferred to first @-mention (2.1.116)."
+      "notes": "Accessible via @-mention typeahead but not proactively surfaced or browsable."
     },
     "mcp-prompts": {
       "stats": {
@@ -320,7 +320,7 @@
         "2.1.118": "a",
         "2.1.121": "a"
       },
-      "notes": "Partial: officially listed as supported on modelcontextprotocol.io but no changelog evidence of prompts/list or prompts/get being practically usable."
+      "notes": "Officially listed as supported but limited documentation. No dedicated prompt UI."
     },
     "mcp-sampling": {
       "stats": {
@@ -373,7 +373,7 @@
         "2.1.118": "n",
         "2.1.121": "n"
       },
-      "notes": "MCP sampling not documented as supported"
+      "notes": "Not supported. No agent supports this yet."
     },
     "mcp-roots": {
       "stats": {
@@ -426,7 +426,7 @@
         "2.1.118": "a",
         "2.1.121": "a"
       },
-      "notes": "Partial: officially listed as supported on modelcontextprotocol.io but no changelog evidence of roots being actively used."
+      "notes": "Listed on modelcontextprotocol.io but no docs or changelog evidence."
     },
     "mcp-elicitation": {
       "stats": {
@@ -479,7 +479,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "MCP servers can request structured input mid-task via interactive dialog"
+      "notes": "Servers request input mid-task via dialog. Hookable via Elicitation/ElicitationResult events."
     },
     "mcp-oauth": {
       "stats": {
@@ -532,7 +532,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "OAuth authentication for remote MCP servers"
+      "notes": "In-session login flow. RFC 9728 discovery for finding auth servers."
     },
     "mcp-config-project": {
       "stats": {
@@ -585,7 +585,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "MCP project scope via .mcp.json committed to repo"
+      "notes": ".mcp.json committed to repo. Shareable via version control."
     },
     "mcp-config-user": {
       "stats": {
@@ -638,7 +638,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "Global MCP config. Renamed from global to user in 0.2.49"
+      "notes": "Renamed from 'global' to 'user' scope in 0.2.49."
     },
     "file-read": {
       "stats": {

@@ -37,7 +37,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Local servers spawned as child processes. Primary transport since MCP launch."
+      "notes": "Primary transport. One of the earliest MCP adopters."
     },
     "mcp-sse": {
       "stats": {
@@ -72,7 +72,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Remote server support. Considered legacy; Streamable HTTP recommended."
+      "notes": "Considered legacy; Streamable HTTP recommended."
     },
     "mcp-streamable-http": {
       "stats": {
@@ -107,7 +107,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Recommended transport for modern remote servers."
+      "notes": "Recommended for modern remote servers."
     },
     "mcp-tools": {
       "stats": {
@@ -142,7 +142,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Auto-detected from servers. Per-tool auto-approval via alwaysAllow config."
+      "notes": "Per-tool auto-approval via alwaysAllow config."
     },
     "mcp-resources": {
       "stats": {
@@ -212,7 +212,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Accessible via /mcp:<server>:<prompt> slash commands. Autocomplete in 3.55.0."
+      "notes": "Accessible via /mcp:<server>:<prompt> slash commands. Autocomplete since 3.55.0."
     },
     "mcp-sampling": {
       "stats": {
@@ -246,8 +246,7 @@
         "3.77.0": "n",
         "3.80.0": "n",
         "3.82.0": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-roots": {
       "stats": {
@@ -282,7 +281,7 @@
         "3.80.0": "a",
         "3.82.0": "a"
       },
-      "notes": "Partial: workspace-aware but no explicit MCP roots protocol support."
+      "notes": "Workspace-aware but no explicit MCP roots protocol support."
     },
     "mcp-elicitation": {
       "stats": {
@@ -316,8 +315,7 @@
         "3.77.0": "n",
         "3.80.0": "n",
         "3.82.0": "n"
-      },
-      "notes": "Not supported."
+      }
     },
     "mcp-oauth": {
       "stats": {
@@ -352,7 +350,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "Full OAuth 2.1 for remote servers. Credentials stored securely with auto-reconnect."
+      "notes": "Full OAuth 2.1. Credentials stored securely with auto-reconnect on token refresh."
     },
     "mcp-config-project": {
       "stats": {
@@ -387,7 +385,7 @@
         "3.80.0": "n",
         "3.82.0": "n"
       },
-      "notes": "Not supported. MCP config is user-level only via cline_mcp_settings.json."
+      "notes": "Not supported. Config is user-level only."
     },
     "mcp-config-user": {
       "stats": {
@@ -422,7 +420,7 @@
         "3.80.0": "y",
         "3.82.0": "y"
       },
-      "notes": "cline_mcp_settings.json. Env variable patterns supported since 3.43.0."
+      "notes": "Env variable patterns supported since 3.43.0."
     },
     "hook-tool-use": {
       "stats": {

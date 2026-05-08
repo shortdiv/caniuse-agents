@@ -42,8 +42,7 @@
         "0.124.0": "y",
         "0.125.0": "y",
         "0.128.0": "y"
-      },
-      "notes": "MCP stdio transport supported since early versions"
+      }
     },
     "mcp-sse": {
       "stats": {
@@ -84,7 +83,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "SSE transport supported"
+      "notes": "Legacy transport. Streamable HTTP preferred."
     },
     "mcp-streamable-http": {
       "stats": {
@@ -125,7 +124,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "Streamable HTTP transport. OAuth no longer requires feature flag in 0.77.0"
+      "notes": "OAuth no longer requires feature flag since 0.77.0."
     },
     "mcp-tools": {
       "stats": {
@@ -165,8 +164,7 @@
         "0.124.0": "y",
         "0.125.0": "y",
         "0.128.0": "y"
-      },
-      "notes": "Core MCP tool discovery and execution"
+      }
     },
     "mcp-resources": {
       "stats": {
@@ -207,7 +205,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "MCP resource reads, including threadless resource reads in 0.123.0"
+      "notes": "Threadless resource reads since 0.123.0 \u2014 no active session required."
     },
     "mcp-prompts": {
       "stats": {
@@ -248,7 +246,7 @@
         "0.125.0": "n",
         "0.128.0": "n"
       },
-      "notes": "No prompt template support documented across any version."
+      "notes": "Not supported."
     },
     "mcp-sampling": {
       "stats": {
@@ -288,8 +286,7 @@
         "0.124.0": "n",
         "0.125.0": "n",
         "0.128.0": "n"
-      },
-      "notes": "No MCP sampling support documented across any version."
+      }
     },
     "mcp-roots": {
       "stats": {
@@ -329,8 +326,7 @@
         "0.124.0": "n",
         "0.125.0": "n",
         "0.128.0": "n"
-      },
-      "notes": "No MCP roots support documented across any version."
+      }
     },
     "mcp-elicitation": {
       "stats": {
@@ -371,7 +367,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "MCP elicitations supported. Server-driven elicitations added in 0.119.0"
+      "notes": "Server-driven elicitations since 0.119.0. Auto-approved in Full Access mode."
     },
     "mcp-oauth": {
       "stats": {
@@ -412,7 +408,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "OAuth login for streamable HTTP MCP servers. Scopes config added in 0.92.0"
+      "notes": "Scopes configurable per-server in config.toml since 0.92.0."
     },
     "mcp-config-project": {
       "stats": {
@@ -452,8 +448,7 @@
         "0.124.0": "y",
         "0.125.0": "y",
         "0.128.0": "y"
-      },
-      "notes": "MCP config in project config.toml"
+      }
     },
     "mcp-config-user": {
       "stats": {
@@ -493,8 +488,7 @@
         "0.124.0": "y",
         "0.125.0": "y",
         "0.128.0": "y"
-      },
-      "notes": "MCP config in ~/.codex/config.toml"
+      }
     },
     "file-read": {
       "stats": {
