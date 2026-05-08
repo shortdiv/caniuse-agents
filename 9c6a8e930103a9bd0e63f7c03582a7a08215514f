@@ -1,0 +1,26 @@
+src/components/CiuTable.astro
+  c078473cc4a972dd 349,708-720
+src/components/SiteHeader.astro
+  c078473cc4a972dd 96,100
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "9c6a8e930103a9bd0e63f7c03582a7a08215514f",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 8,
+      "accepted_lines": 16,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/04796e473c03f2eb2f9197f925a47c55a16bb5c38cfc07b4a0e45aaf34a8d2e0"
+    }
+  }
+}
