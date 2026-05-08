@@ -1,0 +1,26 @@
+src/styles/global.css
+  d0d447e576b3eb2b 89,91
+src/components/SiteFooter.astro
+  d0d447e576b3eb2b 13-15,21,69,71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "5ed0ffe496296a3b44538867eecdf76bba562bbf",
+  "prompts": {
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 98,
+      "total_deletions": 114,
+      "accepted_lines": 21,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/cb38ff0613a7c4f1b04a5b63572f2c680c28f721ea55352266c173f931fd606e"
+    }
+  }
+}
