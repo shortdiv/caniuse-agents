@@ -1,0 +1,28 @@
+src/components/SiteHeader.astro
+  d0d447e576b3eb2b 27
+src/pages/features/[featureId].astro
+  d0d447e576b3eb2b 78-95,110,251-292,379-384,391-396,402-403,410-411,546-555
+src/styles/global.css
+  d0d447e576b3eb2b 97-100,102-116,118-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "37f5dc31d3a21e7dfb98cc26e828039ad3a8c71e",
+  "prompts": {
+    "d0d447e576b3eb2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e235240a-959b-47d6-9191-cbbad65888d1",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 116,
+      "total_deletions": 44,
+      "accepted_lines": 112,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/f356fd84bebd4c27a002bdece42962b66300c078d072e1da54acdbff5f4aa4bb"
+    }
+  }
+}
