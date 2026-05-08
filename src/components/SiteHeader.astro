@@ -22,6 +22,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
       >
     </a>
     <div class="site-nav-right">
+      <a href="/about" class="nav-link">about</a>
       <a
         href="https://github.com/nicedoc/caniuse-agents"
         class="nav-link"
@@ -40,8 +41,9 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 
       <h1 class="site-title">What can your agent actually do?</h1>
       <p class="site-blurb">
-        A reference manual for the moving target of coding-agent capabilities.
-        Updated continuously.
+        Built for developers choosing between coding agents — or building
+        workflows on top of them. Compare support for hooks, MCP, memory, and
+        other platform features across agents and versions.
       </p>
 
       <div class="site-search-wrap">
@@ -230,10 +232,11 @@ const { agentCount, featureCount, features = [] } = Astro.props;
   /* ─── Nav bar ─── */
   .site-header-nav {
     padding: 14px 24px;
-    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1160px;
+    margin: 0 auto;
   }
 
   .site-wordmark {
@@ -538,9 +541,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
 
   @media (max-width: 700px) {
     .site-header-nav {
-      flex-direction: column;
-      gap: 8px;
-      align-items: flex-start;
+      padding: 14px 16px;
     }
 
     .site-hero {

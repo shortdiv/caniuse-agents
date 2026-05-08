@@ -4,14 +4,27 @@ import type {
   CaniuseSupportCode,
   SupportRow,
   AgentVersion,
+  Feature,
 } from "../lib/types.js";
 
 interface Props {
   featureData: CaniuseFeatureData | null;
   supportRows: SupportRow[];
+  feature?: Feature;
 }
 
-const { featureData, supportRows } = Astro.props as Props;
+const { featureData, supportRows, feature } = Astro.props as Props;
+
+// Build per-agent mapping lookup for hover display
+const agentMappingNames: Record<string, string> = {};
+
+if (feature?.agent_mapping) {
+  for (const [agentId, eventName] of Object.entries(feature.agent_mapping)) {
+    agentMappingNames[agentId] = eventName;
+  }
+}
+
+const mappingJson = JSON.stringify(agentMappingNames);
 
 const supportLabels: Record<CaniuseSupportCode, string> = {
   y: "Full support",
@@ -89,7 +102,7 @@ interface AgentCell {
 }
 
 const fmt = (ts: number) =>
-  new Date(ts).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 // ---------- Build the grid ----------
 
@@ -115,6 +128,7 @@ interface Bucket {
   label: string;
   value: CaniuseSupportCode;
   dateRange: string;
+  note: string;
 }
 
 // Resolve per-agent support for every segment
@@ -157,6 +171,9 @@ for (let i = 0; i < splitIndices.length; i++) {
 
 // Build buckets for each agent using the global row ranges
 const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
+  const agentVersionNotes = featureData?.versionNotes[agent.id] ?? {};
+  const fallbackNote = support.notes || "";
+
   const buckets: Bucket[] = rowRanges
     .map((range) => {
       const group = resolved.slice(range.start, range.end);
@@ -177,10 +194,21 @@ const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
       const startTime = group[0].segment.startTime;
       const endTime = group[group.length - 1].segment.endTime;
 
+      // Resolve version-specific note: use the latest version in this
+      // bucket that has a version_notes entry, else fall back to agent note.
+      let note = fallbackNote;
+      for (let i = unique.length - 1; i >= 0; i--) {
+        if (agentVersionNotes[unique[i]]) {
+          note = agentVersionNotes[unique[i]];
+          break;
+        }
+      }
+
       return {
         label,
         value: group[0].value,
         dateRange: `${fmt(startTime)} — ${fmt(endTime)}`,
+        note,
       };
     })
     .reverse();
@@ -281,7 +309,6 @@ if (supported.length === supportRows.length) {
           const bucket = buckets[rowIdx];
           const meta = getAgentMark(agent.id, agent.name);
           const cls = supportClassNames[bucket.value];
-          const agentNote = support.notes || "";
 
           return (
             <div
@@ -292,7 +319,7 @@ if (supported.length === supportRows.length) {
               data-dates={bucket.dateRange}
               data-status={bucket.value}
               data-status-label={supportLabels[bucket.value]}
-              data-note={agentNote}
+              data-note={bucket.note}
             >
               <span class="ciu-cell-label">{bucket.label}</span>
               {(bucket.value === "a" || bucket.value === "p") && (
@@ -306,7 +333,7 @@ if (supported.length === supportRows.length) {
   </div>
 
   {/* Notes panel — static summary + hover detail */}
-  <div class="ciu-notes" data-notes-panel>
+  <div class="ciu-notes" data-notes-panel data-mapping-names={mappingJson}>
     {/* Default: overview summary */}
     <div class="notes-summary" data-notes-summary>
       <p class="notes-overview">{overviewSummary}</p>
@@ -343,6 +370,7 @@ if (supported.length === supportRows.length) {
         <span class="hover-range" data-hover-range></span>
         <span class="hover-status-tag" data-hover-tag></span>
       </div>
+      <code class="hover-mapping is-hidden" data-hover-mapping></code>
       <p class="hover-note" data-hover-note></p>
       <p class="hover-dates" data-hover-dates></p>
     </div>
@@ -370,6 +398,12 @@ if (supported.length === supportRows.length) {
       d: "tag-deprecated",
     };
 
+    const mappingEl = panel.querySelector("[data-hover-mapping]") as HTMLElement;
+
+    const agentMappingNames: Record<string, string> = JSON.parse(
+      panel.dataset.mappingNames || "{}",
+    );
+
     const cells = document.querySelectorAll(".ciu-cell[data-agent-id]");
     let currentAgentId = "";
 
@@ -377,6 +411,7 @@ if (supported.length === supportRows.length) {
       cell.addEventListener("mouseenter", () => {
         const el = cell as HTMLElement;
         const agentId = el.dataset.agentId || "";
+        const status = el.dataset.status || "u";
 
         // Only update icon when agent changes
         if (currentAgentId !== agentId) {
@@ -392,9 +427,23 @@ if (supported.length === supportRows.length) {
         tag.textContent = el.dataset.statusLabel || "";
         tag.className =
           "hover-status-tag " +
-          (statusClassMap[el.dataset.status || "u"] || "tag-unknown");
+          (statusClassMap[status] || "tag-unknown");
         dates.textContent = el.dataset.dates || "";
-        note.textContent = el.dataset.note || "";
+
+        // Only show notes and mapping for supported/partial versions
+        if (status === "n" || status === "u") {
+          note.textContent = "";
+          mappingEl.classList.add("is-hidden");
+        } else {
+          note.textContent = el.dataset.note || "";
+          const mapping = agentMappingNames[agentId];
+          if (mapping) {
+            mappingEl.textContent = mapping;
+            mappingEl.classList.remove("is-hidden");
+          } else {
+            mappingEl.classList.add("is-hidden");
+          }
+        }
 
         summary.classList.add("is-hidden");
         hover.classList.remove("is-hidden");
@@ -562,7 +611,7 @@ if (supported.length === supportRows.length) {
     margin-bottom: 10px;
     border-top: 0.5px solid var(--border);
     background: var(--surface);
-    height: 90px;
+    height: 110px;
     display: flex;
     align-items: flex-start;
     position: relative;
@@ -667,9 +716,27 @@ if (supported.length === supportRows.length) {
     max-width: 680px;
   }
 
+  .hover-mapping {
+    font: 11px/1 var(--font-mono);
+    color: var(--text-subtle);
+    display: block;
+    margin: 2px 0 0;
+  }
+
+
   @media (max-width: 700px) {
-    .notes-grid {
-      grid-template-columns: 1fr;
+    .ciu-notes {
+      height: auto;
+      min-height: 130px;
+      padding: 14px 16px;
+    }
+
+    .ciu-matrix {
+      padding: 16px 12px 0;
+    }
+
+    .hover-note {
+      font-size: 12px;
     }
   }
 </style>

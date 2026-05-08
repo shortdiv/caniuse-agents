@@ -23,6 +23,7 @@ export interface FeatureSupport {
 
 export interface AgentFeatureStats {
   notes?: string;
+  version_notes?: Record<string, string>;
   stats: Record<string, CaniuseSupportCode>;
 }
 
@@ -87,4 +88,5 @@ export interface CaniuseFeatureData {
   description: string;
   category: string;
   stats: CaniuseFeatureStats;
+  versionNotes: Record<string, Record<string, string>>;
 }

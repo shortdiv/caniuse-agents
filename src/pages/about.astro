@@ -1,0 +1,200 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { loadAgents, loadCategories } from "../lib/data.js";
+
+const [categories, agents] = await Promise.all([
+  loadCategories(),
+  loadAgents(),
+]);
+
+const totalFeatures = categories.reduce(
+  (count, category) => count + category.features.length,
+  0,
+);
+---
+
+<Layout title="About — Can I Use Agents?">
+  <SiteHeader agentCount={agents.length} featureCount={totalFeatures} />
+
+  <main class="page-shell">
+    <article class="about-content">
+      <h1>About this project</h1>
+
+      <p>
+        Coding agents are becoming platforms. Developers aren't just chatting
+        with them — they're building workflows that depend on specific
+        capabilities like hooks, MCP integrations, persistent memory, and custom
+        skills. But there's no single place to see which agents support what.
+      </p>
+
+      <p>
+        <strong>Can I Use Agents?</strong> fills that gap. Inspired by <a
+          href="https://caniuse.com"
+          target="_blank"
+          rel="noopener">caniuse.com</a
+        > for browsers, it tracks feature support across coding agents so you can
+        make informed decisions about which tools fit your workflow — and know when
+        specific capabilities landed.
+      </p>
+
+      <h2>What we track</h2>
+
+      <p>
+        Each feature page shows a compatibility matrix with historical version
+        data. You can see not just whether something is supported today, but
+        when support was introduced and how it evolved. Features are organized
+        into categories:
+      </p>
+
+      <ul>
+        {
+          categories.map((category) => (
+            <li>
+              <a href={`/#${category.category}`}>{category.title}</a> —{" "}
+              {category.description.toLowerCase()}
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2>Which agents</h2>
+
+      <p>
+        We currently track
+        {
+          agents.map((agent, i) => (
+            <>
+              {i > 0 && (i === agents.length - 1 ? ", and " : ", ")}
+              <a href={agent.url} target="_blank" rel="noopener">
+                {agent.name}
+              </a>
+            </>
+          ))
+        }. These are the agents developers are actively building on top of — not
+        just using for chat, but integrating into CI pipelines, editor
+        workflows, and automated toolchains.
+      </p>
+
+      <h2>Why this matters</h2>
+
+      <p>
+        When your pre-commit hook depends on an agent's lifecycle events, or
+        your MCP server expects a specific transport, "does my agent support
+        this?" stops being a curiosity and becomes a dependency question. This
+        site gives you the answer without digging through five different docs
+        sites.
+      </p>
+
+      <h2>Contributing</h2>
+
+      <p>
+        The data behind this site is open source. If you spot something
+        outdated, want to add a feature, or have support data for an agent,
+        contributions are welcome on <a
+          href="https://github.com/nicedoc/caniuse-agents"
+          target="_blank"
+          rel="noopener">GitHub</a
+        >.
+      </p>
+
+      <p class="about-credit">
+        Created and maintained by <a
+          href="https://shortdiv.com"
+          target="_blank"
+          rel="noopener">@shortdiv</a
+        >.
+      </p>
+    </article>
+  </main>
+
+  <SiteFooter />
+</Layout>
+
+<style>
+  :global(body) {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  :global(a) {
+    color: inherit;
+  }
+
+  .page-shell {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+  }
+
+  .about-content {
+    max-width: 680px;
+  }
+
+  .about-content h1 {
+    font: 700 clamp(1.8rem, 4vw, 2.4rem)/1.1 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 24px;
+  }
+
+  .about-content h2 {
+    font: 600 18px/1.2 var(--font-display);
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin: 32px 0 12px;
+  }
+
+  .about-content p {
+    font: 15px/1.65 var(--font-body);
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+
+  .about-content a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border-strong);
+    text-underline-offset: 2px;
+  }
+
+  .about-content a:hover {
+    text-decoration-color: var(--text);
+  }
+
+  .about-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+
+  .about-content ul li {
+    font: 14px/1.6 var(--font-body);
+    color: var(--text-muted);
+    padding: 4px 0 4px 16px;
+    position: relative;
+  }
+
+  .about-content ul li::before {
+    content: "\2022";
+    position: absolute;
+    left: 0;
+    color: var(--text-subtle);
+  }
+
+  .about-credit {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font: 13px/1.5 var(--font-body);
+    color: var(--text-subtle);
+  }
+
+  @media (max-width: 700px) {
+    .page-shell {
+      padding: 24px 16px 0;
+    }
+  }
+</style>

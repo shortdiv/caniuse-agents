@@ -186,12 +186,26 @@ const getFeatureData = async (
     }),
   );
 
+  const versionNotes: Record<string, Record<string, string>> =
+    Object.fromEntries(
+      agents
+        .map((agent) => {
+          const featureSupport = agent.features[featureId];
+          if (featureSupport && isStatsFeature(featureSupport) && featureSupport.version_notes) {
+            return [agent.id, featureSupport.version_notes];
+          }
+          return null;
+        })
+        .filter((entry): entry is [string, Record<string, string>] => entry !== null),
+    );
+
   return {
     id: feature.id,
     title: feature.title,
     description: feature.description,
     category: feature.category.title,
     stats,
+    versionNotes,
   };
 };
 
