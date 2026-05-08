@@ -70,61 +70,6 @@
       },
       "notes": "sessionStart event. Also sessionEnd."
     },
-    "hook-blocking": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "y",
-        "2026.03": "y",
-        "2026.05": "y"
-      },
-      "notes": "Hooks can approve/deny tool calls."
-    },
-    "hook-matchers": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "a",
-        "2026.03": "a",
-        "2026.05": "a"
-      },
-      "notes": "Partial: preToolUse receives tool name and can filter, but no dedicated matcher config."
-    },
-    "hook-json-protocol": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "y",
-        "2026.03": "y",
-        "2026.05": "y"
-      },
-      "notes": "Shell scripts with structured input. Deterministic, consume zero tokens."
-    },
-    "hook-scope-project": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "y",
-        "2026.03": "y",
-        "2026.05": "y"
-      },
-      "notes": ".github/hooks/ on default branch (cloud) or CWD (CLI)."
-    },
-    "hook-scope-user": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "n",
-        "2026.03": "n",
-        "2026.05": "n"
-      },
-      "notes": "No user-level hook configuration."
-    },
     "mcp-stdio": {
       "stats": {
         "2025.06": "y",
@@ -537,22 +482,22 @@
         "2025.06": "n",
         "2025.07": "n",
         "2025.10": "n",
-        "2026.01": "n",
-        "2026.03": "n",
-        "2026.05": "n"
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
       },
-      "notes": "No shell-specific hooks"
+      "notes": "Via generic preToolUse, no dedicated shell hook or matchers"
     },
     "hook-file-access": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
         "2025.10": "n",
-        "2026.01": "n",
-        "2026.03": "n",
-        "2026.05": "n"
+        "2026.01": "y",
+        "2026.03": "y",
+        "2026.05": "y"
       },
-      "notes": "No file-specific hooks"
+      "notes": "Via generic preToolUse, no dedicated file hook"
     },
     "hook-mcp-control": {
       "stats": {

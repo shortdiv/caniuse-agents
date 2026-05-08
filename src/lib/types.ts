@@ -35,6 +35,7 @@ export interface Feature {
   spec_url?: string;
   agent_mapping?: Record<string, string>;
   sub_capabilities?: string[];
+  docs?: Record<string, string>;
 }
 
 export interface FeatureCategory {

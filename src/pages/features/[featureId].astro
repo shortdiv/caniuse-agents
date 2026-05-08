@@ -98,12 +98,20 @@ const allFeatures = categories.flatMap((c) =>
               <h3>Agent event mapping</h3>
               <ul class="mapping-list">
                 {Object.entries(feature.agent_mapping).map(
-                  ([agentId, eventName]) => (
-                    <li>
-                      <span class="mapping-agent">{agentId}</span>
-                      <code class="mapping-event">{eventName}</code>
-                    </li>
-                  ),
+                  ([agentId, eventName]) => {
+                    const docUrl = feature.docs?.[agentId];
+                    return (
+                      <li>
+                        <span class="mapping-agent">{agentId}</span>
+                        <code class="mapping-event">{eventName}</code>
+                        {docUrl && (
+                          <a href={docUrl} target="_blank" rel="noopener" class="mapping-doc-link" title={`${agentId} docs`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+                          </a>
+                        )}
+                      </li>
+                    );
+                  },
                 )}
               </ul>
             </div>
@@ -331,6 +339,18 @@ const allFeatures = categories.flatMap((c) =>
 
   .mapping-event {
     font: 12px/1 var(--font-mono);
+    color: var(--accent);
+  }
+
+  .mapping-doc-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-subtle);
+    margin-left: 4px;
+    transition: color 90ms ease;
+  }
+
+  .mapping-doc-link:hover {
     color: var(--accent);
   }
 

@@ -17,7 +17,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "Four distinct hooks, one per tool type rather than a single event with matchers.; Post: post_write_code, post_read_code, post_run_command, post_mcp_tool_use."
+      "notes": "Three distinct hook sets, one per tool type rather than a single event with matchers; Read, Write, Run"
     },
     "hook-prompt-validation": {
       "stats": {
@@ -43,11 +43,11 @@
         "1.12.25": "n",
         "1.12.28": "n",
         "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
       },
-      "notes": "post_cascade_response and post_cascade_response_with_transcript."
+      "notes": "No dedicated stop/completion hook. post_cascade_response is response observation, not a stop gate."
     },
     "hook-response-tracking": {
       "stats": {
@@ -58,11 +58,11 @@
         "1.12.25": "n",
         "1.12.28": "n",
         "1.12.31": "n",
-        "1.13.3": "n",
-        "2.0.44": "n",
-        "2.1.29": "n"
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
       },
-      "notes": "No notification hook."
+      "notes": "post_cascade_response (markdown) and post_cascade_response_with_transcript (full JSONL transcript)"
     },
     "hook-subagent-lifecycle": {
       "stats": {
@@ -93,81 +93,6 @@
         "2.1.29": "n"
       },
       "notes": "No session-start hook."
-    },
-    "hook-blocking": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
-      },
-      "notes": "Exit code 2 blocks. Exit 0 = proceed, other = proceed with error logged."
-    },
-    "hook-matchers": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "n",
-        "2.0.44": "n",
-        "2.1.29": "n"
-      },
-      "notes": "No event matchers. Hooks fire on all events of their type."
-    },
-    "hook-json-protocol": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
-      },
-      "notes": "JSON via stdin with agent_action_name, trajectory_id, execution_id, timestamp, model_name, tool_info."
-    },
-    "hook-scope-project": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
-      },
-      "notes": ".windsurf/hooks.json (version-controlled)."
-    },
-    "hook-scope-user": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
-      },
-      "notes": "~/.codeium/windsurf/hooks.json. Also system-level for enterprise (MDM)."
     },
     "mcp-stdio": {
       "stats": {

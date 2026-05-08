@@ -279,7 +279,9 @@ if (supported.length === supportRows.length) {
   >
     {/* Header row — all agents */}
     {
-      agentDisplay.map(({ agent, meta, latestDate }) => (
+      agentDisplay.map(({ agent, meta, latestDate }) => {
+        const docUrl = feature?.docs?.[agent.id];
+        return (
         <div class="ciu-agent-header">
           {meta.logo ? (
             <img
@@ -294,12 +296,19 @@ if (supported.length === supportRows.length) {
               {meta.short}
             </span>
           )}
-          <span class="agent-name">{agent.name}</span>
+          <span class="agent-name">
+            {agent.name}
+            {docUrl && (
+              <a href={docUrl} target="_blank" rel="noopener" class="agent-doc-link" title={`${agent.name} docs`}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+              </a>
+            )}
+          </span>
           {latestDate && (
             <span class="agent-version">Current · {latestDate}</span>
           )}
         </div>
-      ))
+      );})
     }
 
     {/* Version rows — iterate by row, then by agent */}
@@ -407,52 +416,87 @@ if (supported.length === supportRows.length) {
     const cells = document.querySelectorAll(".ciu-cell[data-agent-id]");
     let currentAgentId = "";
 
+    let pinnedCell: HTMLElement | null = null;
+
+    function showCellDetail(el: HTMLElement) {
+      const agentId = el.dataset.agentId || "";
+      const status = el.dataset.status || "u";
+
+      if (currentAgentId !== agentId) {
+        currentAgentId = agentId;
+        agentIcons.forEach((icon) => {
+          (icon as HTMLElement).style.display =
+            icon.getAttribute("data-agent-icon") === agentId ? "" : "none";
+        });
+        nameEl.textContent = el.dataset.agentName || "";
+      }
+
+      range.textContent = el.dataset.range || "";
+      tag.textContent = el.dataset.statusLabel || "";
+      tag.className =
+        "hover-status-tag " +
+        (statusClassMap[status] || "tag-unknown");
+      dates.textContent = el.dataset.dates || "";
+
+      if (status === "n" || status === "u") {
+        note.textContent = "";
+        mappingEl.classList.add("is-hidden");
+      } else {
+        note.textContent = el.dataset.note || "";
+        const mapping = agentMappingNames[agentId];
+        if (mapping) {
+          mappingEl.textContent = mapping;
+          mappingEl.classList.remove("is-hidden");
+        } else {
+          mappingEl.classList.add("is-hidden");
+        }
+      }
+
+      summary.classList.add("is-hidden");
+      hover.classList.remove("is-hidden");
+    }
+
+    function showSummary() {
+      currentAgentId = "";
+      summary.classList.remove("is-hidden");
+      hover.classList.add("is-hidden");
+    }
+
     cells.forEach((cell) => {
       cell.addEventListener("mouseenter", () => {
-        const el = cell as HTMLElement;
-        const agentId = el.dataset.agentId || "";
-        const status = el.dataset.status || "u";
-
-        // Only update icon when agent changes
-        if (currentAgentId !== agentId) {
-          currentAgentId = agentId;
-          agentIcons.forEach((icon) => {
-            (icon as HTMLElement).style.display =
-              icon.getAttribute("data-agent-icon") === agentId ? "" : "none";
-          });
-          nameEl.textContent = el.dataset.agentName || "";
-        }
-
-        range.textContent = el.dataset.range || "";
-        tag.textContent = el.dataset.statusLabel || "";
-        tag.className =
-          "hover-status-tag " +
-          (statusClassMap[status] || "tag-unknown");
-        dates.textContent = el.dataset.dates || "";
-
-        // Only show notes and mapping for supported/partial versions
-        if (status === "n" || status === "u") {
-          note.textContent = "";
-          mappingEl.classList.add("is-hidden");
-        } else {
-          note.textContent = el.dataset.note || "";
-          const mapping = agentMappingNames[agentId];
-          if (mapping) {
-            mappingEl.textContent = mapping;
-            mappingEl.classList.remove("is-hidden");
-          } else {
-            mappingEl.classList.add("is-hidden");
-          }
-        }
-
-        summary.classList.add("is-hidden");
-        hover.classList.remove("is-hidden");
+        if (pinnedCell) return; // Don't override pinned state
+        showCellDetail(cell as HTMLElement);
       });
+
       cell.addEventListener("mouseleave", () => {
-        currentAgentId = "";
-        summary.classList.remove("is-hidden");
-        hover.classList.add("is-hidden");
+        if (pinnedCell) return; // Keep pinned state
+        showSummary();
       });
+
+      cell.addEventListener("click", () => {
+        const el = cell as HTMLElement;
+
+        // Toggle pin: clicking same cell unpins, clicking different cell re-pins
+        if (pinnedCell === el) {
+          pinnedCell.classList.remove("pinned");
+          pinnedCell = null;
+          showSummary();
+        } else {
+          if (pinnedCell) pinnedCell.classList.remove("pinned");
+          pinnedCell = el;
+          el.classList.add("pinned");
+          showCellDetail(el);
+        }
+      });
+    });
+
+    // Clicking outside the matrix unpins
+    document.addEventListener("click", (e) => {
+      if (pinnedCell && !(e.target as Element).closest(".ciu-grid")) {
+        pinnedCell.classList.remove("pinned");
+        pinnedCell = null;
+        showSummary();
+      }
     });
   }
 </script>
@@ -533,6 +577,19 @@ if (supported.length === supportRows.length) {
     font: 600 13px/1 var(--font-sans);
     color: var(--text);
     letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .agent-doc-link {
+    display: inline-flex;
+    color: var(--text-subtle);
+    transition: color 90ms ease;
+  }
+
+  .agent-doc-link:hover {
+    color: var(--accent);
   }
 
   .agent-version {
@@ -556,10 +613,16 @@ if (supported.length === supportRows.length) {
     transition: outline-color 90ms ease;
   }
 
-  .ciu-cell:hover {
+  .ciu-cell:hover,
+  .ciu-cell.pinned {
     outline: 1px solid var(--accent);
     outline-offset: -1px;
     z-index: 1;
+    cursor: pointer;
+  }
+
+  .ciu-cell.pinned {
+    outline-width: 2px;
   }
 
   .ciu-cell-label {
@@ -713,7 +776,7 @@ if (supported.length === supportRows.length) {
     font: 13px/1.55 var(--font-sans);
     color: var(--text-muted);
     margin: 2px 0 0;
-    max-width: 680px;
+    max-width: 100%;
   }
 
   .hover-mapping {
