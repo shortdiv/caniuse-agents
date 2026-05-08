@@ -4,7 +4,7 @@
   "vendor": "Codeium",
   "url": "https://windsurf.com",
   "features": {
-    "hook-pre-tool": {
+    "hook-tool-use": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -17,24 +17,9 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "Four distinct hooks, one per tool type rather than a single event with matchers."
+      "notes": "Four distinct hooks, one per tool type rather than a single event with matchers.; Post: post_write_code, post_read_code, post_run_command, post_mcp_tool_use."
     },
-    "hook-post-tool": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "y",
-        "2.0.44": "y",
-        "2.1.29": "y"
-      },
-      "notes": "post_write_code, post_read_code, post_run_command, post_mcp_tool_use."
-    },
-    "hook-prompt-submit": {
+    "hook-prompt-validation": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -49,7 +34,7 @@
       },
       "notes": "pre_user_prompt hook. Can block policy-violating prompts."
     },
-    "hook-turn-end": {
+    "hook-agent-stop": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -64,7 +49,7 @@
       },
       "notes": "post_cascade_response and post_cascade_response_with_transcript."
     },
-    "hook-notification": {
+    "hook-response-tracking": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -79,7 +64,7 @@
       },
       "notes": "No notification hook."
     },
-    "hook-subagent-end": {
+    "hook-subagent-lifecycle": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -94,7 +79,7 @@
       },
       "notes": "No subagent completion hook. Only post_setup_worktree for worktree lifecycle."
     },
-    "hook-session-start": {
+    "hook-session-lifecycle": {
       "stats": {
         "1.0.2": "n",
         "1.1.0": "n",
@@ -108,21 +93,6 @@
         "2.1.29": "n"
       },
       "notes": "No session-start hook."
-    },
-    "hook-permission": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "n",
-        "2.0.44": "n",
-        "2.1.29": "n"
-      },
-      "notes": "No permission-request hook. Pre-hooks can block but no dedicated permission event."
     },
     "hook-blocking": {
       "stats": {
@@ -168,21 +138,6 @@
         "2.1.29": "y"
       },
       "notes": "JSON via stdin with agent_action_name, trajectory_id, execution_id, timestamp, model_name, tool_info."
-    },
-    "hook-timeout": {
-      "stats": {
-        "1.0.2": "n",
-        "1.1.0": "n",
-        "1.2.1": "n",
-        "1.12.20": "n",
-        "1.12.25": "n",
-        "1.12.28": "n",
-        "1.12.31": "n",
-        "1.13.3": "n",
-        "2.0.44": "n",
-        "2.1.29": "n"
-      },
-      "notes": "No configurable timeout. Docs recommend sub-100ms execution."
     },
     "hook-scope-project": {
       "stats": {
@@ -768,6 +723,66 @@
         "2.1.29": "y"
       },
       "notes": "Built-in planning and todo lists. Spaces for grouping sessions (2.0.44)."
+    },
+    "hook-shell-control": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Dedicated pre/post_run_command events"
+    },
+    "hook-file-access": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Dedicated pre/post read/write code events"
+    },
+    "hook-mcp-control": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "y",
+        "2.0.44": "y",
+        "2.1.29": "y"
+      },
+      "notes": "Dedicated pre/post_mcp_tool_use events"
+    },
+    "hook-compaction": {
+      "stats": {
+        "1.0.2": "n",
+        "1.1.0": "n",
+        "1.2.1": "n",
+        "1.12.20": "n",
+        "1.12.25": "n",
+        "1.12.28": "n",
+        "1.12.31": "n",
+        "1.13.3": "n",
+        "2.0.44": "n",
+        "2.1.29": "n"
+      },
+      "notes": "No compaction hooks"
     }
   }
 }

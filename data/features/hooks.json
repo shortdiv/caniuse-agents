@@ -4,179 +4,233 @@
   "description": "Agent extensibility via lifecycle hooks — intercept, observe, and control agent behavior at key points in the workflow",
   "features": [
     {
-      "id": "hook-pre-tool",
-      "group": "Hook Events",
-      "title": "Pre-tool-use hook",
-      "description": "Run custom code before any tool executes",
+      "id": "hook-session-lifecycle",
+      "group": "Lifecycle Hooks",
+      "title": "Session lifecycle management",
+      "description": "Hooks for session start and end — initialize environment, load context, clean up resources, or log session activity",
       "agent_mapping": {
-        "claude-code": "PreToolUse",
-        "codex-cli": "pre_tool_call",
-        "cursor": "preToolUse",
-        "windsurf": "pre_write_code, pre_read_code, pre_run_command, pre_mcp_tool_use",
-        "copilot": "preToolUse"
+        "claude-code": "SessionStart, SessionEnd",
+        "codex-cli": "SessionStart",
+        "cursor": "sessionStart, sessionEnd",
+        "copilot": "sessionStart, sessionEnd",
+        "cline": "TaskStart, TaskResume"
       },
       "sub_capabilities": [
-        "Tool-specific filtering via matchers (Claude Code: tool name or regex; Codex: shell-only initially, MCP in 0.124.0; Cursor: tool type + regex; Windsurf: separate events per tool type)",
-        "Blocking via exit code to veto the tool call (all agents except Windsurf use exit code 2; Windsurf uses exit code 2 as well)"
+        "Session start: initialize env vars, load context, inject configuration",
+        "Session end: clean up resources, flush logs, save state",
+        "Claude Code: SessionStart (1.0.62) and SessionEnd (1.0.85) shipped separately",
+        "Codex CLI: SessionStart only, can distinguish fresh start vs resume vs /clear",
+        "Cursor: both events, fire-and-forget (non-blocking); sessionEnd includes reason and duration",
+        "Cline: TaskStart on new tasks, TaskResume on interrupted task resumption"
       ]
     },
     {
-      "id": "hook-post-tool",
-      "group": "Hook Events",
-      "title": "Post-tool-use hook",
-      "description": "Run custom code after a tool completes",
+      "id": "hook-tool-use",
+      "group": "Lifecycle Hooks",
+      "title": "Generic tool use hooks",
+      "description": "Pre and post hooks around any tool execution — inspect, modify, block, or log tool calls",
       "agent_mapping": {
-        "claude-code": "PostToolUse",
-        "codex-cli": "post_tool_call",
-        "cursor": "postToolUse",
-        "windsurf": "post_write_code, post_read_code, post_run_command, post_mcp_tool_use",
-        "copilot": "postToolUse"
+        "claude-code": "PreToolUse, PostToolUse, PostToolUseFailure, PostToolBatch",
+        "codex-cli": "PreToolUse, PostToolUse",
+        "cursor": "preToolUse, postToolUse, postToolUseFailure",
+        "windsurf": "pre_run_command, post_run_command, pre_read_code, post_read_code, pre_write_code, post_write_code",
+        "copilot": "preToolUse, postToolUse",
+        "cline": "PreToolUse, PostToolUse"
       },
       "sub_capabilities": [
-        "Tool-specific filtering via matchers (Claude Code: tool name or regex; Cursor: tool type; Windsurf: separate events per tool type)",
-        "Cursor: can modify MCP tool output via updated_mcp_tool_output and inject additional_context"
+        "Pre-tool: inspect and optionally block or modify tool input before execution",
+        "Post-tool: observe results, trigger side effects (linting, formatting, logging)",
+        "Claude Code: richest event set — includes PostToolUseFailure and PostToolBatch",
+        "Windsurf: uses separate events per tool type rather than a single generic event with matchers"
       ]
     },
     {
-      "id": "hook-prompt-submit",
-      "group": "Hook Events",
-      "title": "User prompt submit hook",
-      "description": "Intercept or augment user prompts before they are processed",
+      "id": "hook-subagent-lifecycle",
+      "group": "Lifecycle Hooks",
+      "title": "Subagent lifecycle",
+      "description": "Hooks for when subagents are spawned and when they complete — observe delegation, aggregate results, enforce policies",
+      "agent_mapping": {
+        "claude-code": "SubagentStart, SubagentStop, TeammateIdle, TaskCreated, TaskCompleted",
+        "cursor": "subagentStart, subagentStop"
+      },
+      "sub_capabilities": [
+        "Subagent start: observe or veto when a parent agent delegates to a child",
+        "Subagent stop: receive results, enforce quality gates on delegated work",
+        "Claude Code: also has TeammateIdle (multi-agent), TaskCreated, TaskCompleted events",
+        "Cursor: subagentStart is blocking (can veto); subagentStop includes summary, duration, modified_files"
+      ]
+    },
+    {
+      "id": "hook-shell-control",
+      "group": "Tool-Specific Hooks",
+      "title": "Control shell commands",
+      "description": "Dedicated hooks for intercepting shell/terminal command execution — block dangerous commands, audit, or inject env vars",
+      "agent_mapping": {
+        "claude-code": "PreToolUse with Bash matcher",
+        "codex-cli": "PreToolUse (shell-only initially)",
+        "cursor": "beforeShellExecution, afterShellExecution",
+        "windsurf": "pre_run_command, post_run_command"
+      },
+      "sub_capabilities": [
+        "Block dangerous commands before they execute",
+        "Cursor: dedicated events with command string in context",
+        "Claude Code: uses generic PreToolUse with matcher pattern 'Bash'",
+        "Windsurf: dedicated pre_run_command and post_run_command events"
+      ]
+    },
+    {
+      "id": "hook-file-access",
+      "group": "Tool-Specific Hooks",
+      "title": "Control file access",
+      "description": "Dedicated hooks for file read and write operations — enforce access policies, trigger linting, or audit file changes",
+      "agent_mapping": {
+        "claude-code": "PreToolUse with Read|Edit|Write matcher",
+        "codex-cli": "PreToolUse on apply_patch",
+        "cursor": "beforeReadFile, afterFileEdit, beforeTabFileRead, afterTabFileEdit",
+        "windsurf": "pre_read_code, post_read_code, pre_write_code, post_write_code"
+      },
+      "sub_capabilities": [
+        "Pre-read: restrict which files the agent can access",
+        "Post-write: trigger linting, formatting, or validation after edits",
+        "Cursor: separate events for agent chat and Tab completions",
+        "Windsurf: dedicated events per operation with file_path and edits in input"
+      ]
+    },
+    {
+      "id": "hook-prompt-validation",
+      "group": "Tool-Specific Hooks",
+      "title": "Validate prompts before submission",
+      "description": "Intercept user prompts before they reach the model — block, rewrite, redact, annotate, or inject context",
       "agent_mapping": {
         "claude-code": "UserPromptSubmit",
-        "codex-cli": "user_prompt_submit",
+        "codex-cli": "UserPromptSubmit",
         "cursor": "beforeSubmitPrompt",
         "windsurf": "pre_user_prompt",
-        "copilot": "userPromptSubmitted"
+        "copilot": "userPromptSubmitted",
+        "cline": "UserPromptSubmit"
       },
       "sub_capabilities": [
-        "Can block or modify the prompt before the agent sees it",
-        "Cursor: returns continue boolean + user_message; Windsurf: can block policy-violating prompts"
+        "Block prompts that violate policies (PII, secrets, off-topic)",
+        "Rewrite or augment prompts with additional context",
+        "Claude Code: receives CWD, transcript ID, prompt text; return value can mutate or block",
+        "Cursor: returns continue boolean + modified user_message"
       ]
     },
     {
-      "id": "hook-turn-end",
-      "group": "Hook Events",
-      "title": "Turn-end / stop hook",
-      "description": "Fire a hook when the agent finishes a turn, with the ability to continue",
+      "id": "hook-mcp-control",
+      "group": "Tool-Specific Hooks",
+      "title": "Control MCP tool use",
+      "description": "Dedicated hooks for MCP server tool invocations — audit, restrict, or modify MCP tool calls independently from built-in tools",
       "agent_mapping": {
-        "claude-code": "Stop",
-        "codex-cli": "stop",
+        "claude-code": "PreToolUse with mcp__* matcher, Elicitation, ElicitationResult",
+        "codex-cli": "PreToolUse (MCP observation added 0.124.0)",
+        "cursor": "beforeMCPExecution, afterMCPExecution",
+        "windsurf": "pre_mcp_tool_use, post_mcp_tool_use"
+      },
+      "sub_capabilities": [
+        "Block or audit specific MCP tool calls",
+        "Cursor: dedicated MCP events separate from generic tool hooks",
+        "Claude Code: uses PreToolUse with regex matcher on mcp__<server>__<tool>; also has Elicitation hooks",
+        "Codex CLI: MCP tool observation added in 0.124.0"
+      ]
+    },
+    {
+      "id": "hook-compaction",
+      "group": "Observation Hooks",
+      "title": "Observe compaction window",
+      "description": "Hooks that fire before and after context window compaction — preserve critical state, log what gets summarized, or block compaction",
+      "agent_mapping": {
+        "claude-code": "PreCompact, PostCompact",
+        "cursor": "preCompact"
+      },
+      "sub_capabilities": [
+        "PreCompact: save state or block compaction if in a critical section",
+        "PostCompact: reinject lost context or verify information survived",
+        "Claude Code: PreCompact can block via exit code 2; PostCompact fires after completion",
+        "Cursor: preCompact is observational (non-blocking)"
+      ]
+    },
+    {
+      "id": "hook-agent-stop",
+      "group": "Observation Hooks",
+      "title": "Agent complete (stop)",
+      "description": "Hook that fires when the agent finishes a turn — implement quality gates, force continuation, or trigger follow-up workflows",
+      "agent_mapping": {
+        "claude-code": "Stop, StopFailure",
+        "codex-cli": "Stop",
         "cursor": "stop",
-        "windsurf": "post_cascade_response"
+        "windsurf": "post_cascade_response",
+        "cline": "Stop"
       },
       "sub_capabilities": [
-        "Claude Code: can force continuation by returning non-zero exit code",
-        "Cursor: followup_message for auto-continue with configurable loop_limit",
-        "Windsurf: also post_cascade_response_with_transcript variant"
+        "Force the agent to keep working by returning a continuation signal",
+        "Implement quality checks before accepting the agent's work",
+        "Claude Code: StopFailure fires on API errors",
+        "Cursor: followup_message for auto-continue with configurable loop_limit"
       ]
     },
     {
-      "id": "hook-notification",
-      "group": "Hook Events",
-      "title": "Notification hook",
-      "description": "Fire a hook on general system notifications such as errors or status updates",
+      "id": "hook-response-tracking",
+      "group": "Observation Hooks",
+      "title": "Agent response tracking",
+      "description": "Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message",
       "agent_mapping": {
-        "claude-code": "Notification"
+        "claude-code": "Notification",
+        "cursor": "afterAgentResponse, afterAgentThought",
+        "windsurf": "post_cascade_response, post_cascade_response_with_transcript"
       },
       "sub_capabilities": [
-        "Covers error events, status changes, and general agent notifications",
-        "Useful for external logging, alerting, or observability integrations"
-      ]
-    },
-    {
-      "id": "hook-subagent-end",
-      "group": "Hook Events",
-      "title": "Subagent completion hook",
-      "description": "Fire a hook when a subagent completes its work",
-      "agent_mapping": {
-        "claude-code": "SubagentStop",
-        "cursor": "subagentStop"
-      },
-      "sub_capabilities": [
-        "Claude Code: receives subagent result context on stdin",
-        "Cursor: also has subagentStart; subagentStop includes summary, duration, modified_files, followup_message support"
-      ]
-    },
-    {
-      "id": "hook-session-start",
-      "group": "Hook Events",
-      "title": "Session start hook",
-      "description": "Fire a hook when an agent session begins",
-      "agent_mapping": {
-        "codex-cli": "SessionStart",
-        "cursor": "sessionStart",
-        "copilot": "sessionStart"
-      },
-      "sub_capabilities": [
-        "Cursor: fire-and-forget; can inject env vars and additional_context; also sessionEnd with reason and duration",
-        "Copilot: also has sessionEnd event"
-      ]
-    },
-    {
-      "id": "hook-permission",
-      "group": "Hook Events",
-      "title": "Permission request hook",
-      "description": "Hook into the permission/approval flow to auto-allow, deny, or defer",
-      "agent_mapping": {
-        "codex-cli": "PermissionRequest",
-        "cursor": "preToolUse (allow/deny/ask)"
-      },
-      "sub_capabilities": [
-        "Codex: dedicated PermissionRequest event",
-        "Cursor: no dedicated event, but preToolUse + beforeShellExecution + beforeMCPExecution can return allow/deny/ask"
+        "Track every agent response for observability, compliance, or analytics",
+        "Cursor: afterAgentResponse after each message; afterAgentThought after thinking blocks",
+        "Windsurf: transcript variant provides full JSONL transcript path",
+        "Claude Code: Notification hook covers general system events"
       ]
     },
     {
       "id": "hook-blocking",
-      "group": "Hook Capabilities",
+      "group": "Hook Infrastructure",
       "title": "Blocking hooks",
-      "description": "Pre-hooks can block the pending action via exit code or return value",
+      "description": "Pre-hooks can block the pending action via exit code or return value, enabling security gates and policy enforcement",
       "sub_capabilities": [
-        "Claude Code: exit code 2 blocks the action; exit code 0 allows",
-        "Cursor: exit code 2 blocks; failClosed option reverses fail-open default for security-critical hooks",
-        "Windsurf: exit code 2 blocks; exit 0 = proceed, other = proceed with error logged",
-        "Copilot: hooks can approve/deny tool calls"
+        "Claude Code: exit code 2 blocks; exit code 0 allows",
+        "Cursor: exit code 2 blocks; failClosed option for security-critical hooks",
+        "Windsurf: exit code 2 blocks",
+        "Codex CLI: exit code 2 blocks; PermissionRequest can deny"
       ]
     },
     {
       "id": "hook-matchers",
-      "group": "Hook Capabilities",
+      "group": "Hook Infrastructure",
       "title": "Event matchers / filters",
-      "description": "Scope a hook to specific tools or events by name or pattern",
+      "description": "Scope a hook to specific tools or events by name or pattern — avoid running hooks on irrelevant tool calls",
       "sub_capabilities": [
-        "Claude Code: tool_name field matches by exact name or regex",
-        "Codex: matcher patterns for filtering tool events",
-        "Cursor: filter by tool type (Shell, Read, Write, MCP:<name>), subagent type, or command regex",
-        "Windsurf: no matchers — uses separate hook events per tool type instead"
+        "Claude Code: exact name, pipe-separated list, or JavaScript regex",
+        "Codex CLI: matcher patterns for tool filtering",
+        "Cursor: tool type, subagent type, or command regex",
+        "Windsurf: no matchers — uses separate events per tool type"
       ]
     },
     {
       "id": "hook-json-protocol",
-      "group": "Hook Capabilities",
+      "group": "Hook Infrastructure",
       "title": "Structured I/O protocol",
       "description": "Hooks receive context as JSON on stdin and can return structured output on stdout",
       "sub_capabilities": [
-        "Input includes tool name, arguments, and session context",
-        "Output can modify tool arguments or provide decisions (block/allow)",
-        "Cursor: also supports prompt-based hooks evaluated by LLM instead of shell scripts"
+        "Input includes tool name, arguments, session context",
+        "Output can modify tool arguments, inject context, or provide decisions",
+        "Cursor: also supports prompt-based hooks evaluated by LLM",
+        "Claude Code: supports command, prompt, agent, HTTP, and MCP tool handler types"
       ]
     },
     {
-      "id": "hook-timeout",
-      "group": "Hook Capabilities",
-      "title": "Configurable timeout",
-      "description": "Per-hook timeout setting to prevent runaway hooks"
-    },
-    {
       "id": "hook-scope-project",
-      "group": "Configuration Scope",
+      "group": "Hook Infrastructure",
       "title": "Project-level hooks",
       "description": "Hooks configured at the project/repo level, shareable via version control"
     },
     {
       "id": "hook-scope-user",
-      "group": "Configuration Scope",
+      "group": "Hook Infrastructure",
       "title": "User-level hooks",
       "description": "Hooks configured globally for the current user across all projects"
     }

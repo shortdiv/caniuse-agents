@@ -4,7 +4,7 @@
   "vendor": "GitHub",
   "url": "https://github.com/features/copilot",
   "features": {
-    "hook-pre-tool": {
+    "hook-tool-use": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -13,20 +13,9 @@
         "2026.03": "y",
         "2026.05": "y"
       },
-      "notes": "Can approve, deny, or defer."
+      "notes": "Can approve, deny, or defer.; Post: postToolUse event. Fires on success or failure."
     },
-    "hook-post-tool": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "y",
-        "2026.03": "y",
-        "2026.05": "y"
-      },
-      "notes": "postToolUse event. Fires on success or failure."
-    },
-    "hook-prompt-submit": {
+    "hook-prompt-validation": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -37,7 +26,7 @@
       },
       "notes": "userPromptSubmitted event."
     },
-    "hook-turn-end": {
+    "hook-agent-stop": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -48,7 +37,7 @@
       },
       "notes": "No turn-end/stop hook."
     },
-    "hook-notification": {
+    "hook-response-tracking": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -59,7 +48,7 @@
       },
       "notes": "No notification hook. errorOccurred event exists but doesn't map to notification."
     },
-    "hook-subagent-end": {
+    "hook-subagent-lifecycle": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -70,7 +59,7 @@
       },
       "notes": "No subagent completion hook."
     },
-    "hook-session-start": {
+    "hook-session-lifecycle": {
       "stats": {
         "2025.06": "n",
         "2025.07": "n",
@@ -80,17 +69,6 @@
         "2026.05": "y"
       },
       "notes": "sessionStart event. Also sessionEnd."
-    },
-    "hook-permission": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "n",
-        "2026.03": "n",
-        "2026.05": "n"
-      },
-      "notes": "No dedicated permission hook. preToolUse can act as gate."
     },
     "hook-blocking": {
       "stats": {
@@ -124,17 +102,6 @@
         "2026.05": "y"
       },
       "notes": "Shell scripts with structured input. Deterministic, consume zero tokens."
-    },
-    "hook-timeout": {
-      "stats": {
-        "2025.06": "n",
-        "2025.07": "n",
-        "2025.10": "n",
-        "2026.01": "n",
-        "2026.03": "n",
-        "2026.05": "n"
-      },
-      "notes": "No configurable timeout documented."
     },
     "hook-scope-project": {
       "stats": {
@@ -564,6 +531,50 @@
         "2026.05": "a"
       },
       "notes": "Partial: no built-in task tool but integrates with GitHub Issues, Jira, Linear, etc."
+    },
+    "hook-shell-control": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No shell-specific hooks"
+    },
+    "hook-file-access": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No file-specific hooks"
+    },
+    "hook-mcp-control": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No MCP-specific hooks"
+    },
+    "hook-compaction": {
+      "stats": {
+        "2025.06": "n",
+        "2025.07": "n",
+        "2025.10": "n",
+        "2026.01": "n",
+        "2026.03": "n",
+        "2026.05": "n"
+      },
+      "notes": "No compaction hooks"
     }
   }
 }
