@@ -346,7 +346,7 @@ if (supported.length === supportRows.length) {
     {/* Default: overview summary */}
     <div class="notes-summary" data-notes-summary>
       <p class="notes-overview">{overviewSummary}</p>
-      <p class="notes-prompt">Hover any cell for version details.</p>
+      <p class="notes-prompt"><span class="prompt-desktop">Hover</span><span class="prompt-mobile">Tap</span> any cell for version details.</p>
     </div>
 
     {/* Hover: specific cell detail */}
@@ -703,6 +703,19 @@ if (supported.length === supportRows.length) {
     font: 12px/1 var(--font-sans);
     color: var(--text-subtle);
     margin: 8px 0 0;
+  }
+
+  .prompt-mobile {
+    display: none;
+  }
+
+  @media (max-width: 700px) {
+    .prompt-desktop {
+      display: none;
+    }
+    .prompt-mobile {
+      display: inline;
+    }
   }
 
   /* ─── Hover detail view ─── */

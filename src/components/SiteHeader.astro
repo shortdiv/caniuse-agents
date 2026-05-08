@@ -93,16 +93,11 @@ const { agentCount, featureCount, features = [] } = Astro.props;
   }
   const searchBtn = document.querySelector("#search-submit");
 
-  // Search button focuses input or navigates to first result
+  // Search button navigates to index with query param
   if (searchBtn && input) {
     searchBtn.addEventListener("click", () => {
       if (input.value.trim()) {
-        const firstResult = document.querySelector(
-          ".search-result",
-        ) as HTMLAnchorElement;
-        if (firstResult) {
-          window.location.href = firstResult.href;
-        }
+        window.location.href = `/?q=${encodeURIComponent(input.value.trim())}`;
       } else {
         input.focus();
       }
