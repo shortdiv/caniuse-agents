@@ -13,7 +13,7 @@
         "2026.03": "y",
         "2026.05": "y"
       },
-      "notes": "preToolUse event. Can approve, deny, or defer."
+      "notes": "Can approve, deny, or defer."
     },
     "hook-post-tool": {
       "stats": {

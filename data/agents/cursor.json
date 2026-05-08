@@ -18,7 +18,15 @@
         "3.0": "y",
         "3.2": "y"
       },
-      "notes": "1.7 beta: basic tool observation. 2.4 GA: full PreToolUse with allow/deny/modify, matchers, failClosed."
+      "notes": "1.7 beta: basic tool observation. 2.4 GA: full PreToolUse with allow/deny/modify, matchers, failClosed.",
+      "version_notes": {
+        "1.7": "Beta: basic tool observation.",
+        "2.0": "Beta: basic tool observation.",
+        "2.4": "GA: allow/deny/modify, matchers, failClosed.",
+        "2.5": "Allow/deny/modify, matchers, failClosed.",
+        "3.0": "Allow/deny/modify, matchers, failClosed.",
+        "3.2": "Allow/deny/modify, matchers, failClosed."
+      }
     },
     "hook-post-tool": {
       "stats": {

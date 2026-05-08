@@ -2015,7 +2015,7 @@
         "2.1.118": "y",
         "2.1.121": "y"
       },
-      "notes": "PreToolUse event. Supports tool-specific filtering via matcher patterns."
+      "notes": "Supports tool-specific filtering via matcher patterns."
     },
     "hook-post-tool": {
       "stats": {

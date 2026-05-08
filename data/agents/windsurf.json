@@ -17,7 +17,7 @@
         "2.0.44": "y",
         "2.1.29": "y"
       },
-      "notes": "pre_write_code, pre_read_code, pre_run_command, pre_mcp_tool_use \u2014 four distinct pre-tool hooks."
+      "notes": "Four distinct hooks, one per tool type rather than a single event with matchers."
     },
     "hook-post-tool": {
       "stats": {

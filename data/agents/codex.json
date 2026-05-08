@@ -1560,7 +1560,7 @@
         "0.125.0": "y",
         "0.128.0": "y"
       },
-      "notes": "Non-streaming shell-only PreToolUse initially. MCP tool observation added in 0.124.0."
+      "notes": "Non-streaming, shell-only initially. MCP tool observation added in 0.124.0."
     },
     "hook-post-tool": {
       "stats": {

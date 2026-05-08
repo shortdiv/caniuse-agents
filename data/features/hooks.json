@@ -10,11 +10,14 @@
       "description": "Run custom code before any tool executes",
       "agent_mapping": {
         "claude-code": "PreToolUse",
-        "codex-cli": "pre_tool_call"
+        "codex-cli": "pre_tool_call",
+        "cursor": "preToolUse",
+        "windsurf": "pre_write_code, pre_read_code, pre_run_command, pre_mcp_tool_use",
+        "copilot": "preToolUse"
       },
       "sub_capabilities": [
-        "Tool-specific filtering via matchers (Claude Code: match by tool name or regex; Codex: shell-only initially, MCP tool observation added in 0.124.0)",
-        "Blocking via exit code to veto the tool call (both agents)"
+        "Tool-specific filtering via matchers (Claude Code: tool name or regex; Codex: shell-only initially, MCP in 0.124.0; Cursor: tool type + regex; Windsurf: separate events per tool type)",
+        "Blocking via exit code to veto the tool call (all agents except Windsurf use exit code 2; Windsurf uses exit code 2 as well)"
       ]
     },
     {
@@ -24,11 +27,14 @@
       "description": "Run custom code after a tool completes",
       "agent_mapping": {
         "claude-code": "PostToolUse",
-        "codex-cli": "post_tool_call"
+        "codex-cli": "post_tool_call",
+        "cursor": "postToolUse",
+        "windsurf": "post_write_code, post_read_code, post_run_command, post_mcp_tool_use",
+        "copilot": "postToolUse"
       },
       "sub_capabilities": [
-        "Tool-specific filtering via matchers (Claude Code: match by tool name or regex; Codex: shell-only initially)",
-        "Useful for post-edit linting, formatting, or logging"
+        "Tool-specific filtering via matchers (Claude Code: tool name or regex; Cursor: tool type; Windsurf: separate events per tool type)",
+        "Cursor: can modify MCP tool output via updated_mcp_tool_output and inject additional_context"
       ]
     },
     {
@@ -38,11 +44,14 @@
       "description": "Intercept or augment user prompts before they are processed",
       "agent_mapping": {
         "claude-code": "UserPromptSubmit",
-        "codex-cli": "user_prompt_submit"
+        "codex-cli": "user_prompt_submit",
+        "cursor": "beforeSubmitPrompt",
+        "windsurf": "pre_user_prompt",
+        "copilot": "userPromptSubmitted"
       },
       "sub_capabilities": [
         "Can block or modify the prompt before the agent sees it",
-        "Useful for injecting context, enforcing policies, or prompt logging"
+        "Cursor: returns continue boolean + user_message; Windsurf: can block policy-violating prompts"
       ]
     },
     {
@@ -52,11 +61,14 @@
       "description": "Fire a hook when the agent finishes a turn, with the ability to continue",
       "agent_mapping": {
         "claude-code": "Stop",
-        "codex-cli": "stop"
+        "codex-cli": "stop",
+        "cursor": "stop",
+        "windsurf": "post_cascade_response"
       },
       "sub_capabilities": [
-        "Can force the agent to continue working by returning a non-zero exit code (Claude Code)",
-        "Useful for quality gates, automated review, or chaining tasks"
+        "Claude Code: can force continuation by returning non-zero exit code",
+        "Cursor: followup_message for auto-continue with configurable loop_limit",
+        "Windsurf: also post_cascade_response_with_transcript variant"
       ]
     },
     {
@@ -78,11 +90,12 @@
       "title": "Subagent completion hook",
       "description": "Fire a hook when a subagent completes its work",
       "agent_mapping": {
-        "claude-code": "SubagentStop"
+        "claude-code": "SubagentStop",
+        "cursor": "subagentStop"
       },
       "sub_capabilities": [
-        "Receives subagent result context on stdin",
-        "Useful for aggregating subagent outputs or enforcing policies on delegated work"
+        "Claude Code: receives subagent result context on stdin",
+        "Cursor: also has subagentStart; subagentStop includes summary, duration, modified_files, followup_message support"
       ]
     },
     {
@@ -91,10 +104,13 @@
       "title": "Session start hook",
       "description": "Fire a hook when an agent session begins",
       "agent_mapping": {
-        "codex-cli": "SessionStart"
+        "codex-cli": "SessionStart",
+        "cursor": "sessionStart",
+        "copilot": "sessionStart"
       },
       "sub_capabilities": [
-        "Useful for initializing environment, loading context, or session logging"
+        "Cursor: fire-and-forget; can inject env vars and additional_context; also sessionEnd with reason and duration",
+        "Copilot: also has sessionEnd event"
       ]
     },
     {
@@ -103,10 +119,12 @@
       "title": "Permission request hook",
       "description": "Hook into the permission/approval flow to auto-allow, deny, or defer",
       "agent_mapping": {
-        "codex-cli": "PermissionRequest"
+        "codex-cli": "PermissionRequest",
+        "cursor": "preToolUse (allow/deny/ask)"
       },
       "sub_capabilities": [
-        "Allows programmatic approval or denial of tool execution requests"
+        "Codex: dedicated PermissionRequest event",
+        "Cursor: no dedicated event, but preToolUse + beforeShellExecution + beforeMCPExecution can return allow/deny/ask"
       ]
     },
     {
@@ -116,7 +134,9 @@
       "description": "Pre-hooks can block the pending action via exit code or return value",
       "sub_capabilities": [
         "Claude Code: exit code 2 blocks the action; exit code 0 allows",
-        "Codex: similar exit-code-based blocking"
+        "Cursor: exit code 2 blocks; failClosed option reverses fail-open default for security-critical hooks",
+        "Windsurf: exit code 2 blocks; exit 0 = proceed, other = proceed with error logged",
+        "Copilot: hooks can approve/deny tool calls"
       ]
     },
     {
@@ -126,7 +146,9 @@
       "description": "Scope a hook to specific tools or events by name or pattern",
       "sub_capabilities": [
         "Claude Code: tool_name field matches by exact name or regex",
-        "Codex: matcher patterns for filtering tool events"
+        "Codex: matcher patterns for filtering tool events",
+        "Cursor: filter by tool type (Shell, Read, Write, MCP:<name>), subagent type, or command regex",
+        "Windsurf: no matchers — uses separate hook events per tool type instead"
       ]
     },
     {
@@ -136,7 +158,8 @@
       "description": "Hooks receive context as JSON on stdin and can return structured output on stdout",
       "sub_capabilities": [
         "Input includes tool name, arguments, and session context",
-        "Output can modify tool arguments or provide decisions (block/allow)"
+        "Output can modify tool arguments or provide decisions (block/allow)",
+        "Cursor: also supports prompt-based hooks evaluated by LLM instead of shell scripts"
       ]
     },
     {
