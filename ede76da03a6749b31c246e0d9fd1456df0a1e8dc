@@ -1,0 +1,32 @@
+public/robots.txt
+  c078473cc4a972dd 1-4
+astro.config.mjs
+  c078473cc4a972dd 3,9-10
+public/llms.txt
+  c078473cc4a972dd 10
+CONTRIBUTING.md
+  c078473cc4a972dd 1-2,4-134
+src/layouts/Layout.astro
+  c078473cc4a972dd 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "ede76da03a6749b31c246e0d9fd1456df0a1e8dc",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 144,
+      "total_deletions": 1,
+      "accepted_lines": 142,
+      "overriden_lines": 1,
+      "messages_url": "http://localhost:4000/cas/31848b29de68778f83ad2bf648ced70b3d0899643bdbab7c415ec197e31b2d7d"
+    }
+  }
+}
