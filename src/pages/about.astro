@@ -23,29 +23,36 @@ const totalFeatures = categories.reduce(
       <h1>About this project</h1>
 
       <p>
-        Coding agents are becoming platforms. Developers aren't just chatting
-        with them — they're building workflows that depend on specific
-        capabilities like hooks, MCP integrations, persistent memory, and custom
-        skills. But there's no single place to see which agents support what.
+        Coding agents have become <em>the</em> platform developers build
+        workflows on top of. But building for agents feels too similar to
+        building for the web in the early aughts: fragmented support, unclear
+        standards, and lots of wondering "does this actually work on all
+        browsers and devices?" Agents shouldn't follow the same pattern.
+        We're better than that.
       </p>
 
       <p>
-        <strong>Can I Use Agents?</strong> fills that gap. Inspired by <a
+        Enter: <strong>Can I Use Agents?</strong>
+      </p>
+
+      <p>
+        A tool to properly check compatibility across agents without having to
+        manually check docs. Heavily inspired by <a
           href="https://caniuse.com"
           target="_blank"
           rel="noopener">caniuse.com</a
-        > for browsers, it tracks feature support across coding agents so you can
-        make informed decisions about which tools fit your workflow — and know when
-        specific capabilities landed.
+        > for browsers, caniuseagents tracks feature support across coding
+        agents so you can make informed decisions about which tools fit your
+        workflow and keep up with the growing ecosystem around AI agents.
       </p>
 
       <h2>What we track</h2>
 
       <p>
         Each feature page shows a compatibility matrix with historical version
-        data. You can see not just whether something is supported today, but
-        when support was introduced and how it evolved. Features are organized
-        into categories:
+        data. In addition to seeing whether something is supported today, you
+        can see when support was introduced and how it evolved over time.
+        Features are generally organized into categories:
       </p>
 
       <ul>
@@ -80,11 +87,11 @@ const totalFeatures = categories.reduce(
       <h2>Why this matters</h2>
 
       <p>
-        When your pre-commit hook depends on an agent's lifecycle events, or
-        your MCP server expects a specific transport, "does my agent support
-        this?" stops being a curiosity and becomes a dependency question. This
-        site gives you the answer without digging through five different docs
-        sites.
+        As agents become part of the modern developer experience, compatibility
+        becomes infrastructure. Agent features like lifecycle hooks and specific
+        protocol support directly affect how tools behave, integrate, and fail.
+        caniuseagents exists to bring clarity to an otherwise chaotic agent
+        landscape.
       </p>
 
       <h2>Contributing</h2>
