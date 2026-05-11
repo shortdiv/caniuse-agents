@@ -1,46 +1,38 @@
-# Astro Starter Kit: Basics
+# Can I Use Agents?
+
+Compatibility tables for AI coding agent features. Compare hooks, MCP, tools, instructions, and memory support across Claude Code, Cline, Codex CLI, Copilot, Cursor, and Windsurf.
+
+**[caniuseagents.com](https://caniuseagents.com)**
+
+## What is this?
+
+Coding agents have become the platform developers build workflows on top of. But support for features like lifecycle hooks, MCP transports, and persistent memory varies widely across agents — and changes with every release.
+
+This site tracks feature support across agents with version-level granularity, so you can check compatibility without digging through six different docs sites.
+
+## Data
+
+All compatibility data lives in `data/`:
+
+- `data/agents.json` — version metadata and release dates for all tracked agents
+- `data/features/*.json` — feature definitions grouped by category
+- `data/agents/*.json` — per-agent support codes across all tracked versions
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on the data format and how to contribute.
+
+## Development
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Built with [Astro](https://astro.build) and deployed on [Netlify](https://netlify.com).
 
-## 🚀 Project Structure
+## Contributing
 
-Inside of your Astro project, you'll see the following folders and files:
+Contributions are welcome — whether it's fixing a support code, adding a feature, or updating notes. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## Credits
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Created and maintained by [@shortdiv](https://shortdiv.com). Inspired by [caniuse.com](https://caniuse.com) by [@Fyrd](https://github.com/Fyrd).
