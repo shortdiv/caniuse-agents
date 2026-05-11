@@ -1,0 +1,24 @@
+README.md
+  c078473cc4a972dd 1,3,5-11,13,15-28,30,32,34,36,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "e8671e5820f40493825051ee287e8df8adbccc78",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 30,
+      "total_deletions": 38,
+      "accepted_lines": 30,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/66ef426d588b9e645c5f4bd9f75a9810c448083de591464171eb3ef2edfd3b91"
+    }
+  }
+}
