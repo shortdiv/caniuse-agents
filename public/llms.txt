@@ -7,6 +7,7 @@ This site compares feature support across AI coding agents with version-level gr
 ## Agents Tracked
 
 - Claude Code (Anthropic) — 48 versions from 0.2.31 (Mar 2025) to 2.1.121 (Apr 2026)
+- Cline (VS Code extension) — 30 versions from 1.1.0 (Aug 2024) to 3.82.0 (May 2026)
 - Codex CLI (OpenAI) — 36 versions from 0.2.0 (Jun 2025) to 0.128.0 (Apr 2026)
 - Cursor (Anysphere) — 11 versions from 0.45 to 3.2
 - Windsurf (Codeium) — 10 versions from 1.0.2 to 2.1.29
