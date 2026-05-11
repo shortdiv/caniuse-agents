@@ -1,0 +1,24 @@
+src/pages/about.astro
+  c078473cc4a972dd 26-31,35-40,44-46,53-55,90-94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "a0ba18b8393227a16547f63b922c988a87910492",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 23,
+      "total_deletions": 16,
+      "accepted_lines": 23,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/5467da95b001fe9a6020dea792208d96bf74b3ddbbe82ee4fc0d1a6b549f575f"
+    }
+  }
+}
