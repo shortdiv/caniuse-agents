@@ -1,0 +1,24 @@
+src/layouts/Layout.astro
+  c078473cc4a972dd 20-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "a6c34c557075cf1b41d64ee4728a32f0030e95cc",
+  "prompts": {
+    "c078473cc4a972dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "747c6b33-9b31-4fd7-b7a7-292f8c6743ed",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 8,
+      "total_deletions": 0,
+      "accepted_lines": 8,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/f7398c0ba9ebf3028a4fa43d788da4c80b1df59fbfa5771e57299fcdadc0bca6"
+    }
+  }
+}
