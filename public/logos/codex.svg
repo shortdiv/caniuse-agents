@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="cloudGrad" x1="100" y1="10" x2="100" y2="190" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b6a8ff"></stop>
+      <stop offset="0.45" stop-color="#5b4dff"></stop>
+      <stop offset="1" stop-color="#2014e6"></stop>
+    </linearGradient>
+    <radialGradient id="topHighlight" cx="100" cy="50" r="70" fx="100" fy="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"></stop>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.08"></stop>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="rimHighlight" cx="100" cy="100" r="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0.78" stop-color="#ffffff" stop-opacity="0"></stop>
+      <stop offset="0.92" stop-color="#ffffff" stop-opacity="0"></stop>
+      <stop offset="0.98" stop-color="#ffffff" stop-opacity="0.45"></stop>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="bottomShade" x1="100" y1="120" x2="100" y2="195" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a0fc8" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#0a0490" stop-opacity="0.55"></stop>
+    </linearGradient>
+    <clipPath id="cloudClip">
+      <g>
+        <circle cx="100" cy="45" r="36"></circle>
+        <circle cx="143" cy="66" r="36"></circle>
+        <circle cx="154" cy="112" r="36"></circle>
+        <circle cx="124" cy="150" r="36"></circle>
+        <circle cx="76" cy="150" r="36"></circle>
+        <circle cx="46" cy="112" r="36"></circle>
+        <circle cx="57" cy="66" r="36"></circle>
+        <circle cx="100" cy="100" r="56"></circle>
+      </g>
+    </clipPath>
+  </defs>
+
+  
+  <g fill="url(#cloudGrad)">
+    <circle cx="100" cy="45" r="36"></circle>
+    <circle cx="143" cy="66" r="36"></circle>
+    <circle cx="154" cy="112" r="36"></circle>
+    <circle cx="124" cy="150" r="36"></circle>
+    <circle cx="76" cy="150" r="36"></circle>
+    <circle cx="46" cy="112" r="36"></circle>
+    <circle cx="57" cy="66" r="36"></circle>
+    <circle cx="100" cy="100" r="56"></circle>
+  </g>
+
+  
+  <g clip-path="url(#cloudClip)">
+    <rect x="0" y="0" width="200" height="200" fill="url(#bottomShade)"></rect>
+    <rect x="0" y="0" width="200" height="200" fill="url(#topHighlight)"></rect>
+    <rect x="0" y="0" width="200" height="200" fill="url(#rimHighlight)"></rect>
+  </g>
+
+  
+  <path d="M 73 78 L 99 102 L 73 126" fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  
+  <rect x="106" y="118" width="32" height="10" rx="5" ry="5" fill="#ffffff"></rect>
+</svg>

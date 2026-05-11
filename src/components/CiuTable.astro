@@ -219,18 +219,19 @@ const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
 // Agent identity: logo path (if available), fallback color + monogram
 const agentMeta: Record<
   string,
-  { color: string; short: string; logo?: string }
+  { color: string; short: string; logo?: string; logoDark?: string }
 > = {
   "claude-code": {
     color: "#D97757",
     short: "CC",
-    logo: "/logos/claude-icon.png",
+    logo: "/logos/claudecode.png",
   },
-  "codex-cli": { color: "#9CA3AF", short: "CX", logo: "/logos/codex-icon.png" },
-  cursor: { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
-  "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor.png" },
-  copilot: { color: "#6C63FF", short: "CP", logo: "/logos/copilot.png" },
-  windsurf: { color: "#5B8DEF", short: "WS", logo: "/logos/windsurf.svg" },
+  "codex-cli": { color: "#9CA3AF", short: "CX", logo: "/logos/codex.svg" },
+  cursor: { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
+  "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
+  copilot: { color: "#6C63FF", short: "CP", logo: "/logos/copilot-light.svg", logoDark: "/logos/copilot-dark.svg" },
+  windsurf: { color: "#5B8DEF", short: "WS", logo: "/logos/Windsurf-black-symbol.svg", logoDark: "/logos/Windsurf-white-symbol.svg" },
+  cline: { color: "#4AA8D8", short: "CL", logo: "/logos/BOT_LIGHT.svg", logoDark: "/logos/BOT_DARK.svg" },
   devin: { color: "#7B61FF", short: "DV" },
   aider: { color: "#5BB67A", short: "AI" },
 };
@@ -283,7 +284,12 @@ if (supported.length === supportRows.length) {
         const docUrl = feature?.docs?.[agent.id];
         return (
         <div class="ciu-agent-header">
-          {meta.logo ? (
+          {meta.logo && meta.logoDark ? (
+            <>
+              <img class="agent-logo logo-light" src={meta.logo} alt={agent.name} width="26" height="26" />
+              <img class="agent-logo logo-dark" src={meta.logoDark} alt={agent.name} width="26" height="26" />
+            </>
+          ) : meta.logo ? (
             <img
               class="agent-logo"
               src={meta.logo}
@@ -355,7 +361,12 @@ if (supported.length === supportRows.length) {
       <div class="hover-header">
         {
           agentDisplay.map(({ agent, meta }) =>
-            meta.logo ? (
+            meta.logo && meta.logoDark ? (
+              <>
+                <img class="agent-logo-sm hover-agent-icon logo-light" data-agent-icon={agent.id} src={meta.logo} alt={agent.name} width="18" height="18" style="display:none;" />
+                <img class="agent-logo-sm hover-agent-icon logo-dark" data-agent-icon={agent.id} src={meta.logoDark} alt={agent.name} width="18" height="18" style="display:none;" />
+              </>
+            ) : meta.logo ? (
               <img
                 class="agent-logo-sm hover-agent-icon"
                 data-agent-icon={agent.id}
@@ -583,6 +594,19 @@ if (supported.length === supportRows.length) {
     border-radius: 4px;
     flex-shrink: 0;
     object-fit: cover;
+  }
+
+  .logo-dark {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .logo-light {
+      display: none;
+    }
+    .logo-dark {
+      display: block;
+    }
   }
 
   .hover-mark-wrap {
