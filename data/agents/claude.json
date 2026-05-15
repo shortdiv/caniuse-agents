@@ -2013,9 +2013,11 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
-      "notes": "Supports tool-specific filtering via matcher patterns.; Post: PostToolUse event. Supports tool-specific filtering via matcher patterns."
+      "notes": "Supports tool-specific filtering via matcher patterns.; Post: PostToolUse event. Supports tool-specific filtering via matcher patterns. continueOnBlock option added in 2.1.139 to feed rejection reason back to Claude."
     },
     "hook-prompt-validation": {
       "stats": {
@@ -2066,7 +2068,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "UserPromptSubmit event. Can block or augment prompts before processing."
     },
@@ -2119,7 +2123,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "Stop event. Can force continuation by returning non-zero exit code."
     },
@@ -2172,7 +2178,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "Notification hook with systemMessage (1.0.64); StopFailure for errors (2.1.78)"
     },
@@ -2225,7 +2233,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "SubagentStop (1.0.41); SubagentStart (2.0.43); also TeammateIdle"
     },
@@ -2278,7 +2288,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "SessionStart added in 1.0.62; SessionEnd added in 1.0.85"
     },
@@ -2331,7 +2343,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "Via PreToolUse matcher on Bash tool"
     },
@@ -2384,7 +2398,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "Via PreToolUse matcher on Read|Edit|Write tools"
     },
@@ -2437,7 +2453,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "Via PreToolUse matcher on mcp__* tools; also Elicitation hooks"
     },
@@ -2490,7 +2508,9 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.122": "y",
+        "2.1.142": "y"
       },
       "notes": "PreCompact (1.0.48) can block; PostCompact (2.1.72) fires after"
     }

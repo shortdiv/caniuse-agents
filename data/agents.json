@@ -6,7 +6,7 @@
     "vendor": "Anthropic",
     "type": "cli",
     "url": "https://code.claude.com",
-    "current_version": "2.1.121",
+    "current_version": "2.1.142",
     "version_list": [
       {
         "version": "0.2.31",
@@ -263,11 +263,21 @@
       {
         "version": "2.1.118",
         "release_date": 1776901736,
-        "era": -1
+        "era": -3
       },
       {
         "version": "2.1.121",
         "release_date": 1777318786,
+        "era": -2
+      },
+      {
+        "version": "2.1.122",
+        "release_date": 1777377600,
+        "era": -1
+      },
+      {
+        "version": "2.1.142",
+        "release_date": 1778630400,
         "era": 0
       }
     ]
