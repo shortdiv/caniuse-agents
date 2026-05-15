@@ -53,7 +53,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Also supports `claude mcp add` CLI for interactive setup."
     },
@@ -106,7 +107,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Custom headers supported since 0.2.106. Being superseded by Streamable HTTP."
     },
@@ -159,7 +161,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Preferred remote transport."
     },
@@ -212,9 +215,10 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
-      "notes": "Tool search defers loading for large tool sets \u2014 avoids flooding the context window."
+      "notes": "Tool search defers loading for large tool sets — avoids flooding the context window."
     },
     "mcp-resources": {
       "stats": {
@@ -265,7 +269,8 @@
         "2.1.105": "a",
         "2.1.111": "a",
         "2.1.118": "a",
-        "2.1.121": "a"
+        "2.1.121": "a",
+        "2.1.143": "a"
       },
       "notes": "Accessible via @-mention typeahead but not proactively surfaced or browsable."
     },
@@ -318,7 +323,8 @@
         "2.1.105": "a",
         "2.1.111": "a",
         "2.1.118": "a",
-        "2.1.121": "a"
+        "2.1.121": "a",
+        "2.1.143": "a"
       },
       "notes": "Officially listed as supported but limited documentation. No dedicated prompt UI."
     },
@@ -371,7 +377,8 @@
         "2.1.105": "n",
         "2.1.111": "n",
         "2.1.118": "n",
-        "2.1.121": "n"
+        "2.1.121": "n",
+        "2.1.143": "n"
       },
       "notes": "Not supported. No agent supports this yet."
     },
@@ -424,7 +431,8 @@
         "2.1.105": "a",
         "2.1.111": "a",
         "2.1.118": "a",
-        "2.1.121": "a"
+        "2.1.121": "a",
+        "2.1.143": "a"
       },
       "notes": "Listed on modelcontextprotocol.io but no docs or changelog evidence."
     },
@@ -477,7 +485,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Servers request input mid-task via dialog. Hookable via Elicitation/ElicitationResult events."
     },
@@ -530,7 +539,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "In-session login flow. RFC 9728 discovery for finding auth servers."
     },
@@ -583,7 +593,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": ".mcp.json committed to repo. Shareable via version control."
     },
@@ -636,7 +647,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Renamed from 'global' to 'user' scope in 0.2.49."
     },
@@ -689,7 +701,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Core tool since earliest version"
     },
@@ -742,7 +755,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Core tool since earliest version"
     },
@@ -795,7 +809,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "NotebookEdit tool for Jupyter .ipynb cells"
     },
@@ -848,7 +863,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Bash tool. PowerShell added in 2.1.84"
     },
@@ -901,7 +917,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Monitor tool for streaming background events"
     },
@@ -954,7 +971,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "CronCreate/CronDelete/CronList tools for session-scoped scheduled tasks"
     },
@@ -1007,7 +1025,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Glob and Grep tools since earliest version"
     },
@@ -1060,7 +1079,8 @@
         "2.1.105": "n",
         "2.1.111": "n",
         "2.1.118": "n",
-        "2.1.121": "n"
+        "2.1.121": "n",
+        "2.1.143": "n"
       },
       "notes": "No embedding-based semantic search. Uses pattern matching via Grep/Glob"
     },
@@ -1113,7 +1133,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Claude can now search the web"
     },
@@ -1166,7 +1187,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Web fetch tool lets Claude view URLs"
     },
@@ -1219,7 +1241,8 @@
         "2.1.105": "a",
         "2.1.111": "a",
         "2.1.118": "a",
-        "2.1.121": "a"
+        "2.1.121": "a",
+        "2.1.143": "a"
       },
       "notes": "LSP tool available via code intelligence plugins. Not built-in"
     },
@@ -1272,7 +1295,8 @@
         "2.1.105": "n",
         "2.1.111": "n",
         "2.1.118": "n",
-        "2.1.121": "n"
+        "2.1.121": "n",
+        "2.1.143": "n"
       },
       "notes": "No built-in browser control. Available via MCP"
     },
@@ -1325,7 +1349,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Drag in or copy/paste image files directly into the prompt"
     },
@@ -1378,7 +1403,8 @@
         "2.1.105": "n",
         "2.1.111": "n",
         "2.1.118": "n",
-        "2.1.121": "n"
+        "2.1.121": "n",
+        "2.1.143": "n"
       }
     },
     "subagent-spawning": {
@@ -1430,7 +1456,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Agent tool for spawning subagents with own context window"
     },
@@ -1483,7 +1510,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Todo/Task tools for tracking work progress"
     },
@@ -1536,7 +1564,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "CLAUDE.md in project root since earliest version"
     },
@@ -1589,7 +1618,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "~/.claude/CLAUDE.md for global personal preferences"
     },
@@ -1642,7 +1672,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Managed policy CLAUDE.md deployed via MDM/Group Policy"
     },
@@ -1695,7 +1726,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": ".claude/rules/ with paths frontmatter for glob-scoped instructions"
     },
@@ -1748,7 +1780,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "@path/to/file.md import syntax in CLAUDE.md"
     },
@@ -1801,7 +1834,8 @@
         "2.1.105": "a",
         "2.1.111": "a",
         "2.1.118": "a",
-        "2.1.121": "a"
+        "2.1.121": "a",
+        "2.1.143": "a"
       },
       "notes": "Can import AGENTS.md via @AGENTS.md in CLAUDE.md, but does not read it natively"
     },
@@ -1854,7 +1888,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Memory system. Auto memory writes notes across sessions"
     },
@@ -1907,7 +1942,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "claude --continue and claude --resume"
     },
@@ -1960,7 +1996,8 @@
         "2.1.105": "y",
         "2.1.111": "y",
         "2.1.118": "y",
-        "2.1.121": "y"
+        "2.1.121": "y",
+        "2.1.143": "y"
       },
       "notes": "Automatic conversation compaction for infinite conversation length"
     },
@@ -2015,7 +2052,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Supports tool-specific filtering via matcher patterns.; Post: PostToolUse event. Supports tool-specific filtering via matcher patterns. continueOnBlock option added in 2.1.139 to feed rejection reason back to Claude."
     },
@@ -2070,7 +2108,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "UserPromptSubmit event. Can block or augment prompts before processing."
     },
@@ -2125,7 +2164,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Stop event. Can force continuation by returning non-zero exit code."
     },
@@ -2180,7 +2220,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Notification hook with systemMessage (1.0.64); StopFailure for errors (2.1.78)"
     },
@@ -2235,7 +2276,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "SubagentStop (1.0.41); SubagentStart (2.0.43); also TeammateIdle"
     },
@@ -2290,7 +2332,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "SessionStart added in 1.0.62; SessionEnd added in 1.0.85"
     },
@@ -2345,7 +2388,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Via PreToolUse matcher on Bash tool"
     },
@@ -2400,7 +2444,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Via PreToolUse matcher on Read|Edit|Write tools"
     },
@@ -2455,7 +2500,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "Via PreToolUse matcher on mcp__* tools; also Elicitation hooks"
     },
@@ -2510,7 +2556,8 @@
         "2.1.118": "y",
         "2.1.121": "y",
         "2.1.122": "y",
-        "2.1.142": "y"
+        "2.1.142": "y",
+        "2.1.143": "y"
       },
       "notes": "PreCompact (1.0.48) can block; PostCompact (2.1.72) fires after"
     }

@@ -35,7 +35,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Primary transport. One of the earliest MCP adopters."
     },
@@ -70,7 +71,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Considered legacy; Streamable HTTP recommended."
     },
@@ -105,7 +107,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Recommended for modern remote servers."
     },
@@ -140,7 +143,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Per-tool auto-approval via alwaysAllow config."
     },
@@ -175,7 +179,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "Not supported."
     },
@@ -210,7 +215,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Accessible via /mcp:<server>:<prompt> slash commands. Autocomplete since 3.55.0."
     },
@@ -245,7 +251,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       }
     },
     "mcp-roots": {
@@ -279,7 +286,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Workspace-aware but no explicit MCP roots protocol support."
     },
@@ -314,7 +322,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       }
     },
     "mcp-oauth": {
@@ -348,7 +357,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Full OAuth 2.1. Credentials stored securely with auto-reconnect on token refresh."
     },
@@ -383,7 +393,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "Not supported. Config is user-level only."
     },
@@ -418,7 +429,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Env variable patterns supported since 3.43.0."
     },
@@ -453,7 +465,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Can cancel with errorMessage or inject context via contextModification.; Post: Receives tool result, success status, and execution time. Can cancel to stop task."
     },
@@ -488,7 +501,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Receives prompt text and attachments list."
     },
@@ -523,7 +537,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "TaskComplete on success, TaskCancel on user cancellation."
     },
@@ -558,7 +573,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Attention and completion boundaries with severity and user-input-waiting state."
     },
@@ -593,7 +609,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "No subagent-specific hook type."
     },
@@ -628,7 +645,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "TaskStart fires at beginning of each agentic loop. Task-level, not session-level. No session end hook."
     },
@@ -663,7 +681,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": ".clinerules/ directory with .md and .txt files. Also reads .cursorrules and .windsurfrules."
     },
@@ -698,7 +717,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "~/Documents/Cline/Rules/ with UI for enabling/disabling."
     },
@@ -733,7 +753,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: enterprise remote config can sync rules (3.60.0+). Enterprise-only."
     },
@@ -768,7 +789,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "No structural path-scoping. Rules apply to the entire workspace."
     },
@@ -803,7 +825,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: remote rule fetching and enterprise config sync. No general-purpose import directive."
     },
@@ -838,7 +861,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "AGENTS.md recognized alongside .clinerules/, .cursorrules, and .windsurfrules."
     },
@@ -873,7 +897,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "No built-in automatic memory. Memory Bank is a manual documentation pattern."
     },
@@ -908,7 +933,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: checkpoint-based workspace restore. /newtask distills context into a new task."
     },
@@ -943,7 +969,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "3.3.0: sliding window. 3.25.0: Auto Compact with LLM summarization and multiple strategies."
     },
@@ -978,7 +1005,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Core tool. Chunked reading for targeted access in 3.77.0. Supports PDF and DOCX."
     },
@@ -1013,7 +1041,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Diff-based search/replace for large files. Apply Patch tool added in 3.46.0."
     },
@@ -1048,7 +1077,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Jupyter notebook support with cell-level context awareness."
     },
@@ -1083,7 +1113,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Regex search via search_files. list_code_definition_names for top-level symbols."
     },
@@ -1118,7 +1149,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "VS Code shell integration. Background execution with 10-min timeout in 3.38.0."
     },
@@ -1153,7 +1185,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: Proceed While Running for background terminal processes. Not a general monitoring tool."
     },
@@ -1188,7 +1221,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "No time-based scheduling. Kanban (3.76.0) provides parallel task orchestration."
     },
@@ -1223,7 +1257,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: available through Cline provider only, not universal across all model providers."
     },
@@ -1258,7 +1293,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "@url context mention fetches and converts URLs to markdown."
     },
@@ -1293,7 +1329,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Image pasting in chat. Max 7500x7500 pixels."
     },
@@ -1328,7 +1365,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "Not supported."
     },
@@ -1363,7 +1401,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Computer Use: click, type, scroll, screenshot. Local Chrome via remote debugging."
     },
@@ -1398,7 +1437,8 @@
         "3.76.0": "a",
         "3.77.0": "a",
         "3.80.0": "a",
-        "3.82.0": "a"
+        "3.82.0": "a",
+        "3.83.0": "a"
       },
       "notes": "Partial: reads VS Code diagnostics (@problems) but no direct go-to-definition or symbol lookup."
     },
@@ -1433,7 +1473,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "Regex-based search only. No embedding or semantic code search."
     },
@@ -1468,9 +1509,10 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
-      "notes": "3.33.0: experimental. 3.58.0: native use_subagents tool. Read-only \u2014 cannot write files or use MCP."
+      "notes": "3.33.0: experimental. 3.58.0: native use_subagents tool. Read-only — cannot write files or use MCP."
     },
     "task-management": {
       "stats": {
@@ -1503,7 +1545,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Task history, checkpoints, favorites, Focus Chain todos. Kanban board with git worktrees in 3.76.0."
     },
@@ -1538,7 +1581,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Via generic PreToolUse/PostToolUse, no dedicated shell hook"
     },
@@ -1573,7 +1617,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "Via generic PreToolUse/PostToolUse, no dedicated file hook"
     },
@@ -1608,7 +1653,8 @@
         "3.76.0": "n",
         "3.77.0": "n",
         "3.80.0": "n",
-        "3.82.0": "n"
+        "3.82.0": "n",
+        "3.83.0": "n"
       },
       "notes": "No dedicated event; Cline uses PreToolUse/PostToolUse for generic tool hooks only"
     },
@@ -1643,7 +1689,8 @@
         "3.76.0": "y",
         "3.77.0": "y",
         "3.80.0": "y",
-        "3.82.0": "y"
+        "3.82.0": "y",
+        "3.83.0": "y"
       },
       "notes": "PreCompact fires before conversation history truncation"
     }

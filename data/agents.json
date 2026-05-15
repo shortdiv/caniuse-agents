@@ -6,7 +6,7 @@
     "vendor": "Anthropic",
     "type": "cli",
     "url": "https://code.claude.com",
-    "current_version": "2.1.142",
+    "current_version": "2.1.143",
     "version_list": [
       {
         "version": "0.2.31",
@@ -279,6 +279,11 @@
         "version": "2.1.142",
         "release_date": 1778630400,
         "era": 0
+      },
+      {
+        "version": "2.1.143",
+        "release_date": 1778889600,
+        "era": 1
       }
     ]
   },
@@ -648,7 +653,7 @@
     "vendor": "Cline",
     "type": "ide-extension",
     "url": "https://docs.cline.bot",
-    "current_version": "3.82.0",
+    "current_version": "3.83.0",
     "version_list": [
       {
         "version": "1.1.0",
@@ -799,6 +804,11 @@
         "version": "3.82.0",
         "release_date": 1750118400,
         "era": 0
+      },
+      {
+        "version": "3.83.0",
+        "release_date": 1778889600,
+        "era": 1
       }
     ]
   }
