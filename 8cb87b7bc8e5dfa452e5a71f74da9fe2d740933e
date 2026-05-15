@@ -1,0 +1,26 @@
+data/agents/claude.json
+  ff095d2f911d66c8 2016-2018,2020,2071-2073,2126-2128,2181-2183,2236-2238,2291-2293,2346-2348,2401-2403,2456-2458,2511-2513
+data/agents.json
+  ff095d2f911d66c8 9,266,271-280
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "8cb87b7bc8e5dfa452e5a71f74da9fe2d740933e",
+  "prompts": {
+    "ff095d2f911d66c8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f1b9fc02-db93-48f0-bc90-905be427ab86",
+        "model": "<synthetic>"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 43,
+      "total_deletions": 13,
+      "accepted_lines": 43,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/d6d8c81616385ec40c12bb9235c5db40f5efb980b2cdf0d4603116e4c331af7a"
+    }
+  }
+}
