@@ -1,0 +1,26 @@
+.claude/skills/changelog-review/scripts/readAndParseChangelog.ts
+  41eb952ba91d4c6f 3-8,10-12,15-21,23-45,48,62,68,70
+.claude/skills/changelog-review/scripts/readAndParseChangelog.test.ts
+  41eb952ba91d4c6f 1,4-7,12,14-16,19-73,75-105,107-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "80f4b19ed1014c9ac0082e9a0f3d7a395cc51265",
+  "prompts": {
+    "41eb952ba91d4c6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9a6e54a4-4a5c-4328-ae9d-6fb1683c3330",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 188,
+      "total_deletions": 77,
+      "accepted_lines": 152,
+      "overriden_lines": 3,
+      "messages_url": "http://localhost:4000/cas/d7d4f9804d81e80abdea02c3ac0db58830fc15472ca73a8b2ef6f2aa59738624"
+    }
+  }
+}
