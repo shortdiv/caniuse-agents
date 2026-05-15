@@ -1,0 +1,12 @@
+name: copilot
+homepage: https://docs.github.com/en/copilot
+sources:
+  changelog: https://github.com/github/copilot-cli/blob/main/changelog.md
+version_regex: '^##\s+(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?)'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools

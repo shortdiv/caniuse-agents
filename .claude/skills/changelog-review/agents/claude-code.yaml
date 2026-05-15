@@ -1,0 +1,12 @@
+name: claude-code
+homepage: https://docs.anthropic.com
+sources:
+  changelog: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+version_regex: '^##\s+(\d+\.\d+\.\d+)'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools

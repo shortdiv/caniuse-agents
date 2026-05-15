@@ -1,0 +1,14 @@
+name: cursor
+github_repo: cursor/cursor
+homepage: https://cursor.com/docs
+sources:
+  changelog: https://cursor.com/changelog
+  releases: https://releasebot.io/updates/cursor
+version_regex: '^##\s+(\d+\.\d+\.\d+)'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools

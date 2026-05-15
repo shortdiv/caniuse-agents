@@ -1,0 +1,12 @@
+name: cline
+homepage: https://docs.z.ai/devpack/tool/cline
+sources:
+  changelog: https://github.com/cline/cline/blob/main/CHANGELOG.md
+version_regex: '^##\s+\[(\d+\.\d+\.\d+)\]'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools

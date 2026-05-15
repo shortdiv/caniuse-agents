@@ -1,0 +1,12 @@
+name: codex
+homepage: https://docs.openai.com
+sources:
+  changelog: https://developers.openai.com/codex/changelog
+version_regex: 'Codex CLI\s+v?(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?)'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools
