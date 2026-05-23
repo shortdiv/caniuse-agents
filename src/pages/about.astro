@@ -13,10 +13,23 @@ const totalFeatures = categories.reduce(
   (count, category) => count + category.features.length,
   0,
 );
+
+const searchFeatures = categories.flatMap((category) =>
+  category.features.map((feature) => ({
+    id: feature.id,
+    title: feature.title,
+    description: feature.description,
+    category: category.title,
+  })),
+);
 ---
 
 <Layout title="About — Can I Use Agents?">
-  <SiteHeader agentCount={agents.length} featureCount={totalFeatures} />
+  <SiteHeader
+    agentCount={agents.length}
+    featureCount={totalFeatures}
+    features={searchFeatures}
+  />
 
   <main class="page-shell">
     <article class="about-content">
