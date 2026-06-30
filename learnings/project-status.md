@@ -5,17 +5,17 @@
 ### Data layer
 - [x] TypeScript types (`src/lib/types.ts`) — Agent, Feature, FeatureCategory, CaniuseSupportCode, etc.
 - [x] Data loader (`src/lib/data.ts`) — loads agents, categories, features; merges agents.json version metadata; getFeatureData() for caniuse-style stats
-- [x] `data/agents.json` — version metadata with exact timestamps and eras for Claude Code (48 versions) and Codex CLI (35 versions)
-- [x] `data/agents/claude.json` — 69 features × 48 versions = 3,312 explicit support cells
-- [x] `data/agents/codex.json` — 69 features × 35 versions = 2,415 explicit support cells
-- [x] 5 feature definition files (hooks 32, mcp 12, instructions 6, memory 3, tools 16)
+- [x] `data/agents.json` — stable, feature-changing release milestones for five tracked agents
+- [x] Explicit version-by-feature support matrices for Claude Code, Codex CLI, Cursor, GitHub Copilot CLI, and Cline CLI
+- [x] 5 feature definition files (hooks 10, MCP 12, instructions 6, memory 3, tools 16)
+- [x] Data validation for version completeness, support codes, dates, eras, and feature coverage
 
 ### UI
 - [x] Astro + Tailwind + TypeScript project scaffold
 - [x] Base layout (`src/layouts/Layout.astro`)
 - [x] Global CSS with light/dark theme via CSS custom properties
 - [x] Index page with search, category index, feature index grid
-- [x] Feature detail pages (`/features/[featureId]`) — 69 pages, statically generated
+- [x] Feature detail pages (`/features/[featureId]`) — 47 pages, statically generated
 - [x] CiuTable component with time-aligned era grid (global split points)
 - [x] Features index page (`/features/index`)
 
@@ -28,9 +28,8 @@
 ## What's not built yet
 
 ### Data
-- [ ] Remaining agents: Cursor, Windsurf, Copilot, Cline, Augment Code, Codex, Amazon Q, JetBrains AI, Devin
-- [ ] JSON Schema validation files
-- [ ] Validation script (`npm run validate`)
+- [ ] Candidate future agents: Augment Code, Amazon Q, JetBrains AI, Devin
+- [ ] JSON Schema files
 
 ### UI
 - [ ] Agent detail pages (`/agents/[slug]`)

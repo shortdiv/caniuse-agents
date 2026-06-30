@@ -63,6 +63,14 @@ async function resolveChangelog(agentName: string): Promise<ChangelogMeta> {
     };
   }
 
+  if (agent.sources?.releases) {
+    return {
+      url: agent.sources.releases,
+      source: "github-releases",
+      versionRegex: agent.version_regex,
+    };
+  }
+
   if (agent.homepage) {
     return {
       url: agent.homepage,

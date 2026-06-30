@@ -8,7 +8,6 @@ Grounded in actual documentation from 6 agents' hooks docs:
 - Claude Code: https://code.claude.com/docs/en/hooks (27 events, 5 handler types)
 - Codex CLI: https://developers.openai.com/codex/hooks (6 events, command handlers only)
 - Cursor: https://cursor.com/docs/hooks (18 events, command + prompt handlers)
-- Windsurf: https://docs.windsurf.com/windsurf/cascade/hooks (12 events)
 - Devin: https://cli.devin.ai/docs/extensibility/hooks/overview (7 events)
 - Copilot: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks (6 events)
 

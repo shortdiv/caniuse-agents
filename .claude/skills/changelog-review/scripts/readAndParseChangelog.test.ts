@@ -22,7 +22,7 @@ describe("claude-code", () => {
   }, TIMEOUT);
 });
 
-// cline  version_regex: ^## [1.x.x]
+// cline CLI stable releases use cli-v3.x.x tags
 describe("cline", () => {
   let result: Awaited<ReturnType<typeof resolveChangelog>>;
 
@@ -32,7 +32,7 @@ describe("cline", () => {
 
   it("resolves changelog url", () => {
     expect(result).toHaveProperty("url");
-    expect(result.source).toBe("github");
+    expect(result.source).toBe("github-releases");
   });
 
   it("extracts bracketed semver", async () => {
@@ -41,7 +41,7 @@ describe("cline", () => {
   }, TIMEOUT);
 });
 
-// codex  version_regex: Codex CLI v1.x.x (JS-rendered marketing page — fetch gets pre-render shell)
+// codex stable releases use rust-v0.x.x tags; alpha tags are excluded by the regex
 describe("codex", () => {
   let result: Awaited<ReturnType<typeof resolveChangelog>>;
 
@@ -51,10 +51,13 @@ describe("codex", () => {
 
   it("resolves changelog url", () => {
     expect(result).toHaveProperty("url");
-    expect(result.source).toBe("marketing");
+    expect(result.source).toBe("github-releases");
   });
 
-  it.todo("extracts semver from marketing page (requires JS rendering)");
+  it("extracts stable semver", async () => {
+    const version = await getAgentVersion(result);
+    expect(version).toMatch(/^\d+\.\d+\.\d+$/);
+  }, TIMEOUT);
 });
 
 // copilot  version_regex: ^## 1.x.x (with optional pre-release suffix)
@@ -82,22 +85,6 @@ describe("cursor", () => {
 
   beforeAll(async () => {
     result = await resolveChangelog("cursor");
-  }, TIMEOUT);
-
-  it("resolves changelog url", () => {
-    expect(result).toHaveProperty("url");
-    expect(result.source).toBe("marketing");
-  });
-
-  it.todo("extracts semver from marketing page (requires JS rendering)");
-});
-
-// windsurf  version_regex: \s+(1.x.x) (JS-rendered marketing page — fetch gets pre-render shell)
-describe("windsurf", () => {
-  let result: Awaited<ReturnType<typeof resolveChangelog>>;
-
-  beforeAll(async () => {
-    result = await resolveChangelog("windsurf");
   }, TIMEOUT);
 
   it("resolves changelog url", () => {

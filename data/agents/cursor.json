@@ -16,7 +16,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "1.7 beta: basic tool observation. 2.4 GA: full PreToolUse with allow/deny/modify, matchers, failClosed.; Post: 1.7 beta: basic observation. 2.4 GA: full PostToolUse with updated_mcp_tool_output, additional_context.",
       "version_notes": {
@@ -40,7 +43,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "beforeSubmitPrompt added in 2.4. Not in 1.7 beta."
     },
@@ -56,7 +62,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "stop hook with followup_message added in 2.4. Not in 1.7 beta."
     },
@@ -72,7 +81,10 @@
         "2.4": "n",
         "2.5": "n",
         "3.0": "n",
-        "3.2": "n"
+        "3.2": "n",
+        "3.7": "n",
+        "3.8": "n",
+        "3.9": "n"
       },
       "notes": "No notification hook."
     },
@@ -88,7 +100,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "subagentStart/subagentStop added with subagents in 2.4."
     },
@@ -104,7 +119,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "sessionStart/sessionEnd added in 2.4 with env injection, composer_mode."
     },
@@ -120,7 +138,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Supports env var interpolation in config (${env:VAR})."
     },
@@ -136,7 +157,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Legacy. Streamable HTTP recommended for new servers."
     },
@@ -152,7 +176,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Recommended. Supports OAuth with dynamic client registration."
     },
@@ -168,7 +195,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Auto-run approval available. Dynamic tool registration since 1.1."
     },
@@ -184,7 +214,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Servers share files, database schemas, or app-specific context."
     },
@@ -200,7 +233,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       }
     },
     "mcp-sampling": {
@@ -215,7 +251,10 @@
         "2.4": "n",
         "2.5": "n",
         "3.0": "n",
-        "3.2": "n"
+        "3.2": "n",
+        "3.7": "n",
+        "3.8": "n",
+        "3.9": "n"
       }
     },
     "mcp-roots": {
@@ -230,7 +269,10 @@
         "2.4": "a",
         "2.5": "a",
         "3.0": "a",
-        "3.2": "a"
+        "3.2": "a",
+        "3.7": "a",
+        "3.8": "a",
+        "3.9": "a"
       },
       "notes": "Changelog mentions 'Roots support' in 1.1 but limited documentation."
     },
@@ -246,7 +288,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Servers request structured input via JSON schemas."
     },
@@ -262,7 +307,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Static credentials and dynamic client registration. Scopes/state since 2.2."
     },
@@ -278,7 +326,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": ".cursor/mcp.json. Supports env var interpolation."
     },
@@ -294,7 +345,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       }
     },
     "project-instructions": {
@@ -309,7 +363,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": ".cursor/rules/ with .md/.mdc files. Legacy .cursorrules also supported."
     },
@@ -325,7 +382,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Global user rules in Settings > Rules."
     },
@@ -341,7 +401,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Team Rules via admin dashboard (Teams/Enterprise plans)."
     },
@@ -357,7 +420,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "YAML frontmatter globs: field. Auto-attached when matching files are in context."
     },
@@ -373,7 +439,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Remote rules imported from GitHub repos into .cursor/rules/imported/."
     },
@@ -389,7 +458,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "AGENTS.md supported in project root and subdirectories."
     },
@@ -405,7 +477,10 @@
         "2.4": "a",
         "2.5": "a",
         "3.0": "a",
-        "3.2": "a"
+        "3.2": "a",
+        "3.7": "a",
+        "3.8": "a",
+        "3.9": "a"
       },
       "notes": "Partial: Memories (beta) in 1.0. Per-project facts across conversations."
     },
@@ -421,7 +496,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "CLI -continue flag. Chat history persistent and searchable."
     },
@@ -437,7 +515,10 @@
         "2.4": "a",
         "2.5": "a",
         "3.0": "a",
-        "3.2": "a"
+        "3.2": "a",
+        "3.7": "a",
+        "3.8": "a",
+        "3.9": "a"
       },
       "notes": "Partial: auto-compression at 100% context. No user-configurable controls."
     },
@@ -453,7 +534,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Core tool. Reads images too (png, jpg, gif, webp, svg)."
     },
@@ -469,7 +553,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Core tool. Search-and-replace for large files (0.50+)."
     },
@@ -485,7 +572,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Jupyter notebook cell editing with Sonnet models."
     },
@@ -501,7 +591,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Pattern search + semantic codebase indexing."
     },
@@ -517,7 +610,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Terminal command execution with output monitoring."
     },
@@ -533,7 +629,10 @@
         "2.4": "a",
         "2.5": "a",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Partial from 0.50 (Background Agent). Await tool for background commands in 3.1+."
     },
@@ -549,7 +648,10 @@
         "2.4": "n",
         "2.5": "n",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Automations: always-on agents triggered by events from Slack, Linear, GitHub, webhooks."
     },
@@ -565,7 +667,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Agent generates search queries and searches the web."
     },
@@ -581,7 +686,10 @@
         "2.4": "a",
         "2.5": "a",
         "3.0": "a",
-        "3.2": "a"
+        "3.2": "a",
+        "3.7": "a",
+        "3.8": "a",
+        "3.9": "a"
       },
       "notes": "Partial: @Link context with PDF parsing. Not a standalone fetch tool."
     },
@@ -597,7 +705,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Reads images from workspace."
     },
@@ -613,7 +724,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Text-to-image generation, saves to assets/."
     },
@@ -629,7 +743,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Screenshots, navigation, element interaction, visual verification."
     },
@@ -645,7 +762,10 @@
         "2.4": "n",
         "2.5": "n",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Go-to-definition with full LSPs (3.0+)."
     },
@@ -661,7 +781,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Codebase indexing with meaning-based search."
     },
@@ -677,7 +800,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Built-in subagents (Explore, Bash, Browser) + custom via .cursor/agents/. Async in 2.5+."
     },
@@ -693,7 +819,10 @@
         "2.4": "n",
         "2.5": "n",
         "3.0": "n",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "/multitask for parallel dispatch. Worktrees for isolated work."
     },
@@ -709,7 +838,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Dedicated shell execution hooks"
     },
@@ -725,7 +857,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Dedicated file read/write hooks"
     },
@@ -741,7 +876,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "Dedicated MCP execution hooks"
     },
@@ -757,7 +895,10 @@
         "2.4": "y",
         "2.5": "y",
         "3.0": "y",
-        "3.2": "y"
+        "3.2": "y",
+        "3.7": "y",
+        "3.8": "y",
+        "3.9": "y"
       },
       "notes": "preCompact event, observational (non-blocking)"
     }

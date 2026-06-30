@@ -1,13 +1,13 @@
 {
   "category": "hooks",
   "title": "Hooks & Lifecycle",
-  "description": "Agent extensibility via lifecycle hooks \u2014 intercept, observe, and control agent behavior at key points in the workflow",
+  "description": "Agent extensibility via lifecycle hooks — intercept, observe, and control agent behavior at key points in the workflow",
   "features": [
     {
       "id": "hook-session-lifecycle",
       "group": "Lifecycle Hooks",
       "title": "Session lifecycle management",
-      "description": "Hooks for session start and end \u2014 initialize environment, load context, clean up resources, or log session activity",
+      "description": "Hooks for session start and end — initialize environment, load context, clean up resources, or log session activity",
       "agent_mapping": {
         "claude-code": "SessionStart, SessionEnd",
         "codex-cli": "SessionStart",
@@ -35,26 +35,23 @@
       "id": "hook-tool-use",
       "group": "Lifecycle Hooks",
       "title": "Generic tool use hooks",
-      "description": "Pre and post hooks around any tool execution \u2014 inspect, modify, block, or log tool calls",
+      "description": "Pre and post hooks around any tool execution — inspect, modify, block, or log tool calls",
       "agent_mapping": {
         "claude-code": "PreToolUse, PostToolUse, PostToolUseFailure, PostToolBatch",
         "codex-cli": "PreToolUse, PostToolUse",
         "cursor": "preToolUse, postToolUse, postToolUseFailure",
-        "windsurf": "pre_run_command, post_run_command, pre_read_code, post_read_code, pre_write_code, post_write_code",
         "copilot": "preToolUse, postToolUse",
         "cline": "PreToolUse, PostToolUse"
       },
       "sub_capabilities": [
         "Pre-tool: inspect and optionally block or modify tool input before execution",
         "Post-tool: observe results, trigger side effects (linting, formatting, logging)",
-        "Claude Code: richest event set \u2014 includes PostToolUseFailure and PostToolBatch",
-        "Windsurf: uses separate events per tool type rather than a single generic event with matchers"
+        "Claude Code: richest event set — includes PostToolUseFailure and PostToolBatch"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#pretooluse",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#pre_run_command",
         "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks",
         "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
       }
@@ -63,7 +60,7 @@
       "id": "hook-subagent-lifecycle",
       "group": "Lifecycle Hooks",
       "title": "Subagent lifecycle",
-      "description": "Hooks for when subagents are spawned and when they complete \u2014 observe delegation, aggregate results, enforce policies",
+      "description": "Hooks for when subagents are spawned and when they complete — observe delegation, aggregate results, enforce policies",
       "agent_mapping": {
         "claude-code": "SubagentStart, SubagentStop, TeammateIdle",
         "cursor": "subagentStart, subagentStop"
@@ -83,25 +80,22 @@
       "id": "hook-shell-control",
       "group": "Tool-Specific Hooks",
       "title": "Control shell commands",
-      "description": "Dedicated hooks for intercepting shell/terminal command execution \u2014 block dangerous commands, audit, or inject env vars",
+      "description": "Dedicated hooks for intercepting shell/terminal command execution — block dangerous commands, audit, or inject env vars",
       "agent_mapping": {
         "claude-code": "PreToolUse with Bash matcher",
         "codex-cli": "PreToolUse (shell-only initially)",
         "cursor": "beforeShellExecution, afterShellExecution",
-        "windsurf": "pre_run_command, post_run_command",
         "cline": "PreToolUse (on execute_command)"
       },
       "sub_capabilities": [
         "Block dangerous commands before they execute",
         "Cursor: dedicated events with command string in context",
-        "Claude Code: uses generic PreToolUse with matcher pattern 'Bash'",
-        "Windsurf: dedicated pre_run_command and post_run_command events"
+        "Claude Code: uses generic PreToolUse with matcher pattern 'Bash'"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#pre_run_command",
         "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
       }
     },
@@ -109,25 +103,22 @@
       "id": "hook-file-access",
       "group": "Tool-Specific Hooks",
       "title": "Control file access",
-      "description": "Dedicated hooks for file read and write operations \u2014 enforce access policies, trigger linting, or audit file changes",
+      "description": "Dedicated hooks for file read and write operations — enforce access policies, trigger linting, or audit file changes",
       "agent_mapping": {
         "claude-code": "PreToolUse with Read|Edit|Write matcher",
         "codex-cli": "PreToolUse on apply_patch",
         "cursor": "beforeReadFile, afterFileEdit, beforeTabFileRead, afterTabFileEdit",
-        "windsurf": "pre_read_code, post_read_code, pre_write_code, post_write_code",
         "cline": "PreToolUse (on write_to_file, read_file)"
       },
       "sub_capabilities": [
         "Pre-read: restrict which files the agent can access",
         "Post-write: trigger linting, formatting, or validation after edits",
-        "Cursor: separate events for agent chat and Tab completions",
-        "Windsurf: dedicated events per operation with file_path and edits in input"
+        "Cursor: separate events for agent chat and Tab completions"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#beforereadfile",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#pre_read_code",
         "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
       }
     },
@@ -135,12 +126,11 @@
       "id": "hook-prompt-validation",
       "group": "Tool-Specific Hooks",
       "title": "Validate prompts before submission",
-      "description": "Intercept user prompts before they reach the model \u2014 block, rewrite, redact, annotate, or inject context",
+      "description": "Intercept user prompts before they reach the model — block, rewrite, redact, annotate, or inject context",
       "agent_mapping": {
         "claude-code": "UserPromptSubmit",
         "codex-cli": "UserPromptSubmit",
         "cursor": "beforeSubmitPrompt",
-        "windsurf": "pre_user_prompt",
         "copilot": "userPromptSubmitted",
         "cline": "UserPromptSubmit"
       },
@@ -154,7 +144,6 @@
         "claude-code": "https://code.claude.com/docs/en/hooks#userpromptsubmit",
         "codex-cli": "https://developers.openai.com/codex/hooks#userpromptsubmit",
         "cursor": "https://cursor.com/docs/hooks#beforesubmitprompt",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#pre_user_prompt",
         "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks",
         "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
       }
@@ -163,12 +152,11 @@
       "id": "hook-mcp-control",
       "group": "Tool-Specific Hooks",
       "title": "Control MCP tool use",
-      "description": "Dedicated hooks for MCP server tool invocations \u2014 audit, restrict, or modify MCP tool calls independently from built-in tools",
+      "description": "Dedicated hooks for MCP server tool invocations — audit, restrict, or modify MCP tool calls independently from built-in tools",
       "agent_mapping": {
         "claude-code": "PreToolUse with mcp__* matcher, Elicitation, ElicitationResult",
         "codex-cli": "PreToolUse (MCP observation added 0.124.0)",
-        "cursor": "beforeMCPExecution, afterMCPExecution",
-        "windsurf": "pre_mcp_tool_use, post_mcp_tool_use"
+        "cursor": "beforeMCPExecution, afterMCPExecution"
       },
       "sub_capabilities": [
         "Block or audit specific MCP tool calls",
@@ -179,15 +167,14 @@
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#elicitation",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
-        "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#pre_mcp_tool_use"
+        "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution"
       }
     },
     {
       "id": "hook-compaction",
       "group": "Observation Hooks",
       "title": "Observe compaction window",
-      "description": "Hooks that fire before and after context window compaction \u2014 preserve critical state, log what gets summarized, or block compaction",
+      "description": "Hooks that fire before and after context window compaction — preserve critical state, log what gets summarized, or block compaction",
       "agent_mapping": {
         "claude-code": "PreCompact, PostCompact",
         "cursor": "preCompact",
@@ -209,7 +196,7 @@
       "id": "hook-agent-stop",
       "group": "Observation Hooks",
       "title": "Agent complete (stop)",
-      "description": "Hook that fires when the agent finishes a turn \u2014 implement quality gates, force continuation, or trigger follow-up workflows",
+      "description": "Hook that fires when the agent finishes a turn — implement quality gates, force continuation, or trigger follow-up workflows",
       "agent_mapping": {
         "claude-code": "Stop, StopFailure",
         "codex-cli": "Stop",
@@ -234,22 +221,19 @@
       "id": "hook-response-tracking",
       "group": "Observation Hooks",
       "title": "Agent response tracking",
-      "description": "Observe and react to the agent's responses \u2014 log output, track thinking, or trigger side effects after each message",
+      "description": "Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message",
       "agent_mapping": {
         "claude-code": "Notification",
-        "cursor": "afterAgentResponse, afterAgentThought",
-        "windsurf": "post_cascade_response, post_cascade_response_with_transcript"
+        "cursor": "afterAgentResponse, afterAgentThought"
       },
       "sub_capabilities": [
         "Track every agent response for observability, compliance, or analytics",
         "Cursor: afterAgentResponse after each message; afterAgentThought after thinking blocks",
-        "Windsurf: transcript variant provides full JSONL transcript path",
         "Claude Code: Notification hook covers general system events"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#notification",
-        "cursor": "https://cursor.com/docs/hooks#afteragentresponse",
-        "windsurf": "https://docs.windsurf.com/windsurf/cascade/hooks#post_cascade_response"
+        "cursor": "https://cursor.com/docs/hooks#afteragentresponse"
       }
     }
   ]

@@ -1,8 +1,8 @@
 name: cline
-homepage: https://docs.z.ai/devpack/tool/cline
+homepage: https://github.com/cline/cline
 sources:
-  changelog: https://github.com/cline/cline/blob/main/CHANGELOG.md
-version_regex: '^##\s+\[(\d+\.\d+\.\d+)\]'
+  releases: https://github.com/cline/cline/releases.atom
+version_regex: '<title>CLI v(\d+\.\d+\.\d+)</title>'
 
 features:
   - hooks

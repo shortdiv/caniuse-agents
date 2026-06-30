@@ -1,8 +1,8 @@
 name: codex
 homepage: https://docs.openai.com
 sources:
-  changelog: https://developers.openai.com/codex/changelog
-version_regex: 'Codex CLI\s+v?(\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?)'
+  releases: https://github.com/openai/codex/releases.atom
+version_regex: '<title>(\d+\.\d+\.\d+)</title>'
 
 features:
   - hooks

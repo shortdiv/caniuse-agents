@@ -92,6 +92,23 @@
 - Removed to focus on Claude + Codex with full version history
 
 ## Other agents researched but not yet seeded
-- Cursor, Windsurf, Copilot, Cline, Roo Code, Augment Code, Amazon Q, JetBrains AI
+- Roo Code, Augment Code, Amazon Q, JetBrains AI
 - Initial hooks research done (see feature-categories.md)
 - Need changelog/release research for version data before seeding
+
+## June 2026 refresh policy
+
+- Track stable releases only.
+- Retain feature-changing milestones plus the latest stable release rather than every patch.
+- GitHub Copilot means the local GitHub Copilot CLI and its SDK-facing runtime, not the monthly cloud/editor release train.
+- Cline means Cline CLI and the Cline SDK runtime introduced with CLI 3.0.0, not the editor-extension release train.
+- Windsurf is intentionally not part of the matrix.
+- Model-plan, region, and surface availability are outside the compatibility dataset.
+
+### Current primary sources
+
+- Claude Code: npm publish timestamps and the official `anthropics/claude-code` changelog/releases
+- Codex CLI: stable `openai/codex` GitHub releases and the official Codex manual
+- Cursor: the official Cursor changelog
+- GitHub Copilot CLI: `github/copilot-cli/changelog.md`
+- Cline CLI & SDK: stable `cli-v*` releases from `cline/cline`
