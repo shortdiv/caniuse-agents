@@ -125,6 +125,47 @@ The implementation and the written workflow have drifted:
 5. Should every upstream patch release be stored, or only feature-changing milestones plus the latest stable release?
 6. Should model availability include plan, region, and surface constraints, similar to the untracked `data/availability.json` work?
 
+### Follow-up: Cline session lifecycle
+
+- The `hook-session-lifecycle` row is a normalized cross-agent capability label, not a literal Cline changelog phrase.
+- In the Cline data, the row is populated from the hook docs and current runtime behavior: `TaskStart` is the only lifecycle event mapped, and the notes explicitly say it fires at the beginning of each agentic loop and is task-level, not session-level (`data/features/hooks.json:7-31`, `data/agents/cline.json:685-723`).
+- The Cline hooks landing page itself does not enumerate a `SessionStart` or `SessionEnd` event; it points readers to SDK hooks instead (`https://docs.cline.bot/customization/hooks`).
+- So the data currently says "session lifecycle management" as an umbrella comparison, but Cline’s actual support is narrower than that title suggests.
+
+### Follow-up: hook integration model
+
+- Yes, Cline’s hook model is different from the direct-config approach used by Claude Code and Codex.
+- Claude Code hooks are defined in settings files, including `~/.claude/settings.json`, `.claude/settings.json`, and plugin-bundled `hooks/hooks.json` (`https://code.claude.com/docs/en/hooks`).
+- Codex hooks are defined in `hooks.json` or inline `[hooks]` tables inside `config.toml`, with plugin-bundled lifecycle config as an additional source (`https://developers.openai.com/codex/hooks`).
+- GitHub Copilot also reads hook files from repo/user config and plugin bundles, plus cloud-agent repository hooks (`https://docs.github.com/en/copilot/reference/hooks-reference`).
+- Cline’s plugin docs say hooks are defined inside the plugin `hooks` object, not directly on the extension, and that plugin support applies to the Cline SDK, CLI, and Kanban surfaces (`https://docs.cline.bot/sdk/plugins`, `https://docs.cline.bot/customization/plugins`).
+- So the distinguishing feature is not “hooks exist” but “where the hook logic lives”: Cline pushes lifecycle logic into SDK plugins, while the others are primarily config-file driven with optional plugin loading.
+
+### Follow-up: when Cline plugins appeared
+
+- The GitHub release history shows CLI plugin management by `cli-v3.0.27` on 2026-06-17, where the changelog adds `cline skill`, matches `cline plugin install`, and mentions plugin MCP OAuth handling. That is the earliest clear CLI-era marker for the plugin surface in the release notes.
+- The broader SDK/plugin story becomes explicit in `v4.0.0` on 2026-06-26, which adds the SDK-backed runtime, the Customize marketplace, and "Cline Plugins" as a first-class feature.
+- I did not find a release note that says "session hooks via plugins" in those exact words. The changelog evidence supports plugin-based extensibility and plugin-bundled hooks, but the session-hook semantics still come from the SDK/plugin docs, not a single release-note sentence.
+
+### Follow-up: earliest hooks origin
+
+- The earliest release-note reference I found for the hooks foundation is `v0.0.1-cli` from 2025-10-13. Its release notes explicitly list `Hooks: Initial implementation of hooks foundation logic [ENG-1011, ENG-985]` and link back to PR `#6755` (`https://github.com/cline/cline/releases/tag/v0.0.1-cli`).
+- The linked PR discussion says the initial hook model used one entrypoint per hook in `.clinerules/hooks/`, with support for global `.clinerules/hooks/` too (`https://github.com/cline/cline/pull/6755#diff-43f3811022494cd7f00acc119494dec2a5b1faa3dcc2191759365ff8238384b7`).
+- That is earlier than the CLI 3.x plugin surface. So if the matrix is meant to capture when Cline first gained hook extensibility at all, the start point should be `v0.0.1-cli`, not `cli-v3.0.27` or `v4.0.0`.
+
+### Follow-up: CLI hooks versus plugins
+
+- `v3.33.0` on 2025-10-16 is the earliest release I found that clearly ships hooks in the CLI product line: the notes include “Hooks: Foundation logic” and “Global clinerules dir,” which implies the hook execution model lived directly in the CLI filesystem/config surface at that point (`https://github.com/cline/cline/releases/tag/v3.33.0`).
+- `v3.41.0` on 2025-12-11 then explicitly says “feat(hooks): enable hooks in the CLI” (`https://github.com/cline/cline/releases/tag/v3.41.0`), so by then the hook feature was definitely first-class in the CLI release stream.
+- I do not see evidence that hooks were "moved to plugins" before `v4.0.0`. The first release that clearly makes plugins first-class is `v4.0.0`, which adds the SDK-backed runtime, the Customize marketplace, and plugin-bundled skills/capabilities (`https://github.com/cline/cline/releases/tag/v4.0.0`).
+- Net: hooks in Cline start as a direct CLI capability, then plugin support arrives later as an additional extensibility layer. Those are related, but not the same change.
+
+### Follow-up: current interpretation
+
+- Based on the releases above, the current `hook-session-lifecycle` row is still too coarse if it implies a true session start/end pair for Cline.
+- What Cline clearly has in the CLI line is hook foundation logic and later explicit CLI hook enablement.
+- What `v4.0.0` adds is the SDK-backed app/runtime plus plugin packaging. The release notes explicitly say Cline now runs tasks through the shared Cline SDK session layer and that plugins can package reusable automations and extend Cline with custom tools, workflows, skills, and MCP-powered capabilities. That is enough to treat the lifecycle surface as app/runtime-backed in `v4.0.0`, even though the release notes still do not describe a neat one-line migration from CLI hooks to plugin hooks.
+
 ---
 
 <!-- Follow-up research appended below -->
@@ -137,5 +178,7 @@ The maintainer resolved the open questions as follows:
 2. Copilot tracks the local Copilot CLI/agent runtime that developers can build on top of, not the monthly cloud/editor product.
 3. Cline tracks the Cline SDK/CLI surface, not the VS Code/JetBrains extension.
 4. Windsurf should be removed from the compatibility matrix and data plane.
-5. Store feature-changing milestones tied to stable releases, plus the latest relevant stable release; do not ingest every patch.
+5. Store every stable release in the version timeline. Carry support values
+   forward between releases and reserve `version_notes` for feature-changing
+   milestones.
 6. Defer plan, region, and surface availability. The untracked `data/availability.json` work is outside this refresh.

@@ -299,3 +299,7 @@ function applySince(agentData, agentMeta, featureId, firstVersion, code) {
     }
   }
 }
+
+// Expand the curated compatibility milestones into complete stable release
+// histories after applying all feature transitions.
+await import("./sync-stable-releases.mjs");

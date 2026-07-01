@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "validate": "node scripts/validate-data.mjs"
+    "validate": "node scripts/validate-data.mjs",
+    "sync-releases": "node scripts/sync-stable-releases.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

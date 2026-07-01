@@ -98,8 +98,8 @@
 
 ## June 2026 refresh policy
 
-- Track stable releases only.
-- Retain feature-changing milestones plus the latest stable release rather than every patch.
+- Track every stable release so displayed version ranges remain continuous.
+- Carry compatibility values forward and add notes only at feature-changing milestones.
 - GitHub Copilot means the local GitHub Copilot CLI and its SDK-facing runtime, not the monthly cloud/editor release train.
 - Cline means Cline CLI and the Cline SDK runtime introduced with CLI 3.0.0, not the editor-extension release train.
 - Windsurf is intentionally not part of the matrix.
@@ -111,4 +111,5 @@
 - Codex CLI: stable `openai/codex` GitHub releases and the official Codex manual
 - Cursor: the official Cursor changelog
 - GitHub Copilot CLI: `github/copilot-cli/changelog.md`
-- Cline CLI & SDK: stable `cli-v*` releases from `cline/cline`
+- Cline: CLI hook foundation in `cli-v*` releases, plus SDK-backed VS Code runtime and plugins in `v4.0.0+` from `cline/cline`
+- Cline's `hook-session-lifecycle` row is an umbrella label. The underlying Cline mapping is `TaskStart` only, with notes that it is task-level rather than a true session start/end pair (`data/features/hooks.json:7-31`, `data/agents/cline.json:685-723`).

@@ -139,7 +139,9 @@ const perAgent = supportRows.map(({ agent, support }) => {
   const stats = featureData?.stats[agent.id] ?? {};
 
   const resolved = segments.map((seg) => ({
-    ...supportAtTime(versions, stats, seg.endTime),
+    // Segments are half-open intervals: [startTime, endTime). Resolve at the
+    // start so a version released at endTime belongs only to the next segment.
+    ...supportAtTime(versions, stats, seg.startTime),
     segment: seg,
   }));
 
@@ -173,14 +175,25 @@ for (let i = 0; i < splitIndices.length; i++) {
 const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
   const agentVersionNotes = featureData?.versionNotes[agent.id] ?? {};
   const fallbackNote = support.notes || "";
+  const versions = agent.versions ?? [];
 
   const buckets: Bucket[] = rowRanges
     .map((range) => {
       const group = resolved.slice(range.start, range.end);
-      const versionNames = group
-        .map((g) => g.version)
-        .filter((v): v is string => v !== null);
-      const unique = [...new Set(versionNames)];
+      const startTime = group[0].segment.startTime;
+      const endTime = group[group.length - 1].segment.endTime;
+      const unique = versions
+        .filter((version) => {
+          const releasedAt = new Date(version.date).getTime();
+          return releasedAt >= startTime && releasedAt < endTime;
+        })
+        .map((version) => version.version);
+
+      // If this agent had no release inside a cross-agent window, show the
+      // version that remained active throughout that window.
+      if (unique.length === 0 && group[0].version !== null) {
+        unique.push(group[0].version);
+      }
 
       let label: string;
       if (unique.length === 0) {
@@ -190,9 +203,6 @@ const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
       } else {
         label = `${unique[0]} - ${unique[unique.length - 1]}`;
       }
-
-      const startTime = group[0].segment.startTime;
-      const endTime = group[group.length - 1].segment.endTime;
 
       // Resolve version-specific note: use the latest version in this
       // bucket that has a version_notes entry, else fall back to agent note.

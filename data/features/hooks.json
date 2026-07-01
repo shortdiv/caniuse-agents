@@ -21,7 +21,7 @@
         "Claude Code: SessionStart (1.0.62) and SessionEnd (1.0.85) shipped separately",
         "Codex CLI: SessionStart only, can distinguish fresh start vs resume vs /clear",
         "Cursor: both events, fire-and-forget (non-blocking); sessionEnd includes reason and duration",
-        "Cline: TaskStart fires at the beginning of each agentic loop (task-level, no session end hook)"
+        "Cline: TaskStart in the CLI fires at the beginning of each agentic loop; v4.0.0 adds an SDK-backed session layer and plugin packaging for runtime extensibility"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#sessionstart",
