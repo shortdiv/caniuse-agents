@@ -1,0 +1,24 @@
+src/pages/index.astro
+  06a62a9b7542f173 43-45,53-54,62-63,71,79,87,110,116,118,124,131-149,151-165,169-222,227-229,231-232,234,236-241,244-245,248-257,260-266,284,373,386,397,401,409-410,417-421,425-426,442,445,452,460,469,478,488,494,506,510,518,530,539,552
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "8013c711d9e755ba36a6719dc2998445a27c43e5",
+  "prompts": {
+    "06a62a9b7542f173": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "df031ae9-9372-4942-a8bd-983b6a0f4c9f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 216,
+      "total_deletions": 277,
+      "accepted_lines": 248,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/1c6c26951b89c17a26819b190169eb02748d46456bca9aea3e05740a8782ce5e"
+    }
+  }
+}
