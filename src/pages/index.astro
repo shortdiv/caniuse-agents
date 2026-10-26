@@ -33,6 +33,9 @@ const baselines = new Map<string, Baseline>(
   ),
 );
 const SHORT = { widely: "Widely", newly: "Newly", limited: "Limited" } as const;
+// Card colour follows the feature table's legend: supported (green), partial (amber), no (orange).
+const tone = (b: Baseline) =>
+  b.status !== "limited" ? "yes" : b.gaps.length < agents.length ? "partial" : "no";
 // Within a category: widely available first, then newly, then limited (original order otherwise).
 const ORDER = { widely: 0, newly: 1, limited: 2 } as const;
 const byAvailability = (features: Feature[]) =>
@@ -104,7 +107,7 @@ const featureRows = categories.flatMap((category) =>
                 return (
                 <a
                   href={`/features/${feature.id}`}
-                  class={`feature-card bl-${baseline.status}`}
+                  class={`feature-card bl-${baseline.status} tone-${tone(baseline)}`}
                   data-feature-item
                   data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
                 >
@@ -362,23 +365,19 @@ const featureRows = categories.flatMap((category) =>
     border-color: var(--accent);
   }
 
-  /* Baseline treatment, in the table's pattern language:
-     widely = solid tint, newly = vertical rules, limited = diagonal hatch. */
-  .feature-card.bl-widely {
-    --bl-color: var(--moss);
-    background: color-mix(in srgb, var(--moss) 9%, var(--bg-elev, var(--surface)));
+  /* Baseline treatment in the feature table's legend colours:
+     supported (widely/newly), partial (limited, someone has it), no (nobody has it). */
+  .feature-card.tone-yes {
+    --bl-color: var(--status-yes-text);
+    background: var(--status-yes-bg);
   }
-  .feature-card.bl-newly {
-    --bl-color: var(--moss);
-    background:
-      repeating-linear-gradient(90deg, color-mix(in srgb, var(--moss) 16%, transparent) 0 1.5px, transparent 1.5px 6px),
-      var(--bg-elev, var(--surface));
+  .feature-card.tone-partial {
+    --bl-color: var(--status-partial-text);
+    background: var(--status-partial-bg);
   }
-  .feature-card.bl-limited {
-    --bl-color: var(--ochre);
-    background:
-      repeating-linear-gradient(135deg, color-mix(in srgb, var(--ochre) 14%, transparent) 0 1.5px, transparent 1.5px 6px),
-      var(--bg-elev, var(--surface));
+  .feature-card.tone-no {
+    --bl-color: var(--status-no-text);
+    background: var(--status-no-bg);
   }
 
   .bl-tag {
