@@ -6,6 +6,7 @@ import type {
   AgentVersion,
   Feature,
 } from "../lib/types.js";
+import { getAgentMark } from "../lib/agent-meta";
 
 interface Props {
   featureData: CaniuseFeatureData | null;
@@ -104,31 +105,6 @@ const agentBuckets = perAgent.map(({ agent, support, buckets }) => ({
   support,
   buckets: [...buckets, ...Array(numRows - buckets.length).fill(NOT_RELEASED)],
 }));
-
-// Agent identity: logo path (if available), fallback color + monogram
-const agentMeta: Record<
-  string,
-  { color: string; short: string; logo?: string; logoDark?: string }
-> = {
-  "claude-code": {
-    color: "#D97757",
-    short: "CC",
-    logo: "/logos/claudecode.png",
-  },
-  "codex": { color: "#9CA3AF", short: "CX", logo: "/logos/codex.svg" },
-  cursor: { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
-  "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
-  copilot: { color: "#6C63FF", short: "CP", logo: "/logos/copilot-light.svg", logoDark: "/logos/copilot-dark.svg" },
-  opencode: { color: "#4AA8D8", short: "OC", logo: "/logos/opencode-light.svg", logoDark: "/logos/opencode-dark.svg" },
-  devin: { color: "#7B61FF", short: "DV" },
-  aider: { color: "#5BB67A", short: "AI" },
-};
-
-function getAgentMark(id: string, name: string) {
-  return (
-    agentMeta[id] || { color: "#777", short: name.slice(0, 2).toUpperCase() }
-  );
-}
 
 // Build overview summary from current support status
 const supported = supportRows.filter(

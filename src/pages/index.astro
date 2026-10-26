@@ -13,6 +13,7 @@ import {
   type Baseline,
 } from "../lib/data.js";
 import type { Feature } from "../lib/types";
+import { getAgentMark } from "../lib/agent-meta";
 
 const [categories, agents] = await Promise.all([
   loadCategories(),
@@ -34,6 +35,14 @@ const baselines = new Map<string, Baseline>(
 );
 const SHORT = { widely: "Widely", newly: "Newly", limited: "Limited" } as const;
 // Card colour follows the feature table's legend: supported (green), partial (amber), no (orange).
+// Each agent's current support for a limited feature, for the logo row.
+const STATE_LABEL = { y: "full support", a: "partial support", n: "no support", u: "unknown", d: "deprecated" } as const;
+const agentStates = (b: Baseline) =>
+  agents.map((agent) => {
+    const gap = b.status === "limited" ? b.gaps.find((g) => g.agent === agent.name) : undefined;
+    const state = (gap?.support ?? "y") as keyof typeof STATE_LABEL;
+    return { agent, state, mark: getAgentMark(agent.id, agent.name), label: `${agent.name}: ${STATE_LABEL[state]}` };
+  });
 const tone = (b: Baseline) =>
   b.status !== "limited" ? "yes" : b.gaps.length < agents.length ? "partial" : "no";
 // Within a category: widely available first, then newly, then limited (original order otherwise).
@@ -119,7 +128,24 @@ const featureRows = categories.flatMap((category) =>
                     </span>
                   </div>
                   <span class="feature-card-desc">{feature.description}</span>
-                  {baseline.status === "limited" && <span class="feature-card-gaps">{baselineGaps(baseline)}</span>}
+                  {baseline.status === "limited" && (
+                    <span class="agent-row" aria-label={baselineGaps(baseline)}>
+                      {agentStates(baseline).map(({ agent, state, mark, label }) => (
+                        <span class={`agent-icon state-${state}`} title={label}>
+                          {mark.logo && mark.logoDark ? (
+                            <>
+                              <img class="logo-light" src={mark.logo} alt="" width="16" height="16" />
+                              <img class="logo-dark" src={mark.logoDark} alt="" width="16" height="16" />
+                            </>
+                          ) : mark.logo ? (
+                            <img src={mark.logo} alt="" width="16" height="16" />
+                          ) : (
+                            <span class="agent-mono" style={`background:${mark.color}`}>{mark.short}</span>
+                          )}
+                        </span>
+                      ))}
+                    </span>
+                  )}
                 </a>
                 );
               })}
@@ -401,11 +427,60 @@ const featureRows = categories.flatMap((category) =>
   .bl-newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
   .bl-limited .bl-mark { border-style: dashed; }
 
-  .feature-card-gaps {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    line-height: 1.45;
-    color: var(--bl-color);
+  /* Logo row on limited cards: full colour = full support, faded with a dot = partial, grey = none/unknown. */
+  .agent-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .agent-icon {
+    position: relative;
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+  }
+  .agent-icon img { width: 16px; height: 16px; object-fit: contain; }
+  .agent-mono {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    font: 700 7px/1 var(--font-mono);
+    color: #fff;
+  }
+  /* Status badge on each logo, like web.dev's Baseline widget. */
+  .agent-icon::after {
+    position: absolute;
+    right: -5px;
+    bottom: -4px;
+    display: grid;
+    place-items: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    font: 700 7px/1 var(--font-mono);
+    color: var(--bg);
+    box-shadow: 0 0 0 1.5px var(--status-partial-bg);
+  }
+  .tone-yes .agent-icon::after { box-shadow: 0 0 0 1.5px var(--status-yes-bg); }
+  .agent-icon.state-y::after { content: "✓"; background: var(--status-yes-text); }
+  .agent-icon.state-a::after { content: "~"; background: var(--status-partial-text); }
+  .agent-icon.state-n::after,
+  .agent-icon.state-d::after { content: "✕"; background: var(--status-no-text); }
+  .agent-icon.state-u::after { content: "?"; background: var(--text-subtle); }
+  .agent-icon.state-n img,
+  .agent-icon.state-u img,
+  .agent-icon.state-d img,
+  .agent-icon.state-n .agent-mono,
+  .agent-icon.state-u .agent-mono {
+    filter: grayscale(1);
+    opacity: 0.35;
+  }
+  .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    .logo-light { display: none; }
+    .logo-dark { display: block; }
   }
 
   .feature-card-top {
