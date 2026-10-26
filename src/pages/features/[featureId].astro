@@ -90,11 +90,12 @@ const allFeatures = categories.flatMap((c) =>
             </div>
             <h2 class="matrix-feature-title">{feature.title}</h2>
             <p class="matrix-feature-blurb">{feature.description}</p>
-            <div class={`baseline baseline--${baseline.status}`} title={`Widely available: every tracked agent has fully supported it for ${BASELINE_WIDELY_MONTHS}+ months.`}>
+            <div class={`baseline baseline--${baseline.status}`} title={`Adapted from web.dev's Baseline. Widely available here means every tracked agent has fully supported it for ${BASELINE_WIDELY_MONTHS}+ months (the web uses 30 months and its core browsers).`}>
               <span class="baseline-mark" aria-hidden="true"></span>
               <div class="baseline-body">
                 <span class="baseline-title"><span class="baseline-eyebrow">Baseline</span> {baselineTitle}</span>
                 <span class="baseline-text">{baselineText}</span>
+                <a class="baseline-credit" href="https://web.dev/baseline" target="_blank" rel="noopener">Based on web.dev's Baseline</a>
               </div>
             </div>
             <div class="matrix-pills">
@@ -612,4 +613,6 @@ const allFeatures = categories.flatMap((c) =>
     margin-right: 6px;
   }
   .baseline-text { font-size: 13px; color: var(--text-muted); line-height: 1.45; }
+  .baseline-credit { font: 500 11px/1.4 var(--font-mono); color: var(--text-subtle); text-decoration: underline; text-underline-offset: 2px; width: fit-content; }
+  .baseline-credit:hover { color: var(--accent); }
 </style>

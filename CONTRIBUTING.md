@@ -96,10 +96,10 @@ Behind a flag, experimental, or needing extra setup (an env var, a paid tier) co
 
 #### Baseline
 
-Each feature page shows a Baseline status, computed from the data (`getBaseline` in `src/lib/data.ts`):
+Each feature page shows a Baseline status, adapted from [web.dev's Baseline](https://web.dev/baseline) and computed from the data (`getBaseline` in `src/lib/data.ts`):
 - **Limited availability:** some tracked agent lacks full support (`y`) in its current version.
 - **Newly available:** every tracked agent fully supports it. The date is when the last one added it.
-- **Widely available:** newly available for 6+ months (`BASELINE_WIDELY_MONTHS`).
+- **Widely available:** newly available for 6+ months (`BASELINE_WIDELY_MONTHS`). The web uses 30 months and a core browser set; here the set is the tracked harnesses and the window is shorter, because harnesses move faster.
 
 #### Notes
 

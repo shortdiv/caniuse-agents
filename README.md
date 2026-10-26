@@ -35,4 +35,4 @@ Contributions are welcome — whether it's fixing a support code, adding a featu
 
 ## Credits
 
-Created and maintained by [@shortdiv](https://shortdiv.com). Inspired by [caniuse.com](https://caniuse.com) by [@Fyrd](https://github.com/Fyrd).
+Created and maintained by [@shortdiv](https://shortdiv.com). Inspired by [caniuse.com](https://caniuse.com) by [@Fyrd](https://github.com/Fyrd). The Baseline status is adapted from [web.dev's Baseline](https://web.dev/baseline) (WebDX Community Group), applied to agent harnesses.
