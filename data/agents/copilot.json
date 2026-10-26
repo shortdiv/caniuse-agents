@@ -1,6 +1,6 @@
 {
   "id": "copilot",
-  "name": "GitHub Copilot CLI",
+  "name": "GitHub Copilot",
   "vendor": "GitHub",
   "url": "https://github.com/features/copilot",
   "features": {

@@ -2981,6 +2981,7 @@
     "vendor": "Anysphere",
     "type": "ide",
     "url": "https://cursor.com",
+    "surfaces": "Editor and the Cursor CLI: same modes, rules (.cursor/rules, AGENTS.md, CLAUDE.md) and MCP config, per Cursor's CLI docs. Hooks are documented for the editor; the CLI docs don't say whether it runs them.",
     "current_version": "3.27",
     "version_list": [
       {
@@ -3066,12 +3067,13 @@
     ]
   },
   "copilot": {
-    "name": "GitHub Copilot CLI",
-    "long_name": "GitHub Copilot CLI",
+    "name": "GitHub Copilot",
+    "long_name": "GitHub Copilot (GitHub)",
     "abbr": "GHCP",
     "vendor": "GitHub",
     "type": "cli",
-    "url": "https://github.com/features/copilot/cli",
+    "url": "https://github.com/features/copilot",
+    "surfaces": "Copilot CLI, the agent in VS Code and the GitHub Copilot app: one harness and hook format, per VS Code's hooks docs. Versions follow the Copilot CLI release line; older rows reflect the CLI, from before VS Code shared the harness.",
     "current_version": "1.0.103",
     "version_list": [
       {

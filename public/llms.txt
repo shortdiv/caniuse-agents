@@ -1,6 +1,6 @@
 # Can I Use Agents?
 
-> A community-maintained compatibility table for AI coding agent features, modeled after caniuse.com. Tracks hooks, MCP, tools, instructions, and memory support across Claude Code, Codex, Cursor, GitHub Copilot CLI, and OpenCode.
+> A community-maintained compatibility table for AI coding agent features, modeled after caniuse.com. Tracks hooks, MCP, tools, instructions, and memory support across Claude Code, Codex, Cursor, GitHub Copilot, and OpenCode.
 
 This site compares feature support across AI coding agents with version-level granularity. Each feature page shows a time-aligned matrix of support across agents, similar to how caniuse.com compares browser support for web standards. Data is stored as JSON and open for community contributions.
 
@@ -8,8 +8,8 @@ This site compares feature support across AI coding agents with version-level gr
 
 - Claude Code (Anthropic): 451 versions from 0.2.31 (Mar 2025) to 2.1.311 (Oct 2026). Covers CLI, IDE extensions, desktop app and web: one agent core and settings. Surface-only features are noted on the feature.
 - Codex (OpenAI): 130 versions from 0.2.0 (Jul 2025) to 0.164.0 (Oct 2026). Covers CLI, IDE extension and desktop app: one agent core and config (config.toml, hooks, MCP, AGENTS.md), and the same session logs. Surface-only features are noted on the feature.
-- Cursor (Anysphere): 16 versions from 0.45 (Jan 2025) to 3.27 (Oct 2026)
-- GitHub Copilot CLI: 120 versions from 0.0.374 (Jan 2026) to 1.0.103 (Oct 2026)
+- Cursor (Anysphere): 16 versions from 0.45 (Jan 2025) to 3.27 (Oct 2026). Covers Editor and the Cursor CLI: same modes, rules (.cursor/rules, AGENTS.md, CLAUDE.md) and MCP config, per Cursor's CLI docs. Hooks are documented for the editor; the CLI docs don't say whether it runs them.
+- GitHub Copilot (GitHub): 120 versions from 0.0.374 (Jan 2026) to 1.0.103 (Oct 2026). Covers Copilot CLI, the agent in VS Code and the GitHub Copilot app: one harness and hook format, per VS Code's hooks docs. Versions follow the Copilot CLI release line; older rows reflect the CLI, from before VS Code shared the harness.
 - OpenCode (Anomaly): 21 versions from 0.1.30 (Jun 2025) to 1.19.4 (Oct 2026). Tracked from v0.1.30 (June 2025), when OpenCode was rewritten in TypeScript. Releases 0.0.x were an earlier Go program in the same repository and aren't compared here.
 
 ## Hooks & Lifecycle: 10 features
