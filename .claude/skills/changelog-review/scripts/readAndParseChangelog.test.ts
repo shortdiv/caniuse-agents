@@ -22,20 +22,19 @@ describe("claude-code", () => {
   }, TIMEOUT);
 });
 
-// cline CLI stable releases use cli-v3.x.x tags
-describe("cline", () => {
+// opencode: the npm registry's latest dist-tag (its release feed mixes in other artifacts)
+describe("opencode", () => {
   let result: Awaited<ReturnType<typeof resolveChangelog>>;
 
   beforeAll(async () => {
-    result = await resolveChangelog("cline");
+    result = await resolveChangelog("opencode");
   }, TIMEOUT);
 
-  it("resolves changelog url", () => {
-    expect(result).toHaveProperty("url");
-    expect(result.source).toBe("github-releases");
+  it("resolves the version api", () => {
+    expect(result.source).toBe("api");
   });
 
-  it("extracts bracketed semver", async () => {
+  it("extracts semver", async () => {
     const version = await getAgentVersion(result);
     expect(version).toMatch(/^\d+\.\d+\.\d+$/);
   }, TIMEOUT);
@@ -51,7 +50,7 @@ describe("codex", () => {
 
   it("resolves changelog url", () => {
     expect(result).toHaveProperty("url");
-    expect(result.source).toBe("github-releases");
+    expect(result.source).toBe("api");
   });
 
   it("extracts stable semver", async () => {
@@ -87,10 +86,12 @@ describe("cursor", () => {
     result = await resolveChangelog("cursor");
   }, TIMEOUT);
 
-  it("resolves changelog url", () => {
-    expect(result).toHaveProperty("url");
-    expect(result.source).toBe("marketing");
+  it("resolves the download api", () => {
+    expect(result.source).toBe("api");
   });
 
-  it.todo("extracts semver from marketing page (requires JS rendering)");
+  it("extracts major.minor.patch", async () => {
+    const version = await getAgentVersion(result);
+    expect(version).toMatch(/^\d+\.\d+\.\d+$/);
+  }, TIMEOUT);
 });

@@ -2,9 +2,10 @@ name: cursor
 github_repo: cursor/cursor
 homepage: https://cursor.com/docs
 sources:
+  # The changelog stopped printing version numbers after 3.11; the download API reports the current build.
+  version: https://cursor.com/api/download?platform=darwin-arm64&releaseTrack=stable
   changelog: https://cursor.com/changelog
-  releases: https://releasebot.io/updates/cursor
-version_regex: '^##\s+(\d+\.\d+\.\d+)'
+version_regex: '"version":"(\d+\.\d+\.\d+)"'
 
 features:
   - hooks

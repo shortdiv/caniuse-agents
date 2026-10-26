@@ -10,25 +10,23 @@
       "description": "Hooks for session start and end — initialize environment, load context, clean up resources, or log session activity",
       "agent_mapping": {
         "claude-code": "SessionStart, SessionEnd",
-        "codex-cli": "SessionStart",
+        "codex-cli": "SessionStart, SessionEnd",
         "cursor": "sessionStart, sessionEnd",
         "copilot": "sessionStart, sessionEnd",
-        "cline": "TaskStart"
+        "opencode": "session.created, session.deleted"
       },
       "sub_capabilities": [
         "Session start: initialize env vars, load context, inject configuration",
         "Session end: clean up resources, flush logs, save state",
         "Claude Code: SessionStart (1.0.62) and SessionEnd (1.0.85) shipped separately",
-        "Codex CLI: SessionStart only, can distinguish fresh start vs resume vs /clear",
-        "Cursor: both events, fire-and-forget (non-blocking); sessionEnd includes reason and duration",
-        "Cline: TaskStart in the CLI fires at the beginning of each agentic loop; v4.0.0 adds an SDK-backed session layer and plugin packaging for runtime extensibility"
+        "Codex CLI: SessionStart (start, resume, /clear, compact, fork) and SessionEnd (0.145.0)",
+        "Cursor: both events, fire-and-forget (non-blocking); sessionEnd includes reason and duration"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#sessionstart",
         "codex-cli": "https://developers.openai.com/codex/hooks#sessionstart",
         "cursor": "https://cursor.com/docs/hooks#sessionstart",
-        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks",
-        "cline": "https://docs.cline.bot/customization/hooks#taskstart"
+        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
     },
     {
@@ -41,7 +39,7 @@
         "codex-cli": "PreToolUse, PostToolUse",
         "cursor": "preToolUse, postToolUse, postToolUseFailure",
         "copilot": "preToolUse, postToolUse",
-        "cline": "PreToolUse, PostToolUse"
+        "opencode": "tool.execute.before, tool.execute.after"
       },
       "sub_capabilities": [
         "Pre-tool: inspect and optionally block or modify tool input before execution",
@@ -52,8 +50,7 @@
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#pretooluse",
-        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks",
-        "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
+        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
     },
     {
@@ -63,7 +60,8 @@
       "description": "Hooks for when subagents are spawned and when they complete — observe delegation, aggregate results, enforce policies",
       "agent_mapping": {
         "claude-code": "SubagentStart, SubagentStop, TeammateIdle",
-        "cursor": "subagentStart, subagentStop"
+        "cursor": "subagentStart, subagentStop",
+        "opencode": "session.created (child sessions)"
       },
       "sub_capabilities": [
         "Subagent start: observe or veto when a parent agent delegates to a child",
@@ -85,7 +83,7 @@
         "claude-code": "PreToolUse with Bash matcher",
         "codex-cli": "PreToolUse (shell-only initially)",
         "cursor": "beforeShellExecution, afterShellExecution",
-        "cline": "PreToolUse (on execute_command)"
+        "opencode": "tool.execute.before (bash), shell.env"
       },
       "sub_capabilities": [
         "Block dangerous commands before they execute",
@@ -95,8 +93,7 @@
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
-        "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution",
-        "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
+        "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution"
       }
     },
     {
@@ -108,7 +105,7 @@
         "claude-code": "PreToolUse with Read|Edit|Write matcher",
         "codex-cli": "PreToolUse on apply_patch",
         "cursor": "beforeReadFile, afterFileEdit, beforeTabFileRead, afterTabFileEdit",
-        "cline": "PreToolUse (on write_to_file, read_file)"
+        "opencode": "tool.execute.before (read/edit), file.edited"
       },
       "sub_capabilities": [
         "Pre-read: restrict which files the agent can access",
@@ -118,8 +115,7 @@
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
         "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
-        "cursor": "https://cursor.com/docs/hooks#beforereadfile",
-        "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
+        "cursor": "https://cursor.com/docs/hooks#beforereadfile"
       }
     },
     {
@@ -131,8 +127,7 @@
         "claude-code": "UserPromptSubmit",
         "codex-cli": "UserPromptSubmit",
         "cursor": "beforeSubmitPrompt",
-        "copilot": "userPromptSubmitted",
-        "cline": "UserPromptSubmit"
+        "copilot": "userPromptSubmitted"
       },
       "sub_capabilities": [
         "Block prompts that violate policies (PII, secrets, off-topic)",
@@ -144,8 +139,7 @@
         "claude-code": "https://code.claude.com/docs/en/hooks#userpromptsubmit",
         "codex-cli": "https://developers.openai.com/codex/hooks#userpromptsubmit",
         "cursor": "https://cursor.com/docs/hooks#beforesubmitprompt",
-        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks",
-        "cline": "https://docs.cline.bot/customization/hooks#pretooluse"
+        "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
     },
     {
@@ -156,7 +150,8 @@
       "agent_mapping": {
         "claude-code": "PreToolUse with mcp__* matcher, Elicitation, ElicitationResult",
         "codex-cli": "PreToolUse (MCP observation added 0.124.0)",
-        "cursor": "beforeMCPExecution, afterMCPExecution"
+        "cursor": "beforeMCPExecution, afterMCPExecution",
+        "opencode": "tool.execute.before (MCP tools)"
       },
       "sub_capabilities": [
         "Block or audit specific MCP tool calls",
@@ -178,7 +173,8 @@
       "agent_mapping": {
         "claude-code": "PreCompact, PostCompact",
         "cursor": "preCompact",
-        "cline": "PreCompact"
+        "copilot": "preCompact",
+        "opencode": "experimental.session.compacting, session.compacted"
       },
       "sub_capabilities": [
         "PreCompact: save state or block compaction if in a critical section",
@@ -188,8 +184,7 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#precompact",
-        "cursor": "https://cursor.com/docs/hooks#precompact",
-        "cline": "https://docs.cline.bot/customization/hooks#precompact"
+        "cursor": "https://cursor.com/docs/hooks#precompact"
       }
     },
     {
@@ -201,20 +196,18 @@
         "claude-code": "Stop, StopFailure",
         "codex-cli": "Stop",
         "cursor": "stop",
-        "cline": "TaskComplete, TaskCancel"
+        "opencode": "session.idle"
       },
       "sub_capabilities": [
         "Force the agent to keep working by returning a continuation signal",
         "Implement quality checks before accepting the agent's work",
         "Claude Code: StopFailure fires on API errors",
-        "Cursor: followup_message for auto-continue with configurable loop_limit",
-        "Cline: TaskComplete on success, TaskCancel when user stops a running task"
+        "Cursor: followup_message for auto-continue with configurable loop_limit"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#stop",
         "codex-cli": "https://developers.openai.com/codex/hooks#stop",
-        "cursor": "https://cursor.com/docs/hooks#stop",
-        "cline": "https://docs.cline.bot/customization/hooks#taskstart"
+        "cursor": "https://cursor.com/docs/hooks#stop"
       }
     },
     {
@@ -224,7 +217,9 @@
       "description": "Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message",
       "agent_mapping": {
         "claude-code": "Notification",
-        "cursor": "afterAgentResponse, afterAgentThought"
+        "cursor": "afterAgentResponse, afterAgentThought",
+        "copilot": "notification",
+        "opencode": "message.updated, message.part.updated"
       },
       "sub_capabilities": [
         "Track every agent response for observability, compliance, or analytics",

@@ -1,0 +1,14 @@
+name: opencode
+homepage: https://opencode.ai/docs
+sources:
+  # npm's latest dist-tag; the GitHub release feed also carries other artifacts (e.g. v2.x desktop builds)
+  version: https://registry.npmjs.org/opencode-ai/latest
+  releases: https://github.com/anomalyco/opencode/releases
+version_regex: '"version":"(\d+\.\d+\.\d+)"'
+
+features:
+  - hooks
+  - instructions
+  - mcp
+  - memory
+  - built-in tools

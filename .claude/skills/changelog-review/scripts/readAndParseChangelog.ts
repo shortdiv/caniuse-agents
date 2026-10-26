@@ -48,6 +48,15 @@ async function getAgentVersion(agentMetadata: ChangelogMeta) {
 async function resolveChangelog(agentName: string): Promise<ChangelogMeta> {
   const agent = await readAgentFiles(agentName);
 
+  // A URL that reports the current version directly (a registry or download API).
+  if (agent.sources?.version) {
+    return {
+      url: agent.sources.version,
+      source: "api",
+      versionRegex: agent.version_regex,
+    };
+  }
+
   if (agent.sources?.changelog) {
     const isGithub = agent.sources.changelog.includes("github.com");
     const changelogUrl = isGithub

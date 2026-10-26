@@ -1,44 +1,40 @@
 # Can I Use Agents?
 
-> A community-maintained compatibility table for AI coding agent features, modeled after caniuse.com. Tracks hooks, MCP, tools, instructions, and memory support across Claude Code, Codex CLI, Cursor, GitHub Copilot CLI, and Cline CLI.
+> A community-maintained compatibility table for AI coding agent features, modeled after caniuse.com. Tracks hooks, MCP, tools, instructions, and memory support across Claude Code, Codex CLI, Cursor, GitHub Copilot CLI, and OpenCode.
 
 This site compares feature support across AI coding agents with version-level granularity. Each feature page shows a time-aligned matrix of support across agents, similar to how caniuse.com compares browser support for web standards. Data is stored as JSON and open for community contributions.
 
 ## Agents Tracked
 
-- Claude Code (Anthropic) — 48 versions from 0.2.31 (Mar 2025) to 2.1.121 (Apr 2026)
-- Cline CLI & SDK — stable feature milestones from CLI 3.0.0 onward
-- Codex CLI (OpenAI) — 36 versions from 0.2.0 (Jun 2025) to 0.128.0 (Apr 2026)
-- Cursor (Anysphere) — 11 versions from 0.45 to 3.2
-- Copilot (GitHub) — 6 versions from 2025.06 to 2026.05
+- Claude Code (Anthropic): 451 versions from 0.2.31 (Mar 2025) to 2.1.311 (Oct 2026)
+- Codex CLI (OpenAI): 130 versions from 0.2.0 (Jul 2025) to 0.164.0 (Oct 2026)
+- Cursor (Anysphere): 16 versions from 0.45 (Jan 2025) to 3.27 (Oct 2026)
+- GitHub Copilot CLI: 120 versions from 0.0.374 (Jan 2026) to 1.0.103 (Oct 2026)
+- OpenCode (Anomaly): 20 versions from 0.0.45 (May 2025) to 1.19.4 (Oct 2026)
 
-## Hooks & Lifecycle — 14 features
+## Hooks & Lifecycle: 10 features
 
-- [Pre-tool-use hook](/features/hook-pre-tool): Run custom code before any tool executes
-- [Post-tool-use hook](/features/hook-post-tool): Run custom code after a tool completes
-- [User prompt submit hook](/features/hook-prompt-submit): Intercept or augment user prompts before they are processed
-- [Turn-end / stop hook](/features/hook-turn-end): Fire a hook when the agent finishes a turn, with the ability to continue
-- [Notification hook](/features/hook-notification): Fire a hook on general system notifications such as errors or status updates
-- [Subagent completion hook](/features/hook-subagent-end): Fire a hook when a subagent completes its work
-- [Session start hook](/features/hook-session-start): Fire a hook when an agent session begins
-- [Permission request hook](/features/hook-permission): Hook into the permission/approval flow to auto-allow, deny, or defer
-- [Blocking hooks](/features/hook-blocking): Pre-hooks can block the pending action via exit code or return value
-- [Event matchers / filters](/features/hook-matchers): Scope a hook to specific tools or events by name or pattern
-- [Structured I/O protocol](/features/hook-json-protocol): Hooks receive context as JSON on stdin and can return structured output on stdout
-- [Configurable timeout](/features/hook-timeout): Per-hook timeout setting to prevent runaway hooks
-- [Project-level hooks](/features/hook-scope-project): Hooks configured at the project/repo level, shareable via version control
-- [User-level hooks](/features/hook-scope-user): Hooks configured globally for the current user across all projects
+- [Session lifecycle management](/features/hook-session-lifecycle): Hooks for session start and end — initialize environment, load context, clean up resources, or log session activity
+- [Generic tool use hooks](/features/hook-tool-use): Pre and post hooks around any tool execution — inspect, modify, block, or log tool calls
+- [Subagent lifecycle](/features/hook-subagent-lifecycle): Hooks for when subagents are spawned and when they complete — observe delegation, aggregate results, enforce policies
+- [Control shell commands](/features/hook-shell-control): Dedicated hooks for intercepting shell/terminal command execution — block dangerous commands, audit, or inject env vars
+- [Control file access](/features/hook-file-access): Dedicated hooks for file read and write operations — enforce access policies, trigger linting, or audit file changes
+- [Validate prompts before submission](/features/hook-prompt-validation): Intercept user prompts before they reach the model — block, rewrite, redact, annotate, or inject context
+- [Control MCP tool use](/features/hook-mcp-control): Dedicated hooks for MCP server tool invocations — audit, restrict, or modify MCP tool calls independently from built-in tools
+- [Observe compaction window](/features/hook-compaction): Hooks that fire before and after context window compaction — preserve critical state, log what gets summarized, or block compaction
+- [Agent complete (stop)](/features/hook-agent-stop): Hook that fires when the agent finishes a turn — implement quality gates, force continuation, or trigger follow-up workflows
+- [Agent response tracking](/features/hook-response-tracking): Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message
 
-## Instructions — 6 features
+## Instructions: 6 features
 
-- [Project-level instructions](/features/project-instructions): Repo-specific guidance files checked into version control
-- [User-level instructions](/features/user-instructions): Global personal preferences that apply across all projects
-- [Org/managed instructions](/features/org-instructions): Organization-wide instructions enforced via managed policy
+- [Project-level instructions](/features/project-instructions): Repo-specific guidance files checked into version control (e.g. CLAUDE.md, .cursorrules, copilot-instructions.md)
+- [User-level instructions](/features/user-instructions): Global personal preferences that apply across all projects for the current user
+- [Org/managed instructions](/features/org-instructions): Organization-wide instructions enforced via managed policy or team admin settings
 - [Path-scoped rules](/features/path-scoped-rules): Instructions that only apply when the agent works with files matching a glob pattern
-- [Instruction file imports](/features/instruction-imports): Instruction files can reference or import other files
-- [AGENTS.md compatibility](/features/agents-md-compat): The agent reads the cross-agent AGENTS.md format
+- [Instruction file imports](/features/instruction-imports): Instruction files can reference or import other files to compose guidance from multiple sources
+- [AGENTS.md compatibility](/features/agents-md-compat): The agent reads the cross-agent AGENTS.md format used by multiple coding tools
 
-## Model Context Protocol — 12 features
+## Model Context Protocol: 12 features
 
 - [stdio transport](/features/mcp-stdio): Connect to MCP servers via local processes using stdin/stdout
 - [SSE transport](/features/mcp-sse): Connect to MCP servers via Server-Sent Events over HTTP
@@ -51,32 +47,32 @@ This site compares feature support across AI coding agents with version-level gr
 - [Elicitation](/features/mcp-elicitation): Allow MCP servers to request additional input from the user mid-operation
 - [OAuth authentication](/features/mcp-oauth): OAuth 2.0 authentication for connecting to remote MCP servers
 - [Project-level MCP config](/features/mcp-config-project): Configure MCP servers per-project, shareable via version control
-- [User-level MCP config](/features/mcp-config-user): Configure MCP servers globally for the current user
+- [User-level MCP config](/features/mcp-config-user): Configure MCP servers globally for the current user across all projects
 
-## Memory — 3 features
+## Memory: 3 features
 
-- [Persistent auto memory](/features/auto-memory): The agent automatically saves notes and learnings across sessions
+- [Persistent auto memory](/features/auto-memory): The agent automatically saves notes and learnings across sessions without manual effort
 - [Conversation resume](/features/conversation-resume): Resume a past conversation with its full context intact
-- [Context compaction](/features/context-compaction): Gracefully handles long conversations by summarizing or compacting context
+- [Context compaction](/features/context-compaction): Gracefully handles long conversations by summarizing or compacting context when approaching window limits
 
-## Built-in Tools — 16 features
+## Built-in Tools: 16 features
 
 - [File read](/features/file-read): Read file contents from the local filesystem
 - [File edit / write](/features/file-edit): Create, modify, and overwrite files
-- [Notebook editing](/features/notebook-edit): Read and edit Jupyter notebook cells
+- [Notebook editing](/features/notebook-edit): Read and edit Jupyter notebook (.ipynb) cells
 - [Code search](/features/code-search): Search file contents by pattern, regex, or filename glob
 - [Shell execution](/features/shell-execution): Execute shell commands in the user's environment
-- [Background monitor](/features/background-monitor): Run a process in the background and react to its output
-- [Scheduled tasks](/features/scheduled-tasks): Schedule recurring or one-shot prompts within a session
+- [Background monitor](/features/background-monitor): Run a process in the background and react to its output (tail logs, poll status)
+- [Scheduled tasks](/features/scheduled-tasks): Schedule recurring or one-shot prompts within a session (cron-like)
 - [Web search](/features/web-search): Search the web for information
 - [Web fetch](/features/web-fetch): Fetch and read the contents of a URL
-- [Image input](/features/image-input): Read and understand images and screenshots
+- [Image input](/features/image-input): Read and understand images and screenshots (multimodal input)
 - [Image generation](/features/image-generation): Generate images from text descriptions
-- [Browser control](/features/browser-control): Programmatic browser interaction: screenshots, navigation, clicks
-- [LSP integration](/features/lsp-integration): Language server features: go-to-definition, find references, type errors
-- [Semantic search](/features/semantic-search): Search codebase by meaning using embeddings or indexing
-- [Subagent spawning](/features/subagent-spawning): Spawn sub-agents with their own context window
-- [Task management](/features/task-management): Track work progress with task lists and checklists
+- [Browser control](/features/browser-control): Programmatic browser interaction: take screenshots, navigate pages, click elements
+- [LSP integration](/features/lsp-integration): Language server features: go-to-definition, find references, type errors, symbol search
+- [Semantic search](/features/semantic-search): Search codebase by meaning using embeddings or indexing, not just exact matches
+- [Subagent spawning](/features/subagent-spawning): Spawn sub-agents with their own context window to handle tasks in parallel
+- [Task management](/features/task-management): Track work progress with task lists and checklists within a session
 
 ## Data
 

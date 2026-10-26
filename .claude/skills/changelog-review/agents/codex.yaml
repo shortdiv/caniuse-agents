@@ -1,8 +1,10 @@
 name: codex
 homepage: https://docs.openai.com
 sources:
+  # GitHub's latest stable release; the atom feed only shows the newest ~10 tags, often all alphas.
+  version: https://api.github.com/repos/openai/codex/releases/latest
   releases: https://github.com/openai/codex/releases.atom
-version_regex: '<title>(\d+\.\d+\.\d+)</title>'
+version_regex: '"tag_name":\s*"rust-v(\d+\.\d+\.\d+)"'
 
 features:
   - hooks
