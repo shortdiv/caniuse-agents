@@ -6,7 +6,7 @@ The data model closely follows caniuse.com's structure:
 
 - **Columns** = agents (Claude Code, Codex CLI, etc.) — like browsers in caniuse
 - **Rows** = client/runtime versions — like browser versions in caniuse
-- **Cells** = single-letter support codes (`y`, `n`, `a`, `u`, `p`, `d`)
+- **Cells** = single-letter support codes (`y`, `n`, `a`, `u`, `d`)
 - **Secondary axis** = models (Opus 4.6, GPT-4.1) — like rendering engines in caniuse
 
 ## File structure
@@ -74,7 +74,7 @@ Explicit support code for every version × every feature:
 }
 ```
 
-Support codes: `y` (full), `a` (partial), `n` (no), `u` (unknown), `p` (polyfill/workaround), `d` (deprecated)
+Support codes: `y` (full), `a` (partial), `n` (no), `u` (unknown), `d` (deprecated). Flags and extra setup count as `a` (partial); `p` was retired on 2026-10-26
 
 ## Feature definition files
 

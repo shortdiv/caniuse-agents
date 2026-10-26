@@ -49,7 +49,7 @@ This covers releases from 2026-06-30 to 2026-10-26, for Claude Code, Codex, Curs
 - **Hooks are JS/TS plugins,** not config commands.
   - **Agent stop and subagent lifecycle are `a`:** `session.idle` only observes the end of a turn, and subagents show up only as child sessions.
   - **Prompt validation is `n`:** no documented hook can block or modify a prompt.
-- **Web search is `p`:** it needs OpenCode Zen or an environment flag.
+- **Web search is `a`:** it needs OpenCode Zen or an environment flag. (First recorded as `p`; flags now count as partial.)
 - **LSP is `a`:** diagnostics only, and off by default.
 
 **Cline:** removed, along with its data file, mappings, sub-capabilities, table style and skill feed. The data is archived in `archive/2026-10-26/*`.

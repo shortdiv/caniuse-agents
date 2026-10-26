@@ -87,8 +87,9 @@ Each agent has a file mapping feature IDs to per-version support codes:
 | `a`  | Partial support |
 | `n`  | No support |
 | `u`  | Unknown |
-| `p`  | Behind a flag or workaround |
 | `d`  | Deprecated |
+
+Behind a flag, experimental, or needing extra setup (an env var, a paid tier) counts as partial: use `a`, and say what the catch is in `version_notes`.
 
 #### Notes
 

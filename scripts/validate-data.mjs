@@ -22,7 +22,8 @@ const agents = await Promise.all(
   agentFiles.map((name) => readJson(`data/agents/${name}`)),
 );
 const errors = [];
-const supportCodes = new Set(["y", "a", "n", "u", "p", "d"]);
+// "p" (behind a flag) is retired: flags count as partial ("a") with a version note.
+const supportCodes = new Set(["y", "a", "n", "u", "d"]);
 
 for (const agent of agents) {
   const agentMeta = meta[agent.id];
