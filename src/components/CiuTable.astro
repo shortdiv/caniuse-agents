@@ -44,192 +44,66 @@ const supportClassNames: Record<CaniuseSupportCode, string> = {
   d: "unknown",
 };
 
-// ---------- Time-aligned era system ----------
-
-/**
- * For a given agent, find the support code at a point in time
- * by looking up the latest version released on or before that timestamp.
- */
-function supportAtTime(
-  versions: AgentVersion[],
-  stats: Record<string, CaniuseSupportCode>,
-  timestamp: number,
-): { version: string | null; value: CaniuseSupportCode } {
-  let match: AgentVersion | null = null;
-  for (const v of versions) {
-    if (new Date(v.date).getTime() <= timestamp) {
-      match = v;
-    } else {
-      break;
-    }
-  }
-  if (!match) return { version: null, value: "n" };
-  return {
-    version: match.version,
-    value: (stats[match.version] ?? "u") as CaniuseSupportCode,
-  };
-}
-
-/**
- * Collect every timestamp where ANY agent's support status changes.
- * These become the global row boundaries so all columns split at the same points.
- */
-function findGlobalSplitPoints(): number[] {
-  const allTimestamps = new Set<number>();
-
-  for (const { agent } of supportRows) {
-    const versions = (agent.versions ?? []).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
-    for (const v of versions) {
-      allTimestamps.add(new Date(v.date).getTime());
-    }
-  }
-
-  return [...allTimestamps].sort((a, b) => a - b);
-}
-
-interface RowSegment {
-  startTime: number;
-  endTime: number;
-}
-
-interface AgentCell {
-  version: string | null;
-  value: CaniuseSupportCode;
-  label: string;
-  dateRange: string;
-}
-
-const fmt = (ts: number) =>
-  new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-
-// ---------- Build the grid ----------
-
-// 1. Get all version release timestamps across all agents, sorted
-const splitPoints = findGlobalSplitPoints();
-if (splitPoints.length === 0) splitPoints.push(Date.now());
-
-// 2. Build time segments between consecutive split points
-//    Add "now" as the final boundary
-const now = Date.now();
-const boundaries = [...splitPoints];
-if (boundaries[boundaries.length - 1] < now) boundaries.push(now);
-
-const segments: RowSegment[] = [];
-for (let i = 0; i < boundaries.length - 1; i++) {
-  segments.push({ startTime: boundaries[i], endTime: boundaries[i + 1] });
-}
-
-// 3. Resolve each agent's support at each segment, then find GLOBAL
-//    row boundaries where ANY agent changes status.
+// ---------- Version history, aligned like caniuse ----------
+//
+// Every agent's current version sits on the same top row; older versions
+// stack below it, newest first. Each agent's history is its own: a new row
+// starts only when that agent's support changes (or a version note marks a
+// change). Agents with shorter histories get "not released" cells at the
+// bottom, so columns stay the same height.
 
 interface Bucket {
   label: string;
   value: CaniuseSupportCode;
   dateRange: string;
   note: string;
-  /** No release in this window: the previous version is still current. */
-  carried: boolean;
 }
 
-// Resolve per-agent support for every segment
+const fmt = (ts: number) =>
+  new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const NOT_RELEASED: Bucket = { label: "Not released", value: "n", dateRange: "", note: "" };
+
 const perAgent = supportRows.map(({ agent, support }) => {
-  const versions = (agent.versions ?? []).sort(
+  const versions = [...(agent.versions ?? [])].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
   const stats = featureData?.stats[agent.id] ?? {};
-
-  const resolved = segments.map((seg) => ({
-    // Segments are half-open intervals: [startTime, endTime). Resolve at the
-    // start so a version released at endTime belongs only to the next segment.
-    ...supportAtTime(versions, stats, seg.startTime),
-    segment: seg,
-  }));
-
-  return { agent, support, resolved };
-});
-
-// Find global split indices: a row boundary exists wherever ANY agent's
-// support value differs from the previous segment.
-const globalSplits = new Set<number>();
-globalSplits.add(0); // always start a group at index 0
-for (let i = 1; i < segments.length; i++) {
-  for (const { resolved } of perAgent) {
-    if (resolved[i].value !== resolved[i - 1].value) {
-      globalSplits.add(i);
-      break;
-    }
-  }
-}
-
-// Convert split indices into row ranges: [start, end) segment indices
-const splitIndices = [...globalSplits].sort((a, b) => a - b);
-const rowRanges: { start: number; end: number }[] = [];
-for (let i = 0; i < splitIndices.length; i++) {
-  const start = splitIndices[i];
-  const end =
-    i + 1 < splitIndices.length ? splitIndices[i + 1] : segments.length;
-  rowRanges.push({ start, end });
-}
-
-// Build buckets for each agent using the global row ranges
-const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
-  const agentVersionNotes = featureData?.versionNotes[agent.id] ?? {};
+  const versionNotes = featureData?.versionNotes[agent.id] ?? {};
   const fallbackNote = support.notes || "";
-  const versions = agent.versions ?? [];
 
-  const buckets: Bucket[] = rowRanges
-    .map((range) => {
-      const group = resolved.slice(range.start, range.end);
-      const startTime = group[0].segment.startTime;
-      const endTime = group[group.length - 1].segment.endTime;
-      const unique = versions
-        .filter((version) => {
-          const releasedAt = new Date(version.date).getTime();
-          return releasedAt >= startTime && releasedAt < endTime;
-        })
-        .map((version) => version.version);
+  // Group consecutive versions with the same support into runs (oldest first).
+  const runs: { versions: AgentVersion[]; value: CaniuseSupportCode; note?: string }[] = [];
+  for (const v of versions) {
+    const value = (stats[v.version] ?? "u") as CaniuseSupportCode;
+    const note = versionNotes[v.version];
+    const last = runs.at(-1);
+    if (!last || last.value !== value || note) runs.push({ versions: [v], value, note });
+    else last.versions.push(v);
+  }
 
-      // No release inside this cross-agent window: the cell is left empty
-      // (in the same status color), and the hover names the version still
-      // current, so a version only appears in the window it was released.
-      const carried = unique.length === 0 && group[0].version !== null;
-      if (carried) {
-        unique.push(group[0].version!);
-      }
+  const buckets: Bucket[] = runs.map((run, i) => {
+    const first = run.versions[0];
+    const lastV = run.versions.at(-1)!;
+    const next = runs[i + 1]?.versions[0];
+    return {
+      label: first.version === lastV.version ? first.version : `${first.version} - ${lastV.version}`,
+      value: run.value,
+      dateRange: `${fmt(new Date(first.date).getTime())} — ${next ? fmt(new Date(next.date).getTime()) : "now"}`,
+      note: run.note ?? fallbackNote,
+    };
+  });
 
-      let label: string;
-      if (unique.length === 0) {
-        label = "Not released";
-      } else if (unique.length === 1) {
-        label = unique[0];
-      } else {
-        label = `${unique[0]} - ${unique[unique.length - 1]}`;
-      }
-
-      // Resolve version-specific note: use the latest version in this
-      // bucket that has a version_notes entry, else fall back to agent note.
-      let note = fallbackNote;
-      for (let i = unique.length - 1; i >= 0; i--) {
-        if (agentVersionNotes[unique[i]]) {
-          note = agentVersionNotes[unique[i]];
-          break;
-        }
-      }
-
-      return {
-        label,
-        value: group[0].value,
-        dateRange: `${fmt(startTime)} — ${fmt(endTime)}`,
-        note,
-        carried,
-      };
-    })
-    .reverse();
-
-  return { agent, support, buckets };
+  return { agent, support, buckets: buckets.reverse() };
 });
+
+// Pad shorter histories at the bottom so every column has the same rows.
+const numRows = Math.max(0, ...perAgent.map((a) => a.buckets.length));
+const agentBuckets = perAgent.map(({ agent, support, buckets }) => ({
+  agent,
+  support,
+  buckets: [...buckets, ...Array(numRows - buckets.length).fill(NOT_RELEASED)],
+}));
 
 // Agent identity: logo path (if available), fallback color + monogram
 const agentMeta: Record<
@@ -274,7 +148,6 @@ const agentDisplay = agentBuckets.map(({ agent, support }) => {
   return { agent, support, meta, latestDate, note: support.notes || "" };
 });
 
-const numRows = agentBuckets[0]?.buckets.length ?? 0;
 
 let overviewSummary: string;
 
@@ -342,21 +215,21 @@ if (supported.length === supportRows.length) {
 
           return (
             <div
-              class={`ciu-cell ${cls}${bucket.carried ? " carried" : ""}`}
+              class={`ciu-cell ${cls}`}
               data-agent-id={agent.id}
               data-agent-name={agent.name}
               data-range={
                 notReleased && agent.note && agent.versions?.[0]
                   ? `Before ${agent.versions[0].version}`
-                  : bucket.carried ? `${bucket.label} (no new release)` : bucket.label
+                  : bucket.label
               }
               data-dates={bucket.dateRange}
               data-status={notReleased ? "nr" : bucket.value}
               data-status-label={notReleased ? (agent.note ? "Not tracked" : "Not yet released") : supportLabels[bucket.value]}
               data-note={notReleased ? (agent.note ?? "") : bucket.note}
             >
-              <span class="ciu-cell-label">{notReleased ? "—" : bucket.carried ? "" : bucket.label}</span>
-              {!bucket.carried && (bucket.value === "a" || bucket.value === "p") && (
+              <span class="ciu-cell-label">{notReleased ? "—" : bucket.label}</span>
+              {(bucket.value === "a" || bucket.value === "p") && (
                 <span class="partial-dot" />
               )}
             </div>
@@ -732,16 +605,6 @@ if (supported.length === supportRows.length) {
     color: var(--status-deprecated-text);
   }
   /* No release in this window: same status, nothing new to show. */
-  .ciu-cell.carried::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: currentColor;
-    opacity: 0.22; /* same strength as the not-released hatch */
-    -webkit-mask: var(--carried-mask) repeat;
-    mask: var(--carried-mask) repeat;
-    pointer-events: none;
-  }
   .ciu-cell.not-released {
     background: var(--not-released-bg);
     color: var(--text-subtle);

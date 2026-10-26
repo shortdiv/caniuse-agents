@@ -1,27 +1,21 @@
-# CiuTable Component — Time-Aligned Era Grid
+# CiuTable Component — Version History Grid
 
 ## How it works
 
-The `CiuTable.astro` component renders a caniuse-style grid for a single feature, with columns per agent and rows aligned by time period.
+The `CiuTable.astro` component renders a caniuse-style grid for a single feature, with columns per agent and rows aligned like caniuse: current version on top, history below.
 
-### The problem it solves
+### Alignment (since 2026-10-26)
 
-Agents have different version numbers and release cadences. Claude Code has 48 versions, Codex has 35, they started at different times. You can't just stack version 1 next to version 1 — they'd represent completely different dates.
+Like caniuse.com: **every agent's current version sits on the same top row**, and older versions stack below it, newest first. Each column is that agent's own history:
 
-### Time alignment algorithm
+1. Sort the agent's versions oldest first.
+2. Group consecutive versions with the same support code into runs. A version with a `version_notes` entry also starts a new run, so a documented change gets its own row.
+3. Reverse, so the run containing the current version is on top.
+4. Pad shorter histories at the bottom with "Not released" cells (cross-hatched), so all columns have the same number of rows.
 
-1. **Collect all version release timestamps** across all agents into one sorted list
-2. **Build time segments** between consecutive timestamps (plus "now" as the final boundary)
-3. **Resolve each agent's support** at each segment by finding the latest version released on or before that segment's end time
-4. **Find global split points** — wherever ANY agent's support status changes from one segment to the next, that becomes a row boundary for ALL agents
-5. **Group segments into buckets** using those global splits — each agent gets the same number of rows, split at the same time boundaries
-6. **Reverse** so newest is on top (like caniuse)
+Rows across agents line up by recency, not by date. The hover shows each run's date range.
 
-### Why global splits matter
-
-Without global splits, each agent groups independently. If Claude goes from "n" to "y" in July 2025 but Codex stays "n" the whole time, Claude gets 2 rows but Codex gets 1. The rows don't align.
-
-With global splits, Codex also splits at July 2025, showing two red blocks that line up with Claude's red→green transition. Now you can scan horizontally and compare the same time period.
+**Replaced:** the earlier time-aligned grid. It split every column wherever *any* agent changed support. Rows came from other agents' releases, which needed "no new release" filler cells and made the table busy.
 
 ### Cell labels
 
