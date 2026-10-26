@@ -732,8 +732,15 @@ if (supported.length === supportRows.length) {
     color: var(--status-deprecated-text);
   }
   /* No release in this window: same status, nothing new to show. */
-  .ciu-cell.carried {
-    opacity: 0.45;
+  .ciu-cell.carried::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0.35;
+    -webkit-mask: var(--carried-mask) repeat;
+    mask: var(--carried-mask) repeat;
+    pointer-events: none;
   }
   .ciu-cell.not-released {
     background: var(--not-released-bg);
