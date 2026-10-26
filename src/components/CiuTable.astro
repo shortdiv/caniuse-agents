@@ -129,6 +129,8 @@ interface Bucket {
   value: CaniuseSupportCode;
   dateRange: string;
   note: string;
+  /** No release in this window: the previous version is still current. */
+  carried: boolean;
 }
 
 // Resolve per-agent support for every segment
@@ -189,10 +191,12 @@ const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
         })
         .map((version) => version.version);
 
-      // If this agent had no release inside a cross-agent window, show the
-      // version that remained active throughout that window.
-      if (unique.length === 0 && group[0].version !== null) {
-        unique.push(group[0].version);
+      // No release inside this cross-agent window: the cell is left empty
+      // (in the same status color), and the hover names the version still
+      // current, so a version only appears in the window it was released.
+      const carried = unique.length === 0 && group[0].version !== null;
+      if (carried) {
+        unique.push(group[0].version!);
       }
 
       let label: string;
@@ -219,6 +223,7 @@ const agentBuckets = perAgent.map(({ agent, support, resolved }) => {
         value: group[0].value,
         dateRange: `${fmt(startTime)} — ${fmt(endTime)}`,
         note,
+        carried,
       };
     })
     .reverse();
@@ -337,17 +342,17 @@ if (supported.length === supportRows.length) {
 
           return (
             <div
-              class={`ciu-cell ${cls}`}
+              class={`ciu-cell ${cls}${bucket.carried ? " carried" : ""}`}
               data-agent-id={agent.id}
               data-agent-name={agent.name}
-              data-range={bucket.label}
+              data-range={bucket.carried ? `${bucket.label} (no new release)` : bucket.label}
               data-dates={bucket.dateRange}
               data-status={notReleased ? "nr" : bucket.value}
               data-status-label={notReleased ? "Not yet released" : supportLabels[bucket.value]}
               data-note={bucket.note}
             >
-              <span class="ciu-cell-label">{notReleased ? "—" : bucket.label}</span>
-              {(bucket.value === "a" || bucket.value === "p") && (
+              <span class="ciu-cell-label">{notReleased ? "—" : bucket.carried ? "" : bucket.label}</span>
+              {!bucket.carried && (bucket.value === "a" || bucket.value === "p") && (
                 <span class="partial-dot" />
               )}
             </div>
@@ -717,6 +722,10 @@ if (supported.length === supportRows.length) {
   .ciu-cell.deprecated {
     background: var(--status-deprecated-bg);
     color: var(--status-deprecated-text);
+  }
+  /* No release in this window: same status, nothing new to show. */
+  .ciu-cell.carried {
+    opacity: 0.45;
   }
   .ciu-cell.not-released {
     background: var(--surface-alt, var(--bg));
