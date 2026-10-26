@@ -1,0 +1,37 @@
+.gitignore
+  c78939e7e57c2e97 28-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "a64dd4ef906aa3da324672373b6ccc2b1acf9bb6",
+  "prompts": {
+    "06a62a9b7542f173": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "df031ae9-9372-4942-a8bd-983b6a0f4c9f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 219,
+      "total_deletions": 42,
+      "accepted_lines": 17,
+      "overriden_lines": 26
+    },
+    "c78939e7e57c2e97": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e4d19e0d-ace4-4b90-a180-8df2fbdf1f06",
+        "model": "composer-2.5"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 49,
+      "total_deletions": 2,
+      "accepted_lines": 47,
+      "overriden_lines": 0,
+      "messages_url": "http://localhost:4000/cas/7169b3e6a46cc30f8b2e606575538f7a4c243b48629e4a301e0d36e5de8f5057"
+    }
+  }
+}
