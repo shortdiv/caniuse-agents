@@ -427,7 +427,7 @@ const featureRows = categories.flatMap((category) =>
   .bl-newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
   .bl-limited .bl-mark { border-style: dashed; }
 
-  /* Logo row on limited cards: full colour = full support, faded with a dot = partial, grey = none/unknown. */
+  /* Logo row on limited cards: every logo in full colour; the badge carries the status. */
   .agent-row {
     display: flex;
     gap: 14px;
@@ -469,14 +469,6 @@ const featureRows = categories.flatMap((category) =>
   .agent-icon.state-n::after,
   .agent-icon.state-d::after { content: "✕"; background: var(--status-no-text); }
   .agent-icon.state-u::after { content: "?"; background: var(--text-subtle); }
-  .agent-icon.state-n img,
-  .agent-icon.state-u img,
-  .agent-icon.state-d img,
-  .agent-icon.state-n .agent-mono,
-  .agent-icon.state-u .agent-mono {
-    filter: grayscale(1);
-    opacity: 0.35;
-  }
   .logo-dark { display: none; }
   @media (prefers-color-scheme: dark) {
     .logo-light { display: none; }
