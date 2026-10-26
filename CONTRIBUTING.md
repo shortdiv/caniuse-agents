@@ -92,6 +92,13 @@ Each agent has a file mapping feature IDs to per-version support codes:
 
 Behind a flag, experimental, or needing extra setup (an env var, a paid tier) counts as partial: use `a`, and say what the catch is in `version_notes`.
 
+#### Baseline
+
+Each feature page shows a Baseline status, computed from the data (`getBaseline` in `src/lib/data.ts`):
+- **Limited availability:** some tracked agent lacks full support (`y`) in its current version.
+- **Newly available:** every tracked agent fully supports it. The date is when the last one added it.
+- **Widely available:** newly available for 6+ months (`BASELINE_WIDELY_MONTHS`).
+
 #### Notes
 
 - `notes` is the default note shown for all versions of that feature

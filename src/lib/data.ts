@@ -210,7 +210,49 @@ const getFeatureData = async (
   };
 };
 
+/**
+ * Baseline, like web.dev's, for agents:
+ * - limited: some tracked agent lacks full support in its current version;
+ * - newly: every agent fully supports it; `since` is when the last one shipped it;
+ * - widely: newly available for at least BASELINE_WIDELY_MONTHS.
+ */
+const BASELINE_WIDELY_MONTHS = 6;
+
+type Baseline =
+  | { status: "limited"; gaps: { agent: string; support: CaniuseSupportCode }[] }
+  | { status: "newly" | "widely"; since: Date; widelyFrom: Date; lastAgent: string };
+
+const getBaseline = (featureData: CaniuseFeatureData | null, agents: Agent[], now = new Date()): Baseline => {
+  const gaps: { agent: string; support: CaniuseSupportCode }[] = [];
+  let since = new Date(0);
+  let lastAgent = "";
+  for (const agent of agents) {
+    const versions = [...(agent.versions ?? [])].sort((a, b) => a.date.localeCompare(b.date));
+    const stats = featureData?.stats[agent.id] ?? {};
+    const current = (stats[versions.at(-1)?.version ?? ""] ?? "u") as CaniuseSupportCode;
+    if (current !== "y") {
+      gaps.push({ agent: agent.name, support: current });
+      continue;
+    }
+    // Start of the current unbroken run of full support.
+    let i = versions.length - 1;
+    while (i > 0 && stats[versions[i - 1].version] === "y") i--;
+    const start = new Date(versions[i].date);
+    if (start > since) {
+      since = start;
+      lastAgent = agent.name;
+    }
+  }
+  if (gaps.length) return { status: "limited", gaps };
+  const widelyFrom = new Date(since);
+  widelyFrom.setMonth(widelyFrom.getMonth() + BASELINE_WIDELY_MONTHS);
+  return { status: widelyFrom <= now ? "widely" : "newly", since, widelyFrom, lastAgent };
+};
+
+export type { Baseline };
 export {
+  BASELINE_WIDELY_MONTHS,
+  getBaseline,
   loadCategories,
   loadAgents,
   loadFeatures,

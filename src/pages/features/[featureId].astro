@@ -6,6 +6,8 @@ import CiuTable from "../../components/CiuTable.astro";
 import {
   getCurrentFeatureSupport,
   getFeatureData,
+  getBaseline,
+  BASELINE_WIDELY_MONTHS,
   loadAgents,
   loadCategories,
 } from "../../lib/data.js";
@@ -38,6 +40,24 @@ const [agents, categories] = await Promise.all([
 ]);
 const featureData = await getFeatureData(feature.id);
 const totalFeatures = categories.reduce((n, c) => n + c.features.length, 0);
+
+const baseline = getBaseline(featureData, agents);
+const month = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+const list = (names: string[]) =>
+  names.length < 2 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+const baselineText =
+  baseline.status === "limited"
+    ? (["a", "n", "u", "d"] as const)
+        .map((code) => {
+          const names = baseline.gaps.filter((g) => g.support === code).map((g) => g.agent);
+          const word = { a: "Partial in", n: "Not in", u: "Unknown in", d: "Deprecated in" }[code];
+          return names.length ? `${word} ${list(names)}.` : "";
+        })
+        .filter(Boolean)
+        .join(" ")
+    : `Fully supported by every tracked agent since ${month(baseline.since)}, when ${baseline.lastAgent} added it.` +
+      (baseline.status === "newly" ? ` Widely available from ${month(baseline.widelyFrom)}.` : "");
+const baselineTitle = { limited: "Limited availability", newly: "Newly available", widely: "Widely available" }[baseline.status];
 
 const supportRows: SupportRow[] = agents.map((agent: Agent) => ({
   agent,
@@ -82,6 +102,13 @@ const allFeatures = categories.flatMap((c) =>
             </div>
             <h2 class="matrix-feature-title">{feature.title}</h2>
             <p class="matrix-feature-blurb">{feature.description}</p>
+            <div class={`baseline baseline--${baseline.status}`} title={`Widely available: every tracked agent has fully supported it for ${BASELINE_WIDELY_MONTHS}+ months.`}>
+              <span class="baseline-mark" aria-hidden="true"></span>
+              <div class="baseline-body">
+                <span class="baseline-title"><span class="baseline-eyebrow">Baseline</span> {baselineTitle}</span>
+                <span class="baseline-text">{baselineText}</span>
+              </div>
+            </div>
             <div class="matrix-pills">
               {feature.group && <span class="pill">{feature.group}</span>}
               <span class="pill">{category.title}</span>
@@ -560,4 +587,41 @@ const allFeatures = categories.flatMap((c) =>
       gap: 6px;
     }
   }
+
+  /* ─── Baseline ─── */
+  .baseline {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-block: 14px 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface-alt);
+    max-width: 62ch;
+  }
+  .baseline-mark {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    border-radius: 50%;
+    border: 2px solid var(--baseline-color);
+  }
+  .baseline--widely { --baseline-color: var(--moss); }
+  .baseline--widely .baseline-mark { background: var(--baseline-color); }
+  .baseline--newly { --baseline-color: var(--moss); }
+  .baseline--newly .baseline-mark { background: linear-gradient(90deg, var(--baseline-color) 50%, transparent 50%); }
+  .baseline--limited { --baseline-color: var(--ochre); }
+  .baseline--limited .baseline-mark { border-style: dashed; }
+  .baseline-body { display: grid; gap: 3px; min-width: 0; }
+  .baseline-title { font-weight: 600; font-size: 14px; color: var(--text); }
+  .baseline-eyebrow {
+    font: 600 10.5px/1 var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--baseline-color);
+    margin-right: 6px;
+  }
+  .baseline-text { font-size: 13px; color: var(--text-muted); line-height: 1.45; }
 </style>
