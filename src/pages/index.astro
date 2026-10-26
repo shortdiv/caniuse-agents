@@ -33,6 +33,10 @@ const baselines = new Map<string, Baseline>(
   ),
 );
 const SHORT = { widely: "Widely", newly: "Newly", limited: "Limited" } as const;
+// Within a category: widely available first, then newly, then limited (original order otherwise).
+const ORDER = { widely: 0, newly: 1, limited: 2 } as const;
+const byAvailability = (features: Feature[]) =>
+  [...features].sort((a, b) => ORDER[baselines.get(a.id)!.status] - ORDER[baselines.get(b.id)!.status]);
 
 const featureRows = categories.flatMap((category) =>
   category.features.map((feature: Feature) => ({
@@ -95,7 +99,7 @@ const featureRows = categories.flatMap((category) =>
             </div>
 
             <div class="feature-cards">
-              {category.features.map((feature) => {
+              {byAvailability(category.features).map((feature) => {
                 const baseline = baselines.get(feature.id)!;
                 return (
                 <a
