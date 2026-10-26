@@ -1,0 +1,24 @@
+plans/2026-10-26-restart.md
+  04468107d702c85b 1-24,26-64,66,69-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "development:1.2.7",
+  "base_commit_sha": "7f04373ecc91c1f18a8ae8c654cd804cdd6996ef",
+  "prompts": {
+    "04468107d702c85b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ee899eaf-9c18-4025-b2bf-15ec895d7fde",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Divya",
+      "messages": [],
+      "total_additions": 236,
+      "total_deletions": 0,
+      "accepted_lines": 231,
+      "overriden_lines": 5,
+      "messages_url": "http://localhost:4000/cas/7e6f6c7d4013724984efbf811967945d077720862eff60b348dc372adae1efac"
+    }
+  }
+}
