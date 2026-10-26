@@ -127,7 +127,8 @@
         "claude-code": "UserPromptSubmit",
         "codex-cli": "UserPromptSubmit",
         "cursor": "beforeSubmitPrompt",
-        "copilot": "userPromptSubmitted"
+        "copilot": "userPromptSubmitted",
+        "opencode": "chat.message"
       },
       "sub_capabilities": [
         "Block prompts that violate policies (PII, secrets, off-topic)",

@@ -46,9 +46,9 @@ This covers releases from 2026-06-30 to 2026-10-26, for Claude Code, Codex, Curs
   - features that were clearly introduced later are `n`.
 
   Early release notes are sparse, so the first versions are approximate.
-- **Hooks are JS/TS plugins,** not config commands.
+- **Hooks are JS/TS plugins,** not config commands. The plugin system first shipped in **0.3.114** (2025-08-03): `packages/plugin` landed in commit ca031278c ("wip: plugins"), and 0.3.114 is the first release that contains it. The release notes first mention plugins at 0.3.129, which was used at first and then corrected.
   - **Agent stop and subagent lifecycle are `a`:** `session.idle` only observes the end of a turn, and subagents show up only as child sessions.
-  - **Prompt validation is `n`:** no documented hook can block or modify a prompt.
+  - **Prompt validation is `a`:** the `chat.message` plugin hook (in the source, not the plugin docs) receives each user message and can modify it. Blocking isn't documented.
 - **Web search is `a`:** it needs OpenCode Zen or an environment flag. (First recorded as `p`; flags now count as partial.)
 - **LSP is `a`:** diagnostics only, and off by default.
 
