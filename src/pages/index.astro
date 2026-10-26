@@ -10,7 +10,6 @@ import {
   getFeatureData,
   loadAgents,
   loadCategories,
-  monthYear,
   type Baseline,
 } from "../lib/data.js";
 import type { Feature } from "../lib/types";
@@ -25,7 +24,7 @@ const totalFeatures = categories.reduce(
   0,
 );
 
-// Baseline per feature, to group each category by how widely it works.
+// Baseline per feature, shown as a pattern on its card.
 const baselines = new Map<string, Baseline>(
   await Promise.all(
     categories.flatMap((c) => c.features).map(
@@ -33,14 +32,7 @@ const baselines = new Map<string, Baseline>(
     ),
   ),
 );
-const STATUSES = ["widely", "newly", "limited"] as const;
-const grouped = (features: Feature[]) =>
-  STATUSES.map((status) => ({
-    status,
-    features: features.filter((f) => baselines.get(f.id)?.status === status),
-  })).filter((g) => g.features.length);
-const detail = (b: Baseline | undefined) =>
-  !b ? "" : b.status === "limited" ? baselineGaps(b) : b.status === "newly" ? `widely available from ${monthYear(b.widelyFrom)}` : "";
+const SHORT = { widely: "Widely", newly: "Newly", limited: "Limited" } as const;
 
 const featureRows = categories.flatMap((category) =>
   category.features.map((feature: Feature) => ({
@@ -102,44 +94,28 @@ const featureRows = categories.flatMap((category) =>
               </span>
             </div>
 
-            <div class="baseline-groups">
-              {grouped(category.features).map(({ status, features }) => (
-                <div class={`bl-group bl-group--${status}`} data-bl-group>
-                  <h4 class="bl-group-title">
-                    <span class="bl-mark" aria-hidden="true"></span>
-                    {BASELINE_TITLES[status]}
-                    <span class="bl-count">{features.length}</span>
-                  </h4>
-                  {status === "widely" ? (
-                    <div class="bl-inline">
-                      {features.map((feature) => (
-                        <a
-                          href={`/features/${feature.id}`}
-                          class="bl-inline-item"
-                          title={feature.description}
-                          data-feature-item
-                          data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
-                        >
-                          {feature.title}
-                        </a>
-                      ))}
-                    </div>
-                  ) : (
-                    <ul class="bl-rows">
-                      {features.map((feature) => (
-                        <li
-                          data-feature-item
-                          data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
-                        >
-                          <a href={`/features/${feature.id}`} title={feature.description}>{feature.title}</a>
-                          <span class="bl-leader" aria-hidden="true"></span>
-                          <span class="bl-detail">{detail(baselines.get(feature.id))}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
+            <div class="feature-cards">
+              {category.features.map((feature) => {
+                const baseline = baselines.get(feature.id)!;
+                return (
+                <a
+                  href={`/features/${feature.id}`}
+                  class={`feature-card bl-${baseline.status}`}
+                  data-feature-item
+                  data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
+                >
+                  <div class="feature-card-top">
+                    <span class="feature-card-title">{feature.title}</span>
+                    <span class="bl-tag" title={`Baseline: ${BASELINE_TITLES[baseline.status]}`}>
+                      <span class="bl-mark" aria-hidden="true"></span>
+                      {SHORT[baseline.status]}
+                    </span>
+                  </div>
+                  <span class="feature-card-desc">{feature.description}</span>
+                  {baseline.status === "limited" && <span class="feature-card-gaps">{baselineGaps(baseline)}</span>}
+                </a>
+                );
+              })}
             </div>
           </section>
         ))
@@ -175,11 +151,6 @@ const featureRows = categories.flatMap((category) =>
         if (matches) {
           visibleItems += 1;
         }
-      }
-
-      for (const group of document.querySelectorAll("[data-bl-group]")) {
-        const visible = group.querySelectorAll("[data-feature-item]:not([hidden])").length;
-        group.toggleAttribute("hidden", visible === 0);
       }
 
       for (const card of categoryCards) {
@@ -360,84 +331,100 @@ const featureRows = categories.flatMap((category) =>
     white-space: nowrap;
   }
 
-  /* ─── Baseline groups ─── */
-  .baseline-groups {
-    padding: 4px 24px 28px;
+  /* ─── Feature cards ─── */
+  .feature-cards {
+    padding: 4px 24px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     max-width: 1160px;
     margin: 0 auto;
-    display: grid;
-    gap: 18px;
   }
-  .bl-group { display: grid; gap: 8px; }
-  .bl-group--widely, .bl-group--newly { --bl-color: var(--moss); }
-  .bl-group--limited { --bl-color: var(--ochre); }
-  .bl-group-title {
+
+  .feature-card {
     display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--bg-elev, var(--surface));
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    border-radius: 2px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 90ms ease;
+  }
+
+  .feature-card:hover {
+    border-color: var(--accent);
+  }
+
+  /* Baseline treatment, in the table's pattern language:
+     widely = solid tint, newly = vertical rules, limited = diagonal hatch. */
+  .feature-card.bl-widely {
+    --bl-color: var(--moss);
+    background: color-mix(in srgb, var(--moss) 9%, var(--bg-elev, var(--surface)));
+  }
+  .feature-card.bl-newly {
+    --bl-color: var(--moss);
+    background:
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--moss) 16%, transparent) 0 1.5px, transparent 1.5px 6px),
+      var(--bg-elev, var(--surface));
+  }
+  .feature-card.bl-limited {
+    --bl-color: var(--ochre);
+    background:
+      repeating-linear-gradient(135deg, color-mix(in srgb, var(--ochre) 14%, transparent) 0 1.5px, transparent 1.5px 6px),
+      var(--bg-elev, var(--surface));
+  }
+
+  .bl-tag {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin: 0;
-    font: 600 11px/1 var(--font-mono);
-    letter-spacing: 0.12em;
+    gap: 5px;
+    flex-shrink: 0;
+    font: 600 10px/1 var(--font-mono);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--bl-color);
+    padding-top: 2px;
   }
   .bl-mark {
-    width: 12px;
-    height: 12px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    border: 2px solid var(--bl-color);
-    flex-shrink: 0;
+    border: 1.5px solid var(--bl-color);
   }
-  .bl-group--widely .bl-mark { background: var(--bl-color); }
-  .bl-group--newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
-  .bl-group--limited .bl-mark { border-style: dashed; }
-  .bl-count { color: var(--text-subtle); font-weight: 500; }
+  .bl-widely .bl-mark { background: var(--bl-color); }
+  .bl-newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
+  .bl-limited .bl-mark { border-style: dashed; }
 
-  .bl-inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
-    padding-left: 20px;
+  .feature-card-gaps {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--bl-color);
   }
-  .bl-inline-item {
+
+  .feature-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .feature-card-title {
+    font-family: var(--font-display);
+    font-weight: 700;
     font-size: 14px;
     color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
+    line-height: 1.3;
   }
-  .bl-inline-item:hover, .bl-rows a:hover { border-bottom-color: var(--accent); color: var(--text); }
 
-  .bl-rows {
-    list-style: none;
-    margin: 0;
-    padding: 0 0 0 20px;
-    display: grid;
-    gap: 6px;
-  }
-  .bl-rows li {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 14px;
-    min-width: 0;
-  }
-  .bl-rows a {
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    flex-shrink: 0;
-  }
-  .bl-leader {
-    flex: 1;
-    min-width: 24px;
-    border-bottom: 1px dotted var(--border-strong, var(--text-subtle));
-    opacity: 0.35;
-    transform: translateY(-3px);
-  }
-  .bl-detail {
-    font-size: 13px;
+  .feature-card-desc {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    line-height: 1.5;
     color: var(--text-muted);
-    text-align: right;
   }
 
   /* ─── Footer ─── */
@@ -446,10 +433,10 @@ const featureRows = categories.flatMap((category) =>
     display: none !important;
   }
 
-  @media (max-width: 600px) {
-    .bl-rows li { flex-wrap: wrap; }
-    .bl-leader { display: none; }
-    .bl-detail { flex-basis: 100%; text-align: left; }
+  @media (max-width: 900px) {
+    .feature-cards {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 700px) {
@@ -458,8 +445,8 @@ const featureRows = categories.flatMap((category) =>
       flex-direction: column;
     }
 
-    .baseline-groups {
-      padding: 4px 16px 20px;
+    .feature-cards {
+      padding: 4px 16px 16px;
     }
 
     .cat-index-row {
