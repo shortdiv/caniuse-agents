@@ -345,11 +345,15 @@ if (supported.length === supportRows.length) {
               class={`ciu-cell ${cls}${bucket.carried ? " carried" : ""}`}
               data-agent-id={agent.id}
               data-agent-name={agent.name}
-              data-range={bucket.carried ? `${bucket.label} (no new release)` : bucket.label}
+              data-range={
+                notReleased && agent.note && agent.versions?.[0]
+                  ? `Before ${agent.versions[0].version}`
+                  : bucket.carried ? `${bucket.label} (no new release)` : bucket.label
+              }
               data-dates={bucket.dateRange}
               data-status={notReleased ? "nr" : bucket.value}
-              data-status-label={notReleased ? "Not yet released" : supportLabels[bucket.value]}
-              data-note={bucket.note}
+              data-status-label={notReleased ? (agent.note ? "Not tracked" : "Not yet released") : supportLabels[bucket.value]}
+              data-note={notReleased ? (agent.note ?? "") : bucket.note}
             >
               <span class="ciu-cell-label">{notReleased ? "—" : bucket.carried ? "" : bucket.label}</span>
               {!bucket.carried && (bucket.value === "a" || bucket.value === "p") && (
@@ -465,7 +469,11 @@ if (supported.length === supportRows.length) {
         (statusClassMap[status] || "tag-unknown");
       dates.textContent = el.dataset.dates || "";
 
-      if (status === "n" || status === "u" || status === "nr") {
+      if (status === "nr") {
+        // Before tracking starts: show the harness note (e.g. a rewrite), if any.
+        note.textContent = el.dataset.note || "";
+        mappingEl.classList.add("is-hidden");
+      } else if (status === "n" || status === "u") {
         note.textContent = "";
         mappingEl.classList.add("is-hidden");
       } else {

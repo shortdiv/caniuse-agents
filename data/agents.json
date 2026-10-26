@@ -3681,6 +3681,7 @@
     "vendor": "Anomaly",
     "type": "cli",
     "url": "https://opencode.ai",
+    "note": "Tracked from v0.1.30 (June 2025), when OpenCode was rewritten in TypeScript. Releases 0.0.x were an earlier Go program in the same repository and aren't compared here.",
     "current_version": "1.19.4",
     "version_list": [
       {

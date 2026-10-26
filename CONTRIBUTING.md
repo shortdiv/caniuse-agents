@@ -23,6 +23,7 @@ Maps each agent to its version history with release timestamps:
 ```
 
 - `release_date` is a Unix timestamp
+- `note` (optional) explains where tracking starts, e.g. a rewrite. It's shown when hovering the agent's "not tracked" cells and in `llms.txt`
 - `era` is a relative ordering (0 = latest, negative = older)
 
 ### Feature definitions — `data/features/*.json`

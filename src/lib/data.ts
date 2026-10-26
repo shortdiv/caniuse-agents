@@ -25,7 +25,7 @@ const loadCategories = async (): Promise<FeatureCategory[]> => {
 };
 
 const loadAgentMeta = async (): Promise<
-  Record<string, { name: string; vendor: string; url: string; current_version: string; version_list: { version: string; release_date: number; era: number; models?: string[] }[] }>
+  Record<string, { name: string; vendor: string; url: string; note?: string; current_version: string; version_list: { version: string; release_date: number; era: number; models?: string[] }[] }>
 > => {
   const raw = await readFile(resolve("./data/agents.json"), {
     encoding: "utf8",
@@ -55,6 +55,7 @@ const loadAgents = async (): Promise<Agent[]> => {
         models: v.models,
       }));
       agent.current_version = agentMeta.current_version;
+      if (agentMeta.note) agent.note = agentMeta.note;
     }
     return agent;
   });
