@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Local Cursor hooks and their thought logs (transcript text)
+.cursor/
