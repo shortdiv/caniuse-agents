@@ -1,6 +1,6 @@
 # Can I Use Agents?
 
-Compatibility tables for AI coding agent features. Compare hooks, MCP, tools, instructions, and memory support across Claude Code, Codex CLI, Cursor, GitHub Copilot CLI, and OpenCode.
+Compatibility tables for AI coding agent features. Compare hooks, MCP, tools, instructions, and memory support across Claude Code, Codex, Cursor, GitHub Copilot CLI, and OpenCode.
 
 **[caniuseagents.com](https://caniuseagents.com)**
 

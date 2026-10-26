@@ -23,6 +23,8 @@ Maps each agent to its version history with release timestamps:
 ```
 
 - `release_date` is a Unix timestamp
+- One column per **harness**: the agent loop and its configuration. Surfaces of the same harness (CLI, IDE extension, desktop app, web) share a column; list them in `surfaces`, and mention surface-only behaviour in that feature's notes (e.g. "desktop app only"). Products with a different agent core get their own column (e.g. Copilot CLI vs Copilot in VS Code).
+- `surfaces` (optional) lists where the harness runs. It's shown when hovering the column header and in `llms.txt`
 - `note` (optional) explains where tracking starts, e.g. a rewrite. It's shown when hovering the agent's "not tracked" cells and in `llms.txt`
 - `era` is a relative ordering (0 = latest, negative = older)
 

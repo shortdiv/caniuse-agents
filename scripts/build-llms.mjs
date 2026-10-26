@@ -28,7 +28,7 @@ const lines = [
   "",
   ...agents.map((a) => {
     const v = a.version_list;
-    return `- ${a.long_name ?? a.name}: ${v.length} versions from ${v[0].version} (${month(v[0].release_date)}) to ${v.at(-1).version} (${month(v.at(-1).release_date)})${a.note ? `. ${a.note}` : ""}`;
+    return `- ${a.long_name ?? a.name}: ${v.length} versions from ${v[0].version} (${month(v[0].release_date)}) to ${v.at(-1).version} (${month(v.at(-1).release_date)})${a.surfaces ? `. Covers ${a.surfaces}` : ""}${a.note ? `. ${a.note}` : ""}`;
   }),
   "",
   ...categories.flatMap((c) => [

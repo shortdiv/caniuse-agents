@@ -61,6 +61,8 @@ export interface Agent {
   current_version?: string;
   /** Harness-level context, e.g. a rewrite that tracking starts from. */
   note?: string;
+  /** Where the same harness runs (CLI, IDE, app…); one column covers them all. */
+  surfaces?: string;
   features: Record<string, FeatureSupport | AgentFeatureStats>;
 }
 

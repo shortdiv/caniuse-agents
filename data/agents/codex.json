@@ -1,6 +1,6 @@
 {
-  "id": "codex-cli",
-  "name": "Codex CLI",
+  "id": "codex",
+  "name": "Codex",
   "vendor": "OpenAI",
   "url": "https://developers.openai.com/codex",
   "features": {
@@ -675,7 +675,7 @@
         "0.145.0": "y",
         "0.164.0": "y"
       },
-      "notes": "Threadless resource reads since 0.123.0 — no active session required."
+      "notes": "Threadless resource reads since 0.123.0 \u2014 no active session required."
     },
     "mcp-prompts": {
       "stats": {
@@ -3236,7 +3236,7 @@
         "0.145.0": "y",
         "0.164.0": "y"
       },
-      "notes": "Computer use feature added"
+      "notes": "Computer use, desktop app only: it needs the Codex app on macOS as its host. Not available from the CLI or IDE extension."
     },
     "image-input": {
       "stats": {
@@ -5534,7 +5534,7 @@
         "0.145.0": "n",
         "0.164.0": "n"
       },
-      "notes": "No Notification hook event in Codex CLI."
+      "notes": "No Notification hook event in Codex."
     },
     "hook-subagent-lifecycle": {
       "stats": {

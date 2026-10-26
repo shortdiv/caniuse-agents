@@ -6,6 +6,7 @@
     "vendor": "Anthropic",
     "type": "cli",
     "url": "https://code.claude.com",
+    "surfaces": "CLI, IDE extensions, desktop app and web: one agent core and settings. Surface-only features are noted on the feature.",
     "current_version": "2.1.311",
     "version_list": [
       {
@@ -2311,13 +2312,14 @@
       }
     ]
   },
-  "codex-cli": {
-    "name": "Codex CLI",
-    "long_name": "Codex CLI (OpenAI)",
+  "codex": {
+    "name": "Codex",
+    "long_name": "Codex (OpenAI)",
     "abbr": "Codex",
     "vendor": "OpenAI",
     "type": "cli",
     "url": "https://developers.openai.com/codex",
+    "surfaces": "CLI, IDE extension and desktop app: one agent core and config (config.toml, hooks, MCP, AGENTS.md), and the same session logs. Surface-only features are noted on the feature.",
     "current_version": "0.164.0",
     "version_list": [
       {

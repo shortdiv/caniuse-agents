@@ -115,7 +115,7 @@ const agentMeta: Record<
     short: "CC",
     logo: "/logos/claudecode.png",
   },
-  "codex-cli": { color: "#9CA3AF", short: "CX", logo: "/logos/codex.svg" },
+  "codex": { color: "#9CA3AF", short: "CX", logo: "/logos/codex.svg" },
   cursor: { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
   "cursor-agent": { color: "#E6B450", short: "CA", logo: "/logos/cursor_light.svg", logoDark: "/logos/cursor_dark.svg" },
   copilot: { color: "#6C63FF", short: "CP", logo: "/logos/copilot-light.svg", logoDark: "/logos/copilot-dark.svg" },
@@ -170,7 +170,7 @@ if (supported.length === supportRows.length) {
       agentDisplay.map(({ agent, meta, latestDate }) => {
         const docUrl = feature?.docs?.[agent.id];
         return (
-        <div class="ciu-agent-header">
+        <div class="ciu-agent-header" title={agent.surfaces}>
           {meta.logo && meta.logoDark ? (
             <>
               <img class="agent-logo logo-light" src={meta.logo} alt={agent.name} width="26" height="26" />

@@ -1,16 +1,16 @@
 {
   "category": "hooks",
   "title": "Hooks & Lifecycle",
-  "description": "Agent extensibility via lifecycle hooks — intercept, observe, and control agent behavior at key points in the workflow",
+  "description": "Agent extensibility via lifecycle hooks \u2014 intercept, observe, and control agent behavior at key points in the workflow",
   "features": [
     {
       "id": "hook-session-lifecycle",
       "group": "Lifecycle Hooks",
       "title": "Session lifecycle management",
-      "description": "Hooks for session start and end — initialize environment, load context, clean up resources, or log session activity",
+      "description": "Hooks for session start and end \u2014 initialize environment, load context, clean up resources, or log session activity",
       "agent_mapping": {
         "claude-code": "SessionStart, SessionEnd",
-        "codex-cli": "SessionStart, SessionEnd",
+        "codex": "SessionStart, SessionEnd",
         "cursor": "sessionStart, sessionEnd",
         "copilot": "sessionStart, sessionEnd",
         "opencode": "session.created, session.deleted"
@@ -19,12 +19,12 @@
         "Session start: initialize env vars, load context, inject configuration",
         "Session end: clean up resources, flush logs, save state",
         "Claude Code: SessionStart (1.0.62) and SessionEnd (1.0.85) shipped separately",
-        "Codex CLI: SessionStart (start, resume, /clear, compact, fork) and SessionEnd (0.145.0)",
+        "Codex: SessionStart (start, resume, /clear, compact, fork) and SessionEnd (0.145.0)",
         "Cursor: both events, fire-and-forget (non-blocking); sessionEnd includes reason and duration"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#sessionstart",
-        "codex-cli": "https://developers.openai.com/codex/hooks#sessionstart",
+        "codex": "https://developers.openai.com/codex/hooks#sessionstart",
         "cursor": "https://cursor.com/docs/hooks#sessionstart",
         "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
@@ -33,10 +33,10 @@
       "id": "hook-tool-use",
       "group": "Lifecycle Hooks",
       "title": "Generic tool use hooks",
-      "description": "Pre and post hooks around any tool execution — inspect, modify, block, or log tool calls",
+      "description": "Pre and post hooks around any tool execution \u2014 inspect, modify, block, or log tool calls",
       "agent_mapping": {
         "claude-code": "PreToolUse, PostToolUse, PostToolUseFailure, PostToolBatch",
-        "codex-cli": "PreToolUse, PostToolUse",
+        "codex": "PreToolUse, PostToolUse",
         "cursor": "preToolUse, postToolUse, postToolUseFailure",
         "copilot": "preToolUse, postToolUse",
         "opencode": "tool.execute.before, tool.execute.after"
@@ -44,11 +44,11 @@
       "sub_capabilities": [
         "Pre-tool: inspect and optionally block or modify tool input before execution",
         "Post-tool: observe results, trigger side effects (linting, formatting, logging)",
-        "Claude Code: richest event set — includes PostToolUseFailure and PostToolBatch"
+        "Claude Code: richest event set \u2014 includes PostToolUseFailure and PostToolBatch"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
-        "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
+        "codex": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#pretooluse",
         "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
@@ -57,7 +57,7 @@
       "id": "hook-subagent-lifecycle",
       "group": "Lifecycle Hooks",
       "title": "Subagent lifecycle",
-      "description": "Hooks for when subagents are spawned and when they complete — observe delegation, aggregate results, enforce policies",
+      "description": "Hooks for when subagents are spawned and when they complete \u2014 observe delegation, aggregate results, enforce policies",
       "agent_mapping": {
         "claude-code": "SubagentStart, SubagentStop, TeammateIdle",
         "cursor": "subagentStart, subagentStop",
@@ -78,10 +78,10 @@
       "id": "hook-shell-control",
       "group": "Tool-Specific Hooks",
       "title": "Control shell commands",
-      "description": "Dedicated hooks for intercepting shell/terminal command execution — block dangerous commands, audit, or inject env vars",
+      "description": "Dedicated hooks for intercepting shell/terminal command execution \u2014 block dangerous commands, audit, or inject env vars",
       "agent_mapping": {
         "claude-code": "PreToolUse with Bash matcher",
-        "codex-cli": "PreToolUse (shell-only initially)",
+        "codex": "PreToolUse (shell-only initially)",
         "cursor": "beforeShellExecution, afterShellExecution",
         "opencode": "tool.execute.before (bash), shell.env"
       },
@@ -92,7 +92,7 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
-        "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
+        "codex": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution"
       }
     },
@@ -100,10 +100,10 @@
       "id": "hook-file-access",
       "group": "Tool-Specific Hooks",
       "title": "Control file access",
-      "description": "Dedicated hooks for file read and write operations — enforce access policies, trigger linting, or audit file changes",
+      "description": "Dedicated hooks for file read and write operations \u2014 enforce access policies, trigger linting, or audit file changes",
       "agent_mapping": {
         "claude-code": "PreToolUse with Read|Edit|Write matcher",
-        "codex-cli": "PreToolUse on apply_patch",
+        "codex": "PreToolUse on apply_patch",
         "cursor": "beforeReadFile, afterFileEdit, beforeTabFileRead, afterTabFileEdit",
         "opencode": "tool.execute.before (read/edit), file.edited"
       },
@@ -114,7 +114,7 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#pretooluse",
-        "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
+        "codex": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#beforereadfile"
       }
     },
@@ -122,10 +122,10 @@
       "id": "hook-prompt-validation",
       "group": "Tool-Specific Hooks",
       "title": "Validate prompts before submission",
-      "description": "Intercept user prompts before they reach the model — block, rewrite, redact, annotate, or inject context",
+      "description": "Intercept user prompts before they reach the model \u2014 block, rewrite, redact, annotate, or inject context",
       "agent_mapping": {
         "claude-code": "UserPromptSubmit",
-        "codex-cli": "UserPromptSubmit",
+        "codex": "UserPromptSubmit",
         "cursor": "beforeSubmitPrompt",
         "copilot": "userPromptSubmitted",
         "opencode": "chat.message"
@@ -138,7 +138,7 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#userpromptsubmit",
-        "codex-cli": "https://developers.openai.com/codex/hooks#userpromptsubmit",
+        "codex": "https://developers.openai.com/codex/hooks#userpromptsubmit",
         "cursor": "https://cursor.com/docs/hooks#beforesubmitprompt",
         "copilot": "https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-hooks"
       }
@@ -147,10 +147,10 @@
       "id": "hook-mcp-control",
       "group": "Tool-Specific Hooks",
       "title": "Control MCP tool use",
-      "description": "Dedicated hooks for MCP server tool invocations — audit, restrict, or modify MCP tool calls independently from built-in tools",
+      "description": "Dedicated hooks for MCP server tool invocations \u2014 audit, restrict, or modify MCP tool calls independently from built-in tools",
       "agent_mapping": {
         "claude-code": "PreToolUse with mcp__* matcher, Elicitation, ElicitationResult",
-        "codex-cli": "PreToolUse (MCP observation added 0.124.0)",
+        "codex": "PreToolUse (MCP observation added 0.124.0)",
         "cursor": "beforeMCPExecution, afterMCPExecution",
         "opencode": "tool.execute.before (MCP tools)"
       },
@@ -158,11 +158,11 @@
         "Block or audit specific MCP tool calls",
         "Cursor: dedicated MCP events separate from generic tool hooks",
         "Claude Code: uses PreToolUse with regex matcher on mcp__<server>__<tool>; also has Elicitation hooks",
-        "Codex CLI: MCP tool observation added in 0.124.0"
+        "Codex: MCP tool observation added in 0.124.0"
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#elicitation",
-        "codex-cli": "https://developers.openai.com/codex/hooks#pretooluse",
+        "codex": "https://developers.openai.com/codex/hooks#pretooluse",
         "cursor": "https://cursor.com/docs/hooks#beforeshellexecution--beforemcpexecution"
       }
     },
@@ -170,7 +170,7 @@
       "id": "hook-compaction",
       "group": "Observation Hooks",
       "title": "Observe compaction window",
-      "description": "Hooks that fire before and after context window compaction — preserve critical state, log what gets summarized, or block compaction",
+      "description": "Hooks that fire before and after context window compaction \u2014 preserve critical state, log what gets summarized, or block compaction",
       "agent_mapping": {
         "claude-code": "PreCompact, PostCompact",
         "cursor": "preCompact",
@@ -192,10 +192,10 @@
       "id": "hook-agent-stop",
       "group": "Observation Hooks",
       "title": "Agent complete (stop)",
-      "description": "Hook that fires when the agent finishes a turn — implement quality gates, force continuation, or trigger follow-up workflows",
+      "description": "Hook that fires when the agent finishes a turn \u2014 implement quality gates, force continuation, or trigger follow-up workflows",
       "agent_mapping": {
         "claude-code": "Stop, StopFailure",
-        "codex-cli": "Stop",
+        "codex": "Stop",
         "cursor": "stop",
         "opencode": "session.idle"
       },
@@ -207,7 +207,7 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#stop",
-        "codex-cli": "https://developers.openai.com/codex/hooks#stop",
+        "codex": "https://developers.openai.com/codex/hooks#stop",
         "cursor": "https://cursor.com/docs/hooks#stop"
       }
     },
@@ -215,7 +215,7 @@
       "id": "hook-response-tracking",
       "group": "Observation Hooks",
       "title": "Agent response tracking",
-      "description": "Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message",
+      "description": "Observe and react to the agent's responses \u2014 log output, track thinking, or trigger side effects after each message",
       "agent_mapping": {
         "claude-code": "Notification",
         "cursor": "afterAgentResponse, afterAgentThought",
