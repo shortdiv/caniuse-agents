@@ -56,6 +56,8 @@
   --status-prefix: #70b8c8;
   --status-prefix-bg: #102028;
   --status-prefix-text: #70b8c8;
+  /* Not released / not tracked: greyed out with a hatch, distinct from solid "unknown". */
+  --not-released-bg: repeating-linear-gradient(135deg, color-mix(in srgb, var(--text-subtle) 22%, transparent) 0 1.5px, transparent 1.5px 6px), color-mix(in srgb, var(--text-subtle) 8%, var(--bg));
   --status-unknown: #8a9085;
   --status-unknown-bg: #1a2218;
   --status-unknown-text: #8a9085;
