@@ -3,7 +3,16 @@ import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import { loadAgents, loadCategories } from "../lib/data.js";
+import {
+  BASELINE_TITLES,
+  baselineGaps,
+  getBaseline,
+  getFeatureData,
+  loadAgents,
+  loadCategories,
+  monthYear,
+  type Baseline,
+} from "../lib/data.js";
 import type { Feature } from "../lib/types";
 
 const [categories, agents] = await Promise.all([
@@ -15,6 +24,23 @@ const totalFeatures = categories.reduce(
   (count, category) => count + category.features.length,
   0,
 );
+
+// Baseline per feature, to group each category by how widely it works.
+const baselines = new Map<string, Baseline>(
+  await Promise.all(
+    categories.flatMap((c) => c.features).map(
+      async (f) => [f.id, getBaseline(await getFeatureData(f.id), agents)] as const,
+    ),
+  ),
+);
+const STATUSES = ["widely", "newly", "limited"] as const;
+const grouped = (features: Feature[]) =>
+  STATUSES.map((status) => ({
+    status,
+    features: features.filter((f) => baselines.get(f.id)?.status === status),
+  })).filter((g) => g.features.length);
+const detail = (b: Baseline | undefined) =>
+  !b ? "" : b.status === "limited" ? baselineGaps(b) : b.status === "newly" ? `widely available from ${monthYear(b.widelyFrom)}` : "";
 
 const featureRows = categories.flatMap((category) =>
   category.features.map((feature: Feature) => ({
@@ -76,19 +102,43 @@ const featureRows = categories.flatMap((category) =>
               </span>
             </div>
 
-            <div class="feature-cards">
-              {category.features.map((feature) => (
-                <a
-                  href={`/features/${feature.id}`}
-                  class="feature-card"
-                  data-feature-item
-                  data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
-                >
-                  <div class="feature-card-top">
-                    <span class="feature-card-title">{feature.title}</span>
-                  </div>
-                  <span class="feature-card-desc">{feature.description}</span>
-                </a>
+            <div class="baseline-groups">
+              {grouped(category.features).map(({ status, features }) => (
+                <div class={`bl-group bl-group--${status}`} data-bl-group>
+                  <h4 class="bl-group-title">
+                    <span class="bl-mark" aria-hidden="true"></span>
+                    {BASELINE_TITLES[status]}
+                    <span class="bl-count">{features.length}</span>
+                  </h4>
+                  {status === "widely" ? (
+                    <div class="bl-inline">
+                      {features.map((feature) => (
+                        <a
+                          href={`/features/${feature.id}`}
+                          class="bl-inline-item"
+                          title={feature.description}
+                          data-feature-item
+                          data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
+                        >
+                          {feature.title}
+                        </a>
+                      ))}
+                    </div>
+                  ) : (
+                    <ul class="bl-rows">
+                      {features.map((feature) => (
+                        <li
+                          data-feature-item
+                          data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
+                        >
+                          <a href={`/features/${feature.id}`} title={feature.description}>{feature.title}</a>
+                          <span class="bl-leader" aria-hidden="true"></span>
+                          <span class="bl-detail">{detail(baselines.get(feature.id))}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
             </div>
           </section>
@@ -125,6 +175,11 @@ const featureRows = categories.flatMap((category) =>
         if (matches) {
           visibleItems += 1;
         }
+      }
+
+      for (const group of document.querySelectorAll("[data-bl-group]")) {
+        const visible = group.querySelectorAll("[data-feature-item]:not([hidden])").length;
+        group.toggleAttribute("hidden", visible === 0);
       }
 
       for (const card of categoryCards) {
@@ -305,53 +360,84 @@ const featureRows = categories.flatMap((category) =>
     white-space: nowrap;
   }
 
-  /* ─── Feature cards ─── */
-  .feature-cards {
-    padding: 4px 24px 24px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  /* ─── Baseline groups ─── */
+  .baseline-groups {
+    padding: 4px 24px 28px;
     max-width: 1160px;
     margin: 0 auto;
+    display: grid;
+    gap: 18px;
   }
-
-  .feature-card {
+  .bl-group { display: grid; gap: 8px; }
+  .bl-group--widely, .bl-group--newly { --bl-color: var(--moss); }
+  .bl-group--limited { --bl-color: var(--ochre); }
+  .bl-group-title {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: var(--bg-elev, var(--surface));
-    border: 1px solid var(--border);
-    padding: 14px 16px;
-    border-radius: 2px;
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color 90ms ease;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font: 600 11px/1 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bl-color);
   }
-
-  .feature-card:hover {
-    border-color: var(--accent);
+  .bl-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bl-color);
+    flex-shrink: 0;
   }
+  .bl-group--widely .bl-mark { background: var(--bl-color); }
+  .bl-group--newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
+  .bl-group--limited .bl-mark { border-style: dashed; }
+  .bl-count { color: var(--text-subtle); font-weight: 500; }
 
-  .feature-card-top {
+  .bl-inline {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding-left: 20px;
   }
-
-  .feature-card-title {
-    font-family: var(--font-display);
-    font-weight: 700;
+  .bl-inline-item {
     font-size: 14px;
     color: var(--text);
-    line-height: 1.3;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
   }
+  .bl-inline-item:hover, .bl-rows a:hover { border-bottom-color: var(--accent); color: var(--text); }
 
-  .feature-card-desc {
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    line-height: 1.5;
+  .bl-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 20px;
+    display: grid;
+    gap: 6px;
+  }
+  .bl-rows li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 14px;
+    min-width: 0;
+  }
+  .bl-rows a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    flex-shrink: 0;
+  }
+  .bl-leader {
+    flex: 1;
+    min-width: 24px;
+    border-bottom: 1px dotted var(--border-strong, var(--text-subtle));
+    opacity: 0.35;
+    transform: translateY(-3px);
+  }
+  .bl-detail {
+    font-size: 13px;
     color: var(--text-muted);
+    text-align: right;
   }
 
   /* ─── Footer ─── */
@@ -360,10 +446,10 @@ const featureRows = categories.flatMap((category) =>
     display: none !important;
   }
 
-  @media (max-width: 900px) {
-    .feature-cards {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 600px) {
+    .bl-rows li { flex-wrap: wrap; }
+    .bl-leader { display: none; }
+    .bl-detail { flex-basis: 100%; text-align: left; }
   }
 
   @media (max-width: 700px) {
@@ -372,8 +458,8 @@ const featureRows = categories.flatMap((category) =>
       flex-direction: column;
     }
 
-    .feature-cards {
-      padding: 4px 16px 16px;
+    .baseline-groups {
+      padding: 4px 16px 20px;
     }
 
     .cat-index-row {

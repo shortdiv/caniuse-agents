@@ -7,6 +7,8 @@ import {
   getCurrentFeatureSupport,
   getFeatureData,
   getBaseline,
+  baselineSentence,
+  BASELINE_TITLES,
   BASELINE_WIDELY_MONTHS,
   loadAgents,
   loadCategories,
@@ -42,22 +44,8 @@ const featureData = await getFeatureData(feature.id);
 const totalFeatures = categories.reduce((n, c) => n + c.features.length, 0);
 
 const baseline = getBaseline(featureData, agents);
-const month = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
-const list = (names: string[]) =>
-  names.length < 2 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
-const baselineText =
-  baseline.status === "limited"
-    ? (["a", "n", "u", "d"] as const)
-        .map((code) => {
-          const names = baseline.gaps.filter((g) => g.support === code).map((g) => g.agent);
-          const word = { a: "Partial in", n: "Not in", u: "Unknown in", d: "Deprecated in" }[code];
-          return names.length ? `${word} ${list(names)}.` : "";
-        })
-        .filter(Boolean)
-        .join(" ")
-    : `Fully supported by every tracked agent since ${month(baseline.since)}, when ${baseline.lastAgent} added it.` +
-      (baseline.status === "newly" ? ` Widely available from ${month(baseline.widelyFrom)}.` : "");
-const baselineTitle = { limited: "Limited availability", newly: "Newly available", widely: "Widely available" }[baseline.status];
+const baselineText = baselineSentence(baseline);
+const baselineTitle = BASELINE_TITLES[baseline.status];
 
 const supportRows: SupportRow[] = agents.map((agent: Agent) => ({
   agent,

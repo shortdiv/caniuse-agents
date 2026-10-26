@@ -250,10 +250,40 @@ const getBaseline = (featureData: CaniuseFeatureData | null, agents: Agent[], no
   return { status: widelyFrom <= now ? "widely" : "newly", since, widelyFrom, lastAgent };
 };
 
+const monthYear = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+const joinNames = (names: string[]) =>
+  names.length < 2 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+
+const BASELINE_TITLES = { limited: "Limited availability", newly: "Newly available", widely: "Widely available" } as const;
+
+/** Who's missing, for limited features: "Partial in OpenCode. Not in Codex." */
+const baselineGaps = (b: Baseline): string =>
+  b.status !== "limited"
+    ? ""
+    : (["a", "n", "u", "d"] as const)
+        .map((code) => {
+          const names = b.gaps.filter((g) => g.support === code).map((g) => g.agent);
+          const word = { a: "Partial in", n: "Not in", u: "Unknown in", d: "Deprecated in" }[code];
+          return names.length ? `${word} ${joinNames(names)}.` : "";
+        })
+        .filter(Boolean)
+        .join(" ");
+
+/** One sentence for the badge on a feature page. */
+const baselineSentence = (b: Baseline): string =>
+  b.status === "limited"
+    ? baselineGaps(b)
+    : `Fully supported by every tracked agent since ${monthYear(b.since)}, when ${b.lastAgent} added it.` +
+      (b.status === "newly" ? ` Widely available from ${monthYear(b.widelyFrom)}.` : "");
+
 export type { Baseline };
 export {
+  BASELINE_TITLES,
   BASELINE_WIDELY_MONTHS,
+  baselineGaps,
+  baselineSentence,
   getBaseline,
+  monthYear,
   loadCategories,
   loadAgents,
   loadFeatures,
