@@ -3684,63 +3684,68 @@
     "current_version": "1.19.4",
     "version_list": [
       {
-        "version": "0.0.45",
-        "release_date": 1747247643,
+        "version": "0.1.30",
+        "release_date": 1749817928,
+        "era": -20
+      },
+      {
+        "version": "0.1.87",
+        "release_date": 1750302271,
         "era": -19
       },
       {
-        "version": "0.0.51",
-        "release_date": 1747489144,
+        "version": "0.1.113",
+        "release_date": 1750451961,
         "era": -18
-      },
-      {
-        "version": "0.1.95",
-        "release_date": 1750344428,
-        "era": -17
-      },
-      {
-        "version": "0.1.97",
-        "release_date": 1750352637,
-        "era": -16
-      },
-      {
-        "version": "0.1.121",
-        "release_date": 1750641229,
-        "era": -15
       },
       {
         "version": "0.1.146",
         "release_date": 1750977168,
-        "era": -14
+        "era": -17
       },
       {
         "version": "0.1.148",
         "release_date": 1750990884,
-        "era": -13
+        "era": -16
       },
       {
-        "version": "0.1.174",
-        "release_date": 1751424190,
-        "era": -12
+        "version": "0.1.180",
+        "release_date": 1751515219,
+        "era": -15
       },
       {
         "version": "0.1.192",
         "release_date": 1751660949,
-        "era": -11
+        "era": -14
       },
       {
         "version": "0.3.7",
         "release_date": 1752552620,
-        "era": -10
+        "era": -13
       },
       {
         "version": "0.3.76",
         "release_date": 1753485875,
-        "era": -9
+        "era": -12
+      },
+      {
+        "version": "0.3.83",
+        "release_date": 1753832221,
+        "era": -11
       },
       {
         "version": "0.3.114",
         "release_date": 1754204447,
+        "era": -10
+      },
+      {
+        "version": "0.7.2",
+        "release_date": 1757610185,
+        "era": -9
+      },
+      {
+        "version": "0.15.19",
+        "release_date": 1761639161,
         "era": -8
       },
       {
@@ -3769,13 +3774,13 @@
         "era": -3
       },
       {
-        "version": "1.3.14",
-        "release_date": 1775327560,
+        "version": "1.1.43",
+        "release_date": 1769733073,
         "era": -2
       },
       {
-        "version": "1.18.11",
-        "release_date": 1785584685,
+        "version": "1.17.7",
+        "release_date": 1781462963,
         "era": -1
       },
       {

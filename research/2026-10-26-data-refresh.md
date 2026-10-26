@@ -40,17 +40,51 @@ This covers releases from 2026-06-30 to 2026-10-26, for Claude Code, Codex, Curs
 - **Semantic search:** `n` → `y` at 1.0.100. On by default for online sessions.
 
 **OpenCode (new)**
-- **Milestones:** 20 versions, each the first release-note evidence of a tracked feature, plus the latest.
-- **Before first evidence:**
-  - features that probably already existed are `u`;
-  - features that were clearly introduced later are `n`.
 
-  Early release notes are sparse, so the first versions are approximate.
-- **Hooks are JS/TS plugins,** not config commands. The plugin system first shipped in **0.3.114** (2025-08-03): `packages/plugin` landed in commit ca031278c ("wip: plugins"), and 0.3.114 is the first release that contains it. The release notes first mention plugins at 0.3.129, which was used at first and then corrected.
-  - **Agent stop and subagent lifecycle are `a`:** `session.idle` only observes the end of a turn, and subagents show up only as child sessions.
-  - **Prompt validation is `a`:** the `chat.message` plugin hook (in the source, not the plugin docs) receives each user message and can modify it. Blocking isn't documented.
-- **Web search is `a`:** it needs OpenCode Zen or an environment flag. (First recorded as `p`; flags now count as partial.)
-- **LSP is `a`:** diagnostics only, and off by default.
+**Checked in source.** Each date below is the first release whose code contains the feature. I read files at each release tag with the GitHub contents API and binary-searched the stable tags. Release notes were only a starting point, because early ones are sparse and often mention a feature first in a fix.
+
+**Only the TypeScript OpenCode is tracked.** Tags 0.0.45–0.0.52 are an earlier Go program in the same repo (`main.go`, `internal/`). The TypeScript rewrite starts at v0.1.30 (2025-06-13), so that's the first tracked version.
+
+| Since | What | Where in source (`packages/opencode/src`) |
+|---|---|---|
+| 0.1.30 | read, edit, write, grep, glob, bash; task tool (subagents); todos; webfetch; LSP diagnostics; MCP local + remote over SSE; project config; AGENTS.md/CLAUDE.md walk-up; auto-summarize at 90% of context; `run --session` | `tool/*`, `mcp/index.ts`, `session/system.ts`, `session/index.ts`, `cli/cmd/run.ts` |
+| 0.1.87 | Global config (`~/.config/opencode`), so user-level MCP config | `config/config.ts` |
+| 0.1.113 | Global AGENTS.md and `~/.claude/CLAUDE.md` | `session/system.ts` |
+| 0.1.146 → 0.3.7 | Task tool commented out, then restored | `provider/provider.ts` |
+| 0.1.148 | Experimental config hooks (`file_edited`, `session_completed`) | `config/config.ts` |
+| 0.1.180 | `instructions` config option | `config/config.ts` |
+| 0.1.192 | Image @ files handled; paste images in 0.2.6 | release notes; earlier image support unknown (`u`) |
+| 0.3.76 | Streamable HTTP MCP transport | `mcp/index.ts` |
+| 0.3.83 | Remote `.well-known/opencode` config as an overridable base layer: org instructions `a` | `config/config.ts` |
+| 0.3.114 | Plugin system: `tool.execute.before/after`, `chat.message`, all app events (session updated/idle/deleted; message updated) | `packages/plugin` (first added in commit ca031278c) |
+| 0.7.2 | `session.compacted` event: compaction hook `a` | `session/index.ts` |
+| 0.15.19 | `session.created` event: session lifecycle `y` | `session/index.ts` |
+| 1.0.56 | `websearch` tool (later limited to Zen or an env flag): `a` | `tool/websearch.ts` |
+| 1.0.137 | MCP OAuth | `mcp/oauth-provider.ts` |
+| 1.0.165 | `experimental.session.compacting`: compaction hook `y` | plugin API |
+| 1.0.219 | MCP prompts (as slash commands) | `mcp/index.ts` |
+| 1.1.1 | MCP resources | `mcp/index.ts` |
+| 1.1.43 | Managed config (system dirs, enforced): org instructions `y` | `config/config.ts` |
+| 1.17.7 | MCP roots capability and `roots/list` handler | `mcp/index.ts` |
+
+**Still "no",** because the capabilities are commented out in the MCP client with links to open issues:
+- MCP sampling (#11948);
+- MCP elicitation (#23066).
+
+**Hooks are JS/TS plugins,** not config commands:
+- **Partial:**
+  - agent stop: `session.idle` only observes;
+  - subagent lifecycle: subagents show up only as child sessions;
+  - prompt validation: `chat.message` can modify a prompt, but blocking isn't documented.
+- `chat.message` is in the plugin API but not on the plugin docs page.
+
+**Corrections versus the first draft of this refresh:**
+- Seven features started too late: subagents, todos, web fetch, MCP, MCP over SSE, AGENTS.md and resume.
+- Plugins were dated 0.3.129 (the first release-note mention) instead of 0.3.114.
+- MCP roots was `n`.
+- Global instructions only had the latest version marked.
+- Org instructions started at 1.3.14 instead of 0.3.83/1.1.43.
+- The Go-era versions were included.
 
 **Cline:** removed, along with its data file, mappings, sub-capabilities, table style and skill feed. The data is archived in `archive/2026-10-26/*`.
 
