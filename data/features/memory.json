@@ -1,7 +1,7 @@
 {
   "category": "memory",
   "title": "Memory",
-  "description": "How the agent persists its own knowledge and manages the constraint of limited context",
+  "description": "How the agent persists its own knowledge and sessions, and manages the constraint of limited context",
   "features": [
     {
       "id": "auto-memory",
@@ -14,6 +14,16 @@
       "group": "Persistence",
       "title": "Conversation resume",
       "description": "Resume a past conversation with its full context intact"
+    },
+    {
+      "id": "session-transcripts",
+      "group": "Persistence",
+      "title": "Local session transcripts",
+      "description": "The harness keeps a readable record of each session on your machine (files on disk, or an export)",
+      "sub_capabilities": [
+        "Session analysis and evals start here: no transcript, no data",
+        "Formats differ by harness and change between versions"
+      ]
     },
     {
       "id": "context-compaction",

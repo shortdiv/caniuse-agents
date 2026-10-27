@@ -98,6 +98,15 @@
       "group": "Orchestration",
       "title": "Task management",
       "description": "Track work progress with task lists and checklists within a session"
+    },
+    {
+      "id": "token-usage",
+      "group": "Orchestration",
+      "title": "Token usage reporting",
+      "description": "Reports a session's token usage (input, output, and cache where the model provides it)",
+      "sub_capabilities": [
+        "Shown in the UI or a command, or recorded in the transcript"
+      ]
     }
   ]
 }

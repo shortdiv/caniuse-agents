@@ -8,9 +8,9 @@ This site compares feature support across AI coding agents with version-level gr
 
 - Claude Code (Anthropic): 451 versions from 0.2.31 (Mar 2025) to 2.1.311 (Oct 2026). Covers CLI, IDE extensions, desktop app and web: one agent core and settings. Surface-only features are noted on the feature.
 - Codex (OpenAI): 131 versions from 0.2.0 (Jul 2025) to 0.164.0 (Oct 2026). Covers CLI, IDE extension and desktop app: one agent core and config (config.toml, hooks, MCP, AGENTS.md), and the same session logs. Surface-only features are noted on the feature.
-- Cursor (Anysphere): 16 versions from 0.45 (Jan 2025) to 3.27 (Oct 2026). Covers Editor and the Cursor CLI: same modes, rules (.cursor/rules, AGENTS.md, CLAUDE.md) and MCP config, per Cursor's CLI docs. Hooks are documented for the editor; the CLI docs don't say whether it runs them.
+- Cursor (Anysphere): 17 versions from 0.45 (Jan 2025) to 3.27 (Oct 2026). Covers Editor and the Cursor CLI: same modes, rules (.cursor/rules, AGENTS.md, CLAUDE.md) and MCP config, per Cursor's CLI docs. Hooks are documented for the editor; the CLI docs don't say whether it runs them.
 - GitHub Copilot (GitHub): 120 versions from 0.0.374 (Jan 2026) to 1.0.103 (Oct 2026). Covers Copilot CLI, the agent in VS Code and the GitHub Copilot app: one harness and hook format, per VS Code's hooks docs. Versions follow the Copilot CLI release line; older rows reflect the CLI, from before VS Code shared the harness.
-- OpenCode (Anomaly): 23 versions from 0.1.30 (Jun 2025) to 1.19.4 (Oct 2026). Tracked from v0.1.30 (June 2025), when OpenCode was rewritten in TypeScript. Releases 0.0.x were an earlier Go program in the same repository and aren't compared here.
+- OpenCode (Anomaly): 24 versions from 0.1.30 (Jun 2025) to 1.19.4 (Oct 2026). Tracked from v0.1.30 (June 2025), when OpenCode was rewritten in TypeScript. Releases 0.0.x were an earlier Go program in the same repository and aren't compared here.
 
 ## Hooks & Lifecycle: 12 features
 
@@ -27,7 +27,7 @@ This site compares feature support across AI coding agents with version-level gr
 - [Interrupt hook](/features/hook-interrupt): Runs when you interrupt the agent mid-turn (Esc or Ctrl-C) — clean up, log, or notify when a turn is cut short
 - [Agent response tracking](/features/hook-response-tracking): Observe and react to the agent's responses — log output, track thinking, or trigger side effects after each message
 
-## Instructions: 6 features
+## Instructions: 7 features
 
 - [Project-level instructions](/features/project-instructions): Repo-specific guidance files checked into version control (e.g. CLAUDE.md, .cursorrules, copilot-instructions.md)
 - [User-level instructions](/features/user-instructions): Global personal preferences that apply across all projects for the current user
@@ -35,6 +35,7 @@ This site compares feature support across AI coding agents with version-level gr
 - [Path-scoped rules](/features/path-scoped-rules): Instructions that only apply when the agent works with files matching a glob pattern
 - [Instruction file imports](/features/instruction-imports): Instruction files can reference or import other files to compose guidance from multiple sources
 - [AGENTS.md compatibility](/features/agents-md-compat): The agent reads the cross-agent AGENTS.md format used by multiple coding tools
+- [Tool approval prompts](/features/tool-approval): The agent stops and asks you to approve or deny a tool call (a shell command, an edit) before running it
 
 ## Model Context Protocol: 12 features
 
@@ -51,13 +52,14 @@ This site compares feature support across AI coding agents with version-level gr
 - [Project-level MCP config](/features/mcp-config-project): Configure MCP servers per-project, shareable via version control
 - [User-level MCP config](/features/mcp-config-user): Configure MCP servers globally for the current user across all projects
 
-## Memory: 3 features
+## Memory: 4 features
 
 - [Persistent auto memory](/features/auto-memory): The agent automatically saves notes and learnings across sessions without manual effort
 - [Conversation resume](/features/conversation-resume): Resume a past conversation with its full context intact
+- [Local session transcripts](/features/session-transcripts): The harness keeps a readable record of each session on your machine (files on disk, or an export)
 - [Context compaction](/features/context-compaction): Gracefully handles long conversations by summarizing or compacting context when approaching window limits
 
-## Built-in Tools: 16 features
+## Built-in Tools: 17 features
 
 - [File read](/features/file-read): Read file contents from the local filesystem
 - [File edit / write](/features/file-edit): Create, modify, and overwrite files
@@ -75,6 +77,7 @@ This site compares feature support across AI coding agents with version-level gr
 - [Semantic search](/features/semantic-search): Search codebase by meaning using embeddings or indexing, not just exact matches
 - [Subagent spawning](/features/subagent-spawning): Spawn sub-agents with their own context window to handle tasks in parallel
 - [Task management](/features/task-management): Track work progress with task lists and checklists within a session
+- [Token usage reporting](/features/token-usage): Reports a session's token usage (input, output, and cache where the model provides it)
 
 ## Data
 

@@ -1,7 +1,7 @@
 {
   "category": "instructions",
   "title": "Instructions",
-  "description": "How you tell the agent what to do — persistent guidance files, scoping, and cross-agent compatibility",
+  "description": "How you tell the agent what to do and what it may do: guidance files, scoping, approvals, and cross-agent compatibility",
   "features": [
     {
       "id": "project-instructions",
@@ -38,6 +38,21 @@
       "group": "Interop",
       "title": "AGENTS.md compatibility",
       "description": "The agent reads the cross-agent AGENTS.md format used by multiple coding tools"
+    },
+    {
+      "id": "tool-approval",
+      "group": "Permissions",
+      "title": "Tool approval prompts",
+      "description": "The agent stops and asks you to approve or deny a tool call (a shell command, an edit) before running it",
+      "sub_capabilities": [
+        "A declined call is a signal in session data: the user stopped the agent",
+        "Modes and allow rules can skip the prompt, so no prompt doesn't always mean no approval step"
+      ],
+      "docs": {
+        "claude-code": "https://code.claude.com/docs/en/iam",
+        "cursor": "https://cursor.com/docs/agent/security/run-modes",
+        "opencode": "https://opencode.ai/docs/permissions/"
+      }
     }
   ]
 }
