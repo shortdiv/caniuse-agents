@@ -8,13 +8,10 @@ const meta = await readJson("data/agents.json");
 const featureFiles = (await readdir(new URL("data/features/", root))).filter(
   (name) => name.endsWith(".json"),
 );
-const featureIds = new Set(
-  (
-    await Promise.all(
-      featureFiles.map((name) => readJson(`data/features/${name}`)),
-    )
-  ).flatMap((category) => category.features.map((feature) => feature.id)),
-);
+const features = (
+  await Promise.all(featureFiles.map((name) => readJson(`data/features/${name}`)))
+).flatMap((category) => category.features);
+const featureIds = new Set(features.map((feature) => feature.id));
 const agentFiles = (await readdir(new URL("data/agents/", root))).filter(
   (name) => name.endsWith(".json"),
 );
@@ -68,6 +65,12 @@ for (const agent of agents) {
       if (!versionSet.has(version)) {
         errors.push(`${agent.id} ${featureId}: unknown version ${version}`);
       }
+    }
+    // A feature that names harness events must name them for every harness that supports it now.
+    const mapping = features.find((f) => f.id === featureId).agent_mapping;
+    const current = feature.stats[versions.at(-1)];
+    if (mapping && (current === "y" || current === "a") && !(agent.id in mapping)) {
+      errors.push(`${agent.id} ${featureId}: supported but missing from agent_mapping`);
     }
   }
 }

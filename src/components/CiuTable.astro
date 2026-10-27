@@ -298,6 +298,18 @@ if (supported.length === supportRows.length) {
 
     let pinnedCell: HTMLElement | null = null;
 
+    // Notes are plain text with `backticks` for event and field names; render those as code.
+    function setNote(text: string) {
+      note.replaceChildren(
+        ...text.split("`").map((part, i) => {
+          if (i % 2 === 0) return document.createTextNode(part);
+          const code = document.createElement("code");
+          code.textContent = part;
+          return code;
+        }),
+      );
+    }
+
     function showCellDetail(el: HTMLElement) {
       const agentId = el.dataset.agentId || "";
       const status = el.dataset.status || "u";
@@ -320,13 +332,13 @@ if (supported.length === supportRows.length) {
 
       if (status === "nr") {
         // Before tracking starts: show the harness note (e.g. a rewrite), if any.
-        note.textContent = el.dataset.note || "";
+        setNote(el.dataset.note || "");
         mappingEl.classList.add("is-hidden");
       } else if (status === "n" || status === "u") {
         note.textContent = "";
         mappingEl.classList.add("is-hidden");
       } else {
-        note.textContent = el.dataset.note || "";
+        setNote(el.dataset.note || "");
         const mapping = agentMappingNames[agentId];
         if (mapping) {
           mappingEl.textContent = mapping;
@@ -592,7 +604,7 @@ if (supported.length === supportRows.length) {
     margin-bottom: 10px;
     border-top: 0.5px solid var(--border);
     background: var(--surface);
-    height: 110px;
+    min-height: 110px;
     display: flex;
     align-items: flex-start;
     position: relative;
@@ -708,6 +720,10 @@ if (supported.length === supportRows.length) {
     color: var(--text-muted);
     margin: 2px 0 0;
     max-width: 100%;
+  }
+  .hover-note code {
+    font: 12px var(--font-mono);
+    color: var(--text);
   }
 
   .hover-mapping {

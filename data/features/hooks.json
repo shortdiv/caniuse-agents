@@ -84,7 +84,9 @@
       "agent_mapping": {
         "claude-code": "SubagentStart, SubagentStop, TeammateIdle",
         "cursor": "subagentStart, subagentStop",
-        "opencode": "session.created (child sessions)"
+        "opencode": "session.created (child sessions)",
+        "codex": "SubagentStart, SubagentStop",
+        "copilot": "subagentStart, subagentStop"
       },
       "sub_capabilities": [
         "Subagent start: observe or veto when a parent agent delegates to a child",
@@ -106,7 +108,8 @@
         "claude-code": "PreToolUse with Bash matcher",
         "codex": "PreToolUse (shell-only initially)",
         "cursor": "beforeShellExecution, afterShellExecution",
-        "opencode": "tool.execute.before (bash), shell.env"
+        "opencode": "tool.execute.before (bash), shell.env",
+        "copilot": "preToolUse (bash tool)"
       },
       "sub_capabilities": [
         "Block dangerous commands before they execute",
@@ -128,7 +131,8 @@
         "claude-code": "PreToolUse with Read|Edit|Write matcher",
         "codex": "PreToolUse on apply_patch",
         "cursor": "beforeReadFile, afterFileEdit, beforeTabFileRead, afterTabFileEdit",
-        "opencode": "tool.execute.before (read/edit), file.edited"
+        "opencode": "tool.execute.before (read/edit), file.edited",
+        "copilot": "preToolUse (file tools)"
       },
       "sub_capabilities": [
         "Pre-read: restrict which files the agent can access",
@@ -175,7 +179,8 @@
         "claude-code": "PreToolUse with mcp__* matcher, Elicitation, ElicitationResult",
         "codex": "PreToolUse (MCP observation added 0.124.0)",
         "cursor": "beforeMCPExecution, afterMCPExecution",
-        "opencode": "tool.execute.before (MCP tools)"
+        "opencode": "tool.execute.before (MCP tools)",
+        "copilot": "preToolUse, postToolUse (MCP tools)"
       },
       "sub_capabilities": [
         "Block or audit specific MCP tool calls",
@@ -198,7 +203,8 @@
         "claude-code": "PreCompact, PostCompact",
         "cursor": "preCompact",
         "copilot": "preCompact",
-        "opencode": "experimental.session.compacting, session.compacted"
+        "opencode": "experimental.session.compacting, session.compacted",
+        "codex": "PreCompact, PostCompact"
       },
       "sub_capabilities": [
         "PreCompact: save state or block compaction if in a critical section",
@@ -208,7 +214,8 @@
       ],
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#precompact",
-        "cursor": "https://cursor.com/docs/hooks#precompact"
+        "cursor": "https://cursor.com/docs/hooks#precompact",
+        "codex": "https://learn.chatgpt.com/docs/hooks"
       }
     },
     {
@@ -220,7 +227,8 @@
         "claude-code": "Stop, StopFailure",
         "codex": "Stop",
         "cursor": "stop",
-        "opencode": "session.idle"
+        "opencode": "session.idle",
+        "copilot": "agentStop"
       },
       "sub_capabilities": [
         "Force the agent to keep working by returning a continuation signal",

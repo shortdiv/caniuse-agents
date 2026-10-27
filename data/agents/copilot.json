@@ -377,7 +377,7 @@
         "1.0.100": "y",
         "1.0.103": "y"
       },
-      "notes": "No turn-end/stop hook.",
+      "notes": "`agentStop` fires when the main agent finishes a turn and can control completion.",
       "version_notes": {
         "0.0.401": "Added agentStop and subagentStop hooks."
       }
@@ -633,7 +633,11 @@
         "1.0.100": "y",
         "1.0.103": "y"
       },
-      "notes": "No subagent completion hook."
+      "notes": "`subagentStop` fires when a subagent finishes; `subagentStart` (1.0.7) fires when one is spawned and can inject context into its prompt.",
+      "version_notes": {
+        "0.0.401": "Added `subagentStop`.",
+        "1.0.7": "Added `subagentStart`."
+      }
     },
     "hook-session-lifecycle": {
       "stats": {
@@ -6033,7 +6037,7 @@
         "1.0.100": "y",
         "1.0.103": "y"
       },
-      "notes": "`permissionRequest` (CLI only) returns `behavior: allow | deny`; a deny with `interrupt: true` stops the agent. For sandbox-bypass requests only a deny takes effect.",
+      "notes": "`permissionRequest` (CLI only) returns allow or deny; deny with `interrupt: true` stops the agent.",
       "version_notes": {
         "1.0.16": "Added `permissionRequest`."
       }

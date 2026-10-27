@@ -93,7 +93,7 @@
         "1.17.7": "a",
         "1.19.4": "a"
       },
-      "notes": "Subagents run as child sessions, visible through session events, via JS/TS plugins (`.opencode/plugin`, `plugin` in opencode.json). No dedicated subagent events."
+      "notes": "No subagent events; subagents run as child sessions, visible through session events in plugins."
     },
     "hook-shell-control": {
       "stats": {
@@ -239,7 +239,7 @@
         "1.17.7": "y",
         "1.19.4": "y"
       },
-      "notes": "`experimental.session.compacting` injects context before compaction; `session.compacted` event after, via JS/TS plugins (`.opencode/plugin`, `plugin` in opencode.json).",
+      "notes": "Plugin hook `experimental.session.compacting` adds context before compaction; `session.compacted` event after.",
       "version_notes": {
         "0.7.2": "`session.compacted` event (observe only).",
         "1.0.165": "Experimental `experimental.session.compacting` hook (#5698)."
@@ -271,7 +271,7 @@
         "1.17.7": "a",
         "1.19.4": "a"
       },
-      "notes": "`session.idle` event when the agent finishes, via JS/TS plugins (`.opencode/plugin`, `plugin` in opencode.json). Observes only: it can't block or force continuation.",
+      "notes": "Plugin event `session.idle` when the agent finishes. Observe only: it can't block or force continuation.",
       "version_notes": {
         "0.1.148": "Experimental `session_completed` hook in config.",
         "0.3.114": "`session.idle` plugin event."
@@ -1302,7 +1302,7 @@
         "1.17.7": "a",
         "1.19.4": "a"
       },
-      "notes": "LSP diagnostics are fed back to the agent after edits (30+ built-in servers). Off by default in current versions; a full `lsp` tool (definitions, references) is experimental behind `OPENCODE_EXPERIMENTAL_LSP_TOOL`.",
+      "notes": "Diagnostics fed back after edits (30+ built-in servers), off by default now. A full `lsp` tool is experimental.",
       "version_notes": {
         "0.1.30": "LSP diagnostics and hover tools (packages/opencode/src/lsp, tool/lsp-*.ts)."
       }
@@ -1424,7 +1424,7 @@
         "1.17.7": "a",
         "1.19.4": "a"
       },
-      "notes": "Plugins can observe `permission.asked` and `permission.replied` events. The `permission.ask` hook is still in the plugin types but hasn't been called since 1.2.27, so plugins can't decide anymore.",
+      "notes": "Plugins see `permission.asked`/`replied` events. The `permission.ask` hook that could decide stopped being called in 1.2.27.",
       "version_notes": {
         "0.3.127": "Plugin hook `permission.ask` can set `allow`, `deny` or `ask`.",
         "1.2.27": "Permission rewrite: `permission.ask` is no longer triggered; events only."

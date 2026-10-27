@@ -17338,7 +17338,7 @@
         "2.1.293": "y",
         "2.1.311": "y"
       },
-      "notes": "Supports tool-specific filtering via matcher patterns.; Post: PostToolUse event. Supports tool-specific filtering via matcher patterns. continueOnBlock option added in 2.1.139 to feed rejection reason back to Claude."
+      "notes": "`PreToolUse` and `PostToolUse`, filtered by tool with matchers. `continueOnBlock` (2.1.139) feeds a block reason back to Claude."
     },
     "hook-prompt-validation": {
       "stats": {
@@ -22358,7 +22358,7 @@
         "2.1.293": "n",
         "2.1.311": "n"
       },
-      "notes": "No interrupt event. `Stop` doesn't run when you interrupt a turn; `PostToolUseFailure` has `is_interrupt` for a tool failure that reached Claude Code as an abort."
+      "notes": "No interrupt event, and `Stop` doesn't run when you interrupt a turn."
     }
   }
 }
