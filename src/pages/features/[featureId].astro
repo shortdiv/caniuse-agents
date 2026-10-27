@@ -6,6 +6,7 @@ import CiuTable from "../../components/CiuTable.astro";
 import {
   getCurrentFeatureSupport,
   getFeatureData,
+  searchEntry,
   getBaseline,
   baselineSentence,
   BASELINE_TITLES,
@@ -53,12 +54,7 @@ const supportRows: SupportRow[] = agents.map((agent: Agent) => ({
 }));
 
 const allFeatures = categories.flatMap((c) =>
-  c.features.map((f) => ({
-    id: f.id,
-    title: f.title,
-    description: f.description,
-    category: c.title,
-  })),
+  c.features.map((f) => searchEntry(f, c.title)),
 );
 ---
 
@@ -600,9 +596,11 @@ const allFeatures = categories.flatMap((c) =>
   .baseline--widely { --baseline-color: var(--moss); }
   .baseline--widely .baseline-mark { background: var(--baseline-color); }
   .baseline--newly { --baseline-color: var(--moss); }
-  .baseline--newly .baseline-mark { background: linear-gradient(90deg, var(--baseline-color) 50%, transparent 50%); }
+  .baseline--newly .baseline-mark {
+    background: repeating-linear-gradient(-45deg, var(--baseline-color) 0 1.5px, transparent 1.5px 4px);
+  }
   .baseline--limited { --baseline-color: var(--ochre); }
-  .baseline--limited .baseline-mark { border-style: dashed; }
+  .baseline--limited .baseline-mark { background: linear-gradient(90deg, var(--baseline-color) 50%, transparent 50%); }
   .baseline-body { display: grid; gap: 3px; min-width: 0; }
   .baseline-title { font-weight: 600; font-size: 14px; color: var(--text); }
   .baseline-eyebrow {

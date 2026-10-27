@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import { loadAgents, loadCategories } from "../lib/data.js";
+import { loadAgents, loadCategories, searchEntry } from "../lib/data.js";
 
 const [categories, agents] = await Promise.all([
   loadCategories(),
@@ -15,12 +15,7 @@ const totalFeatures = categories.reduce(
 );
 
 const searchFeatures = categories.flatMap((category) =>
-  category.features.map((feature) => ({
-    id: feature.id,
-    title: feature.title,
-    description: feature.description,
-    category: category.title,
-  })),
+  category.features.map((feature) => searchEntry(feature, category.title)),
 );
 ---
 

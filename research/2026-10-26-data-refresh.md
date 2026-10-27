@@ -88,6 +88,20 @@ This covers releases from 2026-06-30 to 2026-10-26, for Claude Code, Codex, Curs
 
 **Cline:** removed, along with its data file, mappings, sub-capabilities, table style and skill feed. The data is archived in `archive/2026-10-26/*`.
 
+## New hook features: permission request and interrupt
+
+Feature categories here are our own; these two follow event names the harnesses share (Codex's hooks docs group events by when they fire).
+
+| Harness | `hook-permission-request` | `hook-interrupt` | Source |
+|---|---|---|---|
+| Claude Code | `y` from 2.0.45 (`PermissionRequest`) | `n`: `Stop` doesn't run on a user interrupt | CHANGELOG 2.0.45, 2.0.54; hooks docs |
+| Codex | `y` from 0.122.0 (#17563) | `y` from 0.150.0 (`Interrupt`, #40511) | release notes |
+| GitHub Copilot | `y` from 1.0.16 (`permissionRequest`) | `n`: only `sessionEnd` `reason: "abort"`, undocumented | changelog 1.0.16; hooks reference |
+| Cursor | `n`: only pre-call allow/deny on `preToolUse`, shell and MCP hooks | `a` from 2.4: `stop` `status: "aborted"` | hooks docs |
+| OpenCode | `y` 0.3.127–1.2.26 (`permission.ask` plugin hook), then `a`: the hook is still typed but no longer triggered; only `permission.asked`/`replied` events | `n`: aborts show only as `MessageAbortedError` on a message | source: `permission/index.ts` at each tag, binary search |
+
+New tracked versions so these dates show: Codex 0.150.0; OpenCode 0.3.127 and 1.2.27.
+
 ## Skill fixes (`.claude/skills/changelog-review`)
 
 - **New `sources.version` option:** a registry or API URL that reports the current version, checked first.
@@ -101,7 +115,6 @@ This covers releases from 2026-06-30 to 2026-10-26, for Claude Code, Codex, Curs
 - **Model lists:** only Claude Code records models per version. Other harnesses need sources for theirs.
 - **Possible new features** worth tracking:
   - model-switch hooks (Claude Code `PreModelSwitch`/`PostModelSwitch`);
-  - interrupt hooks (Codex `Interrupt`);
   - error hooks (Copilot `errorOccurred`);
   - post-tool-failure hooks (Cursor and Copilot `postToolUseFailure`).
 - **`mcp-sampling` note:** it says "No agent supports this yet", but Copilot is marked `y`. Needs a check.

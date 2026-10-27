@@ -54,6 +54,29 @@
       }
     },
     {
+      "id": "hook-permission-request",
+      "group": "Lifecycle Hooks",
+      "title": "Permission request hook",
+      "description": "Runs when the agent is about to ask you to approve a tool call \u2014 approve or deny it automatically instead of showing the prompt",
+      "agent_mapping": {
+        "claude-code": "PermissionRequest",
+        "codex": "PermissionRequest",
+        "copilot": "permissionRequest",
+        "opencode": "permission.ask (plugin, until 1.2.26), permission.asked event"
+      },
+      "sub_capabilities": [
+        "Different from PreToolUse: it fires only when an approval prompt would show, not on every tool call",
+        "Claude Code, Codex and Copilot can allow or deny; Claude Code can also change the input and apply permission rules",
+        "Codex: if any matching hook denies, the request is denied"
+      ],
+      "docs": {
+        "claude-code": "https://code.claude.com/docs/en/hooks#permissionrequest",
+        "codex": "https://learn.chatgpt.com/docs/hooks",
+        "copilot": "https://docs.github.com/en/copilot/reference/hooks-configuration",
+        "opencode": "https://opencode.ai/docs/plugins/"
+      }
+    },
+    {
       "id": "hook-subagent-lifecycle",
       "group": "Lifecycle Hooks",
       "title": "Subagent lifecycle",
@@ -208,6 +231,25 @@
       "docs": {
         "claude-code": "https://code.claude.com/docs/en/hooks#stop",
         "codex": "https://developers.openai.com/codex/hooks#stop",
+        "cursor": "https://cursor.com/docs/hooks#stop"
+      }
+    },
+    {
+      "id": "hook-interrupt",
+      "group": "Observation Hooks",
+      "title": "Interrupt hook",
+      "description": "Runs when you interrupt the agent mid-turn (Esc or Ctrl-C) \u2014 clean up, log, or notify when a turn is cut short",
+      "agent_mapping": {
+        "codex": "Interrupt",
+        "cursor": "stop (status: aborted)"
+      },
+      "sub_capabilities": [
+        "Advisory: it can't undo the interrupt",
+        "Claude Code's Stop hook doesn't run on a user interrupt",
+        "Cursor reports aborted turns through the stop hook's status field"
+      ],
+      "docs": {
+        "codex": "https://learn.chatgpt.com/docs/hooks",
         "cursor": "https://cursor.com/docs/hooks#stop"
       }
     },

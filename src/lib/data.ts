@@ -6,6 +6,7 @@ import type {
   CaniuseFeatureData,
   CaniuseSupportCode,
   CategorizedFeature,
+  Feature,
   FeatureCategory,
   FeatureSupport,
 } from "./types.js";
@@ -276,8 +277,18 @@ const baselineSentence = (b: Baseline): string =>
     : `Fully supported by every tracked agent since ${monthYear(b.since)}, when ${b.lastAgent} added it.` +
       (b.status === "newly" ? ` Widely available from ${monthYear(b.widelyFrom)}.` : "");
 
+/** A feature as the header search sees it, including each harness's own event names. */
+const searchEntry = (f: Feature, category: string) => ({
+  id: f.id,
+  title: f.title,
+  description: f.description,
+  category,
+  events: Object.values(f.agent_mapping ?? {}).join(" "),
+});
+
 export type { Baseline };
 export {
+  searchEntry,
   BASELINE_TITLES,
   BASELINE_WIDELY_MONTHS,
   baselineGaps,

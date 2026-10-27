@@ -10,6 +10,7 @@ import {
   getFeatureData,
   loadAgents,
   loadCategories,
+  searchEntry,
   type Baseline,
 } from "../lib/data.js";
 import type { Feature } from "../lib/types";
@@ -50,25 +51,14 @@ const ORDER = { widely: 0, newly: 1, limited: 2 } as const;
 const byAvailability = (features: Feature[]) =>
   [...features].sort((a, b) => ORDER[baselines.get(a.id)!.status] - ORDER[baselines.get(b.id)!.status]);
 
-const featureRows = categories.flatMap((category) =>
-  category.features.map((feature: Feature) => ({
-    ...feature,
-    category: category.title,
-    categorySlug: category.category,
-  })),
-);
 ---
 
 <Layout title="Can I Use Agents?">
   <SiteHeader
     agentCount={agents.length}
     featureCount={totalFeatures}
-    features={featureRows.map((f) => ({
-      id: f.id,
-      title: f.title,
-      description: f.description,
-      category: f.category,
-    }))}
+    features={categories.flatMap((c) => c.features.map((f) => searchEntry(f, c.title)))}
+    agents={agents.map((a) => ({ id: a.id, name: a.name, version: a.current_version }))}
   />
 
   <main class="page-shell">
@@ -118,7 +108,7 @@ const featureRows = categories.flatMap((category) =>
                   href={`/features/${feature.id}`}
                   class={`feature-card bl-${baseline.status} tone-${tone(baseline)}`}
                   data-feature-item
-                  data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category}`.toLowerCase()}
+                  data-searchable={`${feature.title} ${feature.description} ${category.title} ${category.category} ${searchEntry(feature, category.title).events}`.toLowerCase()}
                 >
                   <div class="feature-card-top">
                     <span class="feature-card-title">{feature.title}</span>
@@ -417,15 +407,18 @@ const featureRows = categories.flatMap((category) =>
     color: var(--bl-color);
     padding-top: 2px;
   }
+  /* Widely: solid. Newly: diagonal lines (supported everywhere, not settled yet). Limited: half filled. */
   .bl-mark {
-    width: 9px;
-    height: 9px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     border: 1.5px solid var(--bl-color);
   }
   .bl-widely .bl-mark { background: var(--bl-color); }
-  .bl-newly .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
-  .bl-limited .bl-mark { border-style: dashed; }
+  .bl-newly .bl-mark {
+    background: repeating-linear-gradient(-45deg, var(--bl-color) 0 1px, transparent 1px 2.5px);
+  }
+  .bl-limited .bl-mark { background: linear-gradient(90deg, var(--bl-color) 50%, transparent 50%); }
 
   /* Logo row on limited cards: every logo in full colour; the badge carries the status. */
   .agent-row {

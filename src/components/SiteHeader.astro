@@ -1,4 +1,6 @@
 ---
+import { getAgentMark } from "../lib/agent-meta";
+
 interface Props {
   agentCount: number;
   featureCount: number;
@@ -7,28 +9,35 @@ interface Props {
     title: string;
     description: string;
     category: string;
+    events: string;
   }[];
+  /** Shown as a row of logos under the blurb (homepage only). */
+  agents?: { id: string; name: string; version?: string }[];
 }
 
-const { agentCount, featureCount, features = [] } = Astro.props;
+const { agentCount, featureCount, features = [], agents = [] } = Astro.props;
 ---
 
 <section class="site-header">
   {/* Top bar — wordmark + nav */}
   <div class="site-header-nav">
     <a href="/" class="site-wordmark">
-      <span class="wm-name">caniuse</span><span class="wm-dot">·</span><span
-        class="wm-agents">agents</span
-      >
+      <span class="wm-name">caniuse</span>
+      <span class="wm-dot">·</span>
+      <span class="wm-agents">agents</span>
     </a>
     <div class="site-nav-right">
-      <a href="/about" class="nav-link">about</a>
+      <a href="/about" class="nav-link">
+        about
+      </a>
       <a
         href="https://github.com/shortdiv/caniuse-agents/tree/main/data"
         class="nav-link"
         target="_blank"
-        rel="noopener">contribute</a
+        rel="noopener"
       >
+        contribute
+      </a>
     </div>
   </div>
 
@@ -45,19 +54,67 @@ const { agentCount, featureCount, features = [] } = Astro.props;
         workflows on top of them.
       </p>
 
+      {agents.length > 0 && (
+        <p class="site-agents">
+          <span class="site-agents-label">Currently tracking</span>
+          {agents.map((agent) => {
+            const mark = getAgentMark(agent.id, agent.name);
+            const title = agent.version
+              ? `${agent.name} ${agent.version}`
+              : agent.name;
+            return (
+              <span class="site-agent" title={title}>
+                {mark.logo && mark.logoDark ? (
+                  <>
+                    <img
+                      class="logo-light"
+                      src={mark.logo}
+                      alt={agent.name}
+                      width="18"
+                      height="18"
+                    />
+                    <img
+                      class="logo-dark"
+                      src={mark.logoDark}
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  </>
+                ) : mark.logo ? (
+                  <img
+                    src={mark.logo}
+                    alt={agent.name}
+                    width="18"
+                    height="18"
+                  />
+                ) : (
+                  <span
+                    class="site-agent-mono"
+                    style={`background:${mark.color}`}
+                  >
+                    {mark.short}
+                  </span>
+                )}
+              </span>
+            );
+          })}
+        </p>
+      )}
+
       <div class="site-search-wrap">
         <label class="site-search-field">
           <span class="search-prompt">›</span>
           <input
             id="feature-search"
             type="search"
-            placeholder="Search feature, category, or agent…"
+            placeholder="Search feature, event name, or category…"
             autocomplete="off"
           />
         </label>
-        <button type="button" class="site-search-btn" id="search-submit"
-          >Search</button
-        >
+        <button type="button" class="site-search-btn" id="search-submit">
+          Search
+        </button>
         <div class="search-results" id="search-results" hidden></div>
       </div>
 
@@ -73,7 +130,6 @@ const { agentCount, featureCount, features = [] } = Astro.props;
   type="application/json"
   set:html={JSON.stringify(features)}
 />
-
 <script>
   const input = document.querySelector("#feature-search") as HTMLInputElement;
   const results = document.querySelector("#search-results") as HTMLElement;
@@ -120,6 +176,7 @@ const { agentCount, featureCount, features = [] } = Astro.props;
       title: string;
       description: string;
       category: string;
+      events: string;
     }[] = JSON.parse(dataEl.textContent || "[]");
 
     let activeIdx = -1;
@@ -155,7 +212,8 @@ const { agentCount, featureCount, features = [] } = Astro.props;
           (f) =>
             f.title.toLowerCase().includes(q) ||
             f.description.toLowerCase().includes(q) ||
-            f.category.toLowerCase().includes(q),
+            f.category.toLowerCase().includes(q) ||
+            f.events.toLowerCase().includes(q),
         )
         .slice(0, 10);
 
@@ -328,6 +386,56 @@ const { agentCount, featureCount, features = [] } = Astro.props;
     color: var(--text-muted);
     max-width: 680px;
     margin: 0 0 28px;
+  }
+  .site-blurb:has(+ .site-agents) {
+    margin-bottom: 14px;
+  }
+
+  .site-agents {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 28px;
+  }
+  .site-agents-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .site-agent {
+    display: inline-flex;
+  }
+  .site-agent img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+  }
+  .site-agent-mono {
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .site-agent .logo-dark {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-agent .logo-light {
+      display: none;
+    }
+    .site-agent .logo-dark {
+      display: block;
+    }
   }
 
   /* ─── Search ─── */
